@@ -26,7 +26,7 @@
 
                     [:spacebar :return_or_enter]
 
-                    [:i :quote]
+                    [:i [:quote :spacebar]] ; ATTENTION: spacebar at the end
                     [:o :!Sslash]
                     [:p :!S1]
                     [:open_bracket :hyphen]
@@ -36,9 +36,9 @@
                     [:semicolon :!Ssemicolon]
                     [:quote :semicolon]
 
-                    [:comma :!Squote]
+                    [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
                     [:period :!S2]
-                    ; [:slash :!S1] // € IMPORTANT TO DO
+                    ; [:slash :!S1] ; € IMPORTANT TO DO
 
             ]}
             {
@@ -59,7 +59,7 @@
 
                     ; [:comma :]
                     ; [:period :]
-                    [:slash :grave_accent_and_tilde]
+                    [:slash [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
 
             ]}
             {
@@ -76,7 +76,9 @@
             ]}
             {:des "default mode"
               :rules [
+
                 [:caps_lock :delete_or_backspace]
+
                 [:e :f]
                 [:##Se :##Sf]
                 [:r :p]
