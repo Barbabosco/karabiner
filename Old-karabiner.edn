@@ -9,14 +9,14 @@
 ; }
 
 
-        ; :layers {
-        ;     :shift-mode {:key :shift}
-        ; }
+        :layers {
+            :shift-mode {:key :shift}
+        }
+
 
         :simlayers {
             :f-mode {:key :f}
             :r-mode {:key :r}
-            :c-mode {:key :c}
         }
         :main [
             {
@@ -63,18 +63,34 @@
 
             ]}
             {
-                :des "c-mode layer"
+                :des "shift-mode layer"
                 :rules [ 
-                    :c-mode 
-                    [:a [:grave_accent_and_tilde :a]]
-                    [:l [:grave_accent_and_tilde :e]]
-                    [:o [:grave_accent_and_tilde :u]]
-                    [:semicolon [:grave_accent_and_tilde :i]]
-                    [:quote [:grave_accent_and_tilde :o]]
-                    [:k [:quote :e]]
-                    [:period [:grave_accent_and_tilde :!Se]]
-            ]}
-            {:des "default mode"
+                    :shift-mode 
+                    ; [:##1 :4]
+                    ; [:a :!Sa]
+                    ; [:e :!Se]
+                    ; [:##r :!Sp]
+                    ; [:t :!Sb]
+                    ; [:s :!Sr]
+                    ; [:d :!Ss]
+                    ; [:f :!St]
+                    ; [:z :!Sx]
+                    ; [:x :!Sc]
+                    ; [:c :!Sd]
+                    ; [:u :!Sj]
+                    ; [:i :!Sl]
+                    ; [:o :!Su]
+                    ; [:p :!Sy]
+                    ; [:j :!Sm]
+                    ; [:k :!Sn]
+                    ; [:l :!Se]
+                    ; [:quote :!So]
+                    ; [:n :!Sz]
+                    ; [:m :!Sk]
+
+            ]}            
+
+            {:des "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
               :rules [
                 [:caps_lock :delete_or_backspace]
                 [:e :f]
@@ -119,9 +135,33 @@
                 [:##Sm :##Sk]
                 [:comma :h]
                 [:##Scomma :##Sh]
-                [:slash :period]
-                [:period :comma]
                 [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [: :]
+                ; [{:key :spacebar :modi :left_shift} [:spacebar :equal_sign :spacebar]]
             ]}
+            ; {:des "capslock layer"
+            ;   :rules [ 
+            ;       :caps_mode 
+            ;         [:##h :left_arrow]
+            ;         [:##j :down_arrow]
+            ;         [:##k :up_arrow]
+            ;         [:##l :right_arrow]
+            ;         [:##f :left_option]
+            ;         [:##d :left_shift]
+            ;         [:n :comma]
+            ; ]}
+
         ]
     }
