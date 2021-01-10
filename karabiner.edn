@@ -17,6 +17,7 @@
             :f-mode {:key :f}
             :r-mode {:key :r}
             :c-mode {:key :c}
+            :k-mode {:key :k}
         }
         :main [
             {
@@ -66,13 +67,19 @@
                 :des "c-mode layer"
                 :rules [ 
                     :c-mode 
-                    [:a [:grave_accent_and_tilde :a]]
                     [:l [:grave_accent_and_tilde :e]]
                     [:o [:grave_accent_and_tilde :u]]
                     [:semicolon [:grave_accent_and_tilde :i]]
                     [:quote [:grave_accent_and_tilde :o]]
                     [:k [:quote :e]]
                     [:period [:grave_accent_and_tilde :!Se]]
+            ]}
+            {
+                :des "k-mode layer"
+                :rules [ 
+                    :k-mode 
+                    [:a [:grave_accent_and_tilde :a]]
+
             ]}
             {:des "default mode"
               :rules [
@@ -105,6 +112,8 @@
                 [:##So :##Su]
                 [:p :y]
                 [:##Sp :##Sy]
+                [:open_bracket [:z]]
+                [:##Sopen_bracket [:##Sz]]
                 [:j :m]
                 [:##Sj :##Sm]
                 [:k :n]
@@ -115,8 +124,6 @@
                 [:##semicolon :##Si]
                 [:quote :o]
                 [:##quote :##So]
-                [:n :z]
-                [:##Sn :##Sz]
                 [:m :k]
                 [:##Sm :##Sk]
                 [:comma :h]
@@ -124,6 +131,11 @@
                 [:slash :period]
                 [:period :comma]
                 [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
+
+                [:n [:w :w :w :w :w :w :w]]
+                [:b [:w :w :w :w :w :w :w]]
+                [:h [:w :w :w :w :w :w :w]]
+                [:y [:w :w :w :w :w :w :w]]
             ]}
         ]
     }
