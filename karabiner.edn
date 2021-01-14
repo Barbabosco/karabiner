@@ -30,26 +30,71 @@
             ; :simlayer-threshold 222
     }}
 
+    :modifiers {
+        ; :fg [:command :shift]
+        ; :super-hyper [:command :shift :control :option :fn]
+        ; :hyper [:command :shift :control :option]
+        ; :cos [:command :shift :option]
+        ; :cst [:command :shift :control]
+        :co [:command :option]
+        :cs [:command :shift]
+        ; :ct [:command :control]
+        ; :to [:control :option]
+        ; :ts [:control :shift]
+        ; :os [:option :shift]
+    }
+
+    :tos {
+        :delete_line {:key :k :modi :cs} ;!CSk
+        :open_clipMenu {:key :v :modi :co}
+        :open_aText {:key :a :modi :co}
+        ; :cursor_above {:key :up_arrow :modi :co}
+        ; :cursor_below {:key :down_arrow :modi :co}
+
+    }
+
 
         ; :layers {
         ;     :shift-mode {:key :shift}
         ; }
 
-        :simlayers {
-            :f-mode {:key :f}
-            :r-mode {:key :r}
-            :c-mode {:key :c}
-            :k-mode {:key :k}
+    :simlayers {
+        :f-mode {:key :f}
+        :r-mode {:key :r}
+        :c-mode {:key :c}
+        :k-mode {:key :k}
 
-            :movement-mode {:key :q} ; Lindquist
-            ; :cursor-mode {:key :g} ; Lindquist
-            ; :delete-mode {:key :j} ; Lindquist
-            ; :emoji-mode {:key :z} ; Lindquist
+        :movement-mode {:key :q} ; Lindquist
+        ; :movement-mode {:key :g :modi :fg} ; Lindquist
+        ; :movement-mode {:key :f :modi :g} ; Lindquist
+        ; :cursor-mode {:key :g} ; Lindquist
+        :delete-mode {:key :k} ; Lindquist
+        :emoji-mode {:key :z} ; Lindquist
 
-        }
+    }
 
-
+       
         :main [
+
+            {
+                :des "delete"
+                :rules [
+                    :delete-mode
+
+                    ; [:hyphen :delete_line :code]
+                    ; [:hyphen :delete_line]
+                    ; [:s :delete_or_backspace]
+                    [:a :!Odelete_or_backspace]
+                    [:s :!Cdelete_or_backspace]
+                    [:d :!Cdelete_forward]
+                    [:f :!Odelete_forward]
+                    [:g :delete_forward]
+
+                    [:r :delete_line]
+
+                    [:v :open_clipMenu]
+                    [:c :open_aText]
+            ]}
 
             {
                 :des "homerow movement"
@@ -57,12 +102,17 @@
                     :movement-mode
 
                     [:##i :!Cleft_arrow]
+                    [:##o :page_down]
+                    [:##p :page_up]
                     [:##open_bracket :!Cright_arrow]
 
                     [:##k :left_arrow]
                     [:##l :down_arrow]
                     [:##semicolon :up_arrow]
                     [:##quote :right_arrow]
+
+                    [:##period :!Cdown_arrow]
+                    [:##slash :!Cup_arrow]
 
                     ; [:semicolon :autocomplete] ; To-Do
 
@@ -82,6 +132,7 @@
                     [:o :!Sslash]
                     [:p :!S1]
                     [:open_bracket :hyphen]
+                    [:close_bracket :!Shyphen]
 
                     [:k :comma]
                     [:l :period]
@@ -126,14 +177,15 @@
                     [:quote [:grave_accent_and_tilde :o]]
                     [:k [:quote :e]]
                     [:period [:grave_accent_and_tilde :!Se]]
+                    [:j [:grave_accent_and_tilde :a]]
             ]}
-            {
-                :des "k-mode layer"
-                :rules [ 
-                    :k-mode 
-                    [:a [:grave_accent_and_tilde :a]]
+            ; {
+            ;     :des "k-mode layer"
+            ;     :rules [ 
+            ;         :k-mode 
+            ;         [:a [:grave_accent_and_tilde :a]]
 
-            ]}
+            ; ]}
 
             {:des "default mode"
               :rules [
@@ -166,8 +218,9 @@
                 [:##So :##Su]
                 [:p :y]
                 [:##Sp :##Sy]
-                [:open_bracket [:z]]
-                [:##Sopen_bracket [:##Sz]]
+                [:open_bracket :z]
+                [:##Sopen_bracket :##Sz]
+                [:close_bracket :delete_forward]
                 [:j :m]
                 [:##Sj :##Sm]
                 [:k :n]
