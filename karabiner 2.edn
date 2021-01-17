@@ -55,7 +55,7 @@
         ; :cst [:command :shift :control]
         :co [:command :option]
         :cs [:command :shift]
-        :ct [:command :control]
+        ; :ct [:command :control]
         ; :to [:control :option]
         ; :ts [:control :shift]
         :os [:option :shift]
@@ -69,6 +69,7 @@
         :open_aText {:key :a :modi :co}
         :next_window {:key :grave_accent_and_tilde :modi :command}
         :command_tab {:key :tab :modi :command}
+        :toggle_comments {:key :slash :modi :command}
         ; :select_line {:key :a :modi :control }
 
         :cursor_find_match {:key :d :modi :command} ; Lindquist
@@ -79,36 +80,19 @@
         ; :acejump_selection {:key :s :modi :cos}
         ; :acejump_multi {:key :m :modi :cos}
 
-        :start_of_line {:key :left_arrow :modi :command}
-        :end_of_line {:key :right_arrow :modi :command}
+       :start_of_line {:key :left_arrow :modi :command}
+       :end_of_line {:key :right_arrow :modi :command}
 
-        :mycut {:key :x :modi :command}
-        :mycopy {:key :c :modi :command}
-        :mypaste_plain {:key :v :modi :cs}
-        :mypaste {:key :v :modi :command}
-
-        :mybold {:key :b :modi :command}
-        :myitalic {:key :i :modi :command}
-        :myunderline {:key :u :modi :command}
-        :mystrikethrough {:key :x :modi :cs}
-        :fontdecrease {:key :comma :modi :cs}
-        :fontincrease {:key :period :modi :cs}
-
-        :myhard_reload {:key :r :modi :cs}
-        :myreload {:key :r :modi :command}
-        :mysave {:key :s :modi :command}
-        :myselect_all {:key :a :modi :command}
-
-        :myfind_previous {:key :g :modi :cs}
-        :myfind_next {:key :g :modi :command}
-        :myfind_replace {:key :h :modi :cs}
-        :myfind {:key :f :modi :command}
-        :myfind_selection {:key :e :modi :command}
-        :myfind_gspreadsheet {:key :h :modi :cs}
-
-        :mytoggle_comments {:key :slash :modi :command}
-        :myfocus_terminal {:key :r :modi :ct}; custom shortcut in VS Code - View: Focus Active Editor Group ⌃⌘R 
-        :myfocus_editor {:key :s :modi :ct} ; custom shortcut in VS Code - Terminal: Focus Terminal ⌃⌘S
+       :mycut {:key :x :modi :command}
+       :mycopy {:key :c :modi :command}
+       :mypaste_plain {:key :v :modi :cs}
+       :mypaste {:key :v :modi :command}
+       :mybold {:key :b :modi :command}
+       :myitalic {:key :i :modi :command}
+       :myunderline {:key :u :modi :command}
+       :mystrikethrough {:key :x :modi :cs}
+       :fontdecrease {:key :comma :modi :cs}
+       :fontincrease {:key :period :modi :cs}
     }
 
 
@@ -118,20 +102,21 @@
 
     :simlayers {
         ; left hand
-        :caps_lock-mode {:key :caps_lock} ; delete mode
+        :caps_lock-mode {:key :caps_lock} ; or delete mode
         :tab-mode {:key :tab} ; or selection mode???
 
-        :r-mode {:key :r} ; parenthesis
-        :f-mode {:key :f} ; symbols
-        :d-mode {:key :d} ; numbers
+        :r-mode {:key :r}
+        :f-mode {:key :f}
+        :s-mode {:key :s} ; numbers
+        :d-mode {:key :d} ; symbols
 
         :cursor-mode {:key :g} ; Lindquist
         :c-mode {:key :c} ; accents
         :v-mode {:key :v} ; text related
         
         ; left hand
-        :comma-mode {:key :comma} ; this is reserved for VS Code and programming
-        :l-mode {:key :l} ; find, save, select all
+        :k-mode {:key :k} ; this is reserved for VS Code and programming
+        :l-mode {:key :l} ; empty at the moment
         :o-mode {:key :o} ; to open (= go to the specified application)
         :spacebar-mode {:key :spacebar}
         ;:movement-mode {:key :q} ; Lindquist
@@ -150,9 +135,9 @@
                     [
                         :cursor-mode
 
-                        [:k :cursor_find_match]
-                        [:l :cursor_below]
-                        [:semicolon :cursor_above]
+                        [:h :cursor_find_match]
+                        [:j :cursor_below]
+                        [:k :cursor_above]
                         ;  [:-v :acejump]
                         ;  [:-l :acejump_line]
                         ;  [:-m :acejump_multi]
@@ -160,7 +145,6 @@
                     ]
             }
 
-   
             {
                 :des   "toggle arrows-mode"
                 :rules
@@ -171,7 +155,6 @@
                         ; [:grave_accent_and_tilde ["arrows-mode" 1]]
                     ]
             }
-
 
             {:des   "arrows-mode"
                 :rules [
@@ -190,11 +173,6 @@
                     [:##d :left_option]
                     [:##f :left_command]
 
-                    [:##z :myhard_reload]
-                    [:##x :myreload]
-                    [:##c :mysave]
-                    [:##v :myselect_all]
-
                     [:##i :start_of_line]
                     [:##o :page_down]
                     [:##p :page_up]
@@ -211,7 +189,6 @@
                     [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
                 ]
             }
-
 
             {   
                 :des   "spacebar-mode"
@@ -259,20 +236,19 @@
                     [:l :!Odelete_or_backspace]
                     [:semicolon :!Odelete_forward]
                     [:quote :!Cdelete_forward]
-                ]
-            }
-
+            ]}
 
             {
                 :des "tab-mode" ; or select mode
                 :rules [
                     :tab-mode
 
-                    ; [:k :focus_editor]
-                    ; [:l :focus_terminal]
-                    ; [:semicolon :focus_explorer]
-                ]
-            }
+                    ; [:i :select_line]
+                    ; [:k :!Cdelete_or_backspace]
+                    ; [:l :!Odelete_or_backspace]
+                    ; [:semicolon :!Odelete_forward]
+                    ; [:quote :!Cdelete_forward]
+            ]}
 
             ; {
             ;     :des "homerow movement"
@@ -291,8 +267,6 @@
 
             ;         [:##period :!Cdown_arrow]
             ;         [:##slash :!Cup_arrow]
-
-            
 
             ;         ; [:semicolon :autocomplete] ; To-Do
 
@@ -317,39 +291,22 @@
                 ]
             }
 
-
             {
                 :des "d-mode layer"
                 :rules [ 
                     :d-mode 
 
-                    [:i :7]
-                    [:o :8]
-                    [:p :9]
-                    [:open_bracket :comma]
-                    [:k :4]
-                    [:l :5]
-                    [:semicolon :6]
-                    [:quote :period]
-                    [:m :0]
-                    [:comma :1]
-                    [:period :2]
-                    [:slash :3]
                 ]
             }
-
 
             {
-                :des "comma-mode layer"
+                :des "k-mode layer"
                 :rules [ 
-                    :comma-mode 
+                    :k-mode 
 
-                    [:s :myfocus_editor]
-                    [:d :myfocus_terminal]
-                    [:f :mytoggle_comments]
+                    [:f :toggle_comments]
                 ]
             }
-
 
             {
                 :des "f-mode layer"
@@ -373,7 +330,6 @@
                     [:slash [:!Sgrave_accent_and_tilde :spacebar]]
                 ]
             }
-
 
             {
                 :des "r-mode layer"
@@ -399,7 +355,6 @@
                 ]
             }
 
-
             {
                 :des "v-mode layer"
                 :rules [ 
@@ -413,7 +368,6 @@
                     [:period :fontincrease]
                 ]
             }
-
 
             {
                 :des "c-mode layer"
@@ -429,22 +383,14 @@
                 ]
             }
 
-
             {
                 :des "l-mode layer"
                 :rules [ 
                     :l-mode
 
-                    [:q :myfind_previous]
-                    [:w :myfind_next]
-                    [:e :myfind_selection]
-                    [:r :myfind_replace]
-                    [:d :myfind_gspreadsheet]
-                    [:f :myfind]
 
                 ]
             }
-
 
             {:des "default mode"
                 :rules [
@@ -505,13 +451,9 @@
                     [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
 
                     [:n [:w :w :w :w :w :w :w]]
-                    [:h [:w :w :w :w :w :w :w]]
                     [:b [:w :w :w :w :w :w :w]]
                     [:y [:w :w :w :w :w :w :w]]
                 ]
             }
-
-
-
         ]
     }
