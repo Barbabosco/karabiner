@@ -119,20 +119,20 @@
     :simlayers {
         ; left hand
         :caps_lock-mode {:key :caps_lock} ; delete mode
-        :tab-mode {:key :tab} ; or selection mode???
+        ; :tab-mode {:key :tab} ; or selection mode???
 
         :r-mode {:key :r} ; parenthesis
-        :f-mode {:key :f} ; symbols
         :d-mode {:key :d} ; numbers
+        :f-mode {:key :f} ; symbols
 
-        :cursor-mode {:key :g} ; Lindquist
+        :g-mode {:key :g} ; Lindquist - cursor mode
         :c-mode {:key :c} ; accents
         :v-mode {:key :v} ; text related
         
         ; left hand
-        :comma-mode {:key :comma} ; this is reserved for VS Code and programming
-        :l-mode {:key :l} ; find, save, select all
         :o-mode {:key :o} ; to open (= go to the specified application)
+        :l-mode {:key :l} ; find, save, select all
+        :comma-mode {:key :comma} ; this is reserved for VS Code and programming
         :spacebar-mode {:key :spacebar}
         ;:movement-mode {:key :q} ; Lindquist
         ;:movement-mode {:key :g :modi :fg} ; Lindquist
@@ -145,10 +145,10 @@
         :main [
 
             { 
-                :des   "cursor-mode"
+                :des   "g-mode"
                 :rules
                     [
-                        :cursor-mode
+                        :g-mode
 
                         [:k :cursor_find_match]
                         [:l :cursor_below]
@@ -207,8 +207,8 @@
  
                     [:m :next_window]
                     [:comma :command_tab]
-                    [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    ; [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    ; [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
                 ]
             }
 
@@ -243,8 +243,8 @@
  
                     [:m :next_window]
                     [:comma :command_tab]
-                    [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    ; [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    ; [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
                 ]
             }
 
@@ -311,8 +311,9 @@
                     [:d [:open "/Applications/Visual Studio Code.app"]]
                     [:f [:open "/System/Library/CoreServices/Finder.app"]]
                     [:q [:open "/Applications/Anki.app/"]]
+                    
+                    [:e [:open "/Applications/OpenOffice.app/"]]
                     [:r [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
-                    [:f [:open "/Applications/OpenOffice.app/"]]
 
                 ]
             }
@@ -327,10 +328,12 @@
                     [:o :8]
                     [:p :9]
                     [:open_bracket :comma]
+
                     [:k :4]
                     [:l :5]
                     [:semicolon :6]
                     [:quote :period]
+                    
                     [:m :0]
                     [:comma :1]
                     [:period :2]
