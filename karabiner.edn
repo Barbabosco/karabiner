@@ -6,7 +6,7 @@
     ;; #  | means optional
     ;; C  | left_command
     ;; T  | left_control
-    ;; O  | left_option
+    ;; O  | 
     ;; S  | left_shift
     ;; F  | fn
     ;; Q  | right_command
@@ -41,162 +41,272 @@
             ;; key is fired twice when 500 ms is elapsed (otherwise seen as a hold command)
             ;; increase this value to allow you to hold a simlayer key longer before the next key is pressed
             :held    1000}
+    }
 
+    :templates {
+        :open       "open \"%s\""
     }
 
     :modifiers {
         ; :fg [:command :shift]
         ; :super-hyper [:command :shift :control :option :fn]
         ; :hyper [:command :shift :control :option]
-        ; :cos [:command :shift :option]
+        :cos [:command :shift :option]
         ; :cst [:command :shift :control]
         :co [:command :option]
         :cs [:command :shift]
         ; :ct [:command :control]
         ; :to [:control :option]
         ; :ts [:control :shift]
-        ; :os [:option :shift]
+        :os [:option :shift]
     }
 
     :tos {
-        :delete_line {:key :k :modi :cs} ;!CSk
+        :myundo {:key :z :modi :command}
+        :myredo {:key :z :modi :cs}
+        :delete_line {:key :k :modi :cs} ;!CSk Lindquist
         :open_clipMenu {:key :v :modi :co}
         :open_aText {:key :a :modi :co}
-        ; :cursor_above {:key :up_arrow :modi :co}
-        ; :cursor_below {:key :down_arrow :modi :co}
+        :next_window {:key :grave_accent_and_tilde :modi :command}
+        :command_tab {:key :tab :modi :command}
+        :toggle_comments {:key :slash :modi :command}
+        ; :select_line {:key :a :modi :control }
 
+        :cursor_find_match {:key :d :modi :command} ; Lindquist
+        :cursor_above {:key :up_arrow :modi :co} ; Lindquist
+        :cursor_below {:key :down_arrow :modi :co} ; Lindquist
+        ; :acejump {:key :j :modi :cos}
+        ; :acejump_line {:key :l :modi :cos}
+        ; :acejump_selection {:key :s :modi :cos}
+        ; :acejump_multi {:key :m :modi :cos}
+
+       :start_of_line {:key :left_arrow :modi :command}
+       :end_of_line {:key :right_arrow :modi :command}
+
+       :mycut {:key :x :modi :command}
+       :mycopy {:key :c :modi :command}
+       :mypaste_plain {:key :v :modi :cs}
+       :mypaste {:key :v :modi :command}
+       :mybold {:key :b :modi :command}
+       :myitalic {:key :i :modi :command}
+       :myunderline {:key :u :modi :command}
+       :mystrikethrough {:key :x :modi :cs}
+       :fontdecrease {:key :comma :modi :cs}
+       :fontincrease {:key :period :modi :cs}
     }
 
 
-        ; :layers {
-        ;     :shift-mode {:key :shift}
-        ; }
+    ; :layers {
+    ;     :shift-mode {:key :shift}
+    ; }
 
     :simlayers {
-        :f-mode {:key :f}
+        ; left hand
+        :caps_lock-mode {:key :caps_lock} ; or delete mode
+        :tab-mode {:key :tab} ; or selection mode???
+
         :r-mode {:key :r}
-        :c-mode {:key :c}
-        :k-mode {:key :k}
+        :f-mode {:key :f}
+        :s-mode {:key :s} ; numbers
+        :d-mode {:key :d} ; symbols
+
+        :cursor-mode {:key :g} ; Lindquist
+        :c-mode {:key :c} ; accents
+        :v-mode {:key :v} ; text related
+        
+        ; left hand
+        :k-mode {:key :k} ; this is reserved for VS Code and programming
+        :l-mode {:key :l} ; empty at the moment
+        :o-mode {:key :o} ; to open (= go to the specified application)
         :spacebar-mode {:key :spacebar}
-
-        ; :movement-mode {:key :q} ; Lindquist
-        ; :movement-mode {:key :g :modi :fg} ; Lindquist
-        ; :movement-mode {:key :f :modi :g} ; Lindquist
-        ; :cursor-mode {:key :g} ; Lindquist
-        ; :delete-mode {:key :k} ; Lindquist
+        ;:movement-mode {:key :q} ; Lindquist
+        ;:movement-mode {:key :g :modi :fg} ; Lindquist
+        ;:movement-mode {:key :f :modi :g} ; Lindquist
+        ; :delete-mode {:key :h} ; Lindquist
         ; :emoji-mode {:key :z} ; Lindquist
-
     }
 
-       
+
         :main [
 
+            { 
+                :des   "cursor-mode"
+                :rules
+                    [
+                        :cursor-mode
 
-            ; {
-            ;     :des   "toggle arrows-mode"
-            ;     :rules
-            ;         [
-            ;             [:y ["arrows-mode" 0]]
-            ;             [:h ["arrows-mode" 1]]
-            ;         ]
-            ; }
+                        [:h :cursor_find_match]
+                        [:j :cursor_below]
+                        [:k :cursor_above]
+                        ;  [:-v :acejump]
+                        ;  [:-l :acejump_line]
+                        ;  [:-m :acejump_multi]
+                        ;  [:left_shift :acejump_selection]
+                    ]
+            }
+
             {
                 :des   "toggle arrows-mode"
                 :rules
                     [
                         [[:f :k]["arrows-mode" 0]] ; this should be kinda of a global resetter, to go back to the base mode
                         [[:l :d] ["arrows-mode" 1]]
+                        ; [:escape [:escape ["arrows-mode" 0]]] ; this should be kinda of a global resetter, to go back to the base mode
+                        ; [:grave_accent_and_tilde ["arrows-mode" 1]]
                     ]
             }
 
+            {:des   "arrows-mode"
+                :rules [
+                    [:condi :arrows-mode] ; IMPORTANT
 
-             {:des   "arrows-mode"
-              :rules [
-                        [:condi :arrows-mode]
+                    [:q :mycut]
+                    [:w :mycopy]
+                    [:e :mypaste_plain]
+                    [:r :mypaste]
 
-                        [:##a :left_control]
-                        [:##s :left_shift]
-                        [:##d :left_option]
-                        [:##f :left_command]
+                    [:t :open_clipMenu]
+                    [:g :open_aText]
 
-                        [:##k :left_arrow]
-                        [:##l :down_arrow]
-                        [:##semicolon :up_arrow]
-                        [:##quote :right_arrow]
+                    [:##a :left_control]
+                    [:##s :left_shift]
+                    [:##d :left_option]
+                    [:##f :left_command]
 
-                        [:##o :page_down]
-                        [:##p :page_up]
-                        [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                        [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    [:##i :start_of_line]
+                    [:##o :page_down]
+                    [:##p :page_up]
+                    [:##open_bracket :end_of_line]
 
+                    [:##k :left_arrow]
+                    [:##l :down_arrow]
+                    [:##semicolon :up_arrow]
+                    [:##quote :right_arrow]
+ 
+                    [:m :next_window]
+                    [:comma :command_tab]
+                    [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                ]
+            }
+
+            {   
+                :des   "spacebar-mode"
+                :rules [
+                    :spacebar-mode
+
+                    [:q :mycut]
+                    [:w :mycopy]
+                    [:e :mypaste_plain]
+                    [:r :mypaste]
+
+                    [:t :open_clipMenu]
+                    [:g :open_aText]
+
+                    [:##a :left_control]
+                    [:##s :left_shift]
+                    [:##d :left_option]
+                    [:##f :left_command]
+
+                    [:##i :start_of_line]
+                    [:##o :page_down]
+                    [:##p :page_up]
+                    [:##open_bracket :end_of_line]
+
+                    [:##k :left_arrow]
+                    [:##l :down_arrow]
+                    [:##semicolon :up_arrow]
+                    [:##quote :right_arrow]
+ 
+                    [:m :next_window]
+                    [:comma :command_tab]
+                    [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
                 ]
             }
 
 
-
             {
-                :des "spacebar mode" ; has to be identical to arrows-mode
+                :des "caps_lock" ; or delete mode
                 :rules [
-                    :spacebar-mode
+                    :caps_lock-mode
 
-                    [:##a :left_shift]
-                    [:##s :left_control]
-                    [:##d :left_option]
-                    [:##f :left_command]
-
-                    [:##k :left_arrow]
-                    [:##l :down_arrow]
-                    [:##semicolon :up_arrow]
-                    [:##quote :right_arrow]
-
+                    [:i :delete_line]
+                    [:k :!Cdelete_or_backspace]
+                    [:l :!Odelete_or_backspace]
+                    [:semicolon :!Odelete_forward]
+                    [:quote :!Cdelete_forward]
             ]}
 
+            {
+                :des "tab-mode" ; or select mode
+                :rules [
+                    :tab-mode
 
+                    ; [:i :select_line]
+                    ; [:k :!Cdelete_or_backspace]
+                    ; [:l :!Odelete_or_backspace]
+                    ; [:semicolon :!Odelete_forward]
+                    ; [:quote :!Cdelete_forward]
+            ]}
 
             ; {
-            ;     :des "delete"
+            ;     :des "homerow movement"
             ;     :rules [
-            ;         :delete-mode
+            ;         :movement-mode
 
-            ;         ; [:hyphen :delete_line :code]
-            ;         ; [:hyphen :delete_line]
-            ;         ; [:s :delete_or_backspace]
-            ;         [:a :!Odelete_or_backspace]
-            ;         [:s :!Cdelete_or_backspace]
-            ;         [:d :!Cdelete_forward]
-            ;         [:f :!Odelete_forward]
-            ;         [:g :delete_forward]
+            ;         [:##i :!Cleft_arrow]
+            ;         [:##o :page_down]
+            ;         [:##p :page_up]
+            ;         [:##open_bracket :!Cright_arrow]
 
-            ;         [:r :delete_line]
+            ;         [:##k :left_arrow]
+            ;         [:##l :down_arrow]
+            ;         [:##semicolon :up_arrow]
+            ;         [:##quote :right_arrow]
 
-            ;         [:v :open_clipMenu]
-            ;         [:c :open_aText]
+            ;         [:##period :!Cdown_arrow]
+            ;         [:##slash :!Cup_arrow]
+
+            ;         ; [:semicolon :autocomplete] ; To-Do
+
+            ;         ; [:return_or_enter :insert_line_below]  ; To-Do
+
+            ;         ; [:left_shift :expand_selection] ; To-Do
             ; ]}
 
             {
-                :des "homerow movement"
-                :rules [
-                    :movement-mode
+                :des "o-mode layer"
+                :rules [ 
+                    :o-mode 
 
-                    [:##i :!Cleft_arrow]
-                    [:##o :page_down]
-                    [:##p :page_up]
-                    [:##open_bracket :!Cright_arrow]
+                    [:a [:open "/Applications/Google Chrome.app"]]
+                    [:s [:open "/Applications/Google Chrome Canary.app"]]
+                    [:d [:open "/Applications/Visual Studio Code.app"]]
+                    [:f [:open "/System/Library/CoreServices/Finder.app"]]
+                    [:q [:open "/Applications/Anki.app/"]]
+                    [:r [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
+                    [:f [:open "/Applications/OpenOffice.app/"]]
 
-                    [:##k :left_arrow]
-                    [:##l :down_arrow]
-                    [:##semicolon :up_arrow]
-                    [:##quote :right_arrow]
+                ]
+            }
 
-                    [:##period :!Cdown_arrow]
-                    [:##slash :!Cup_arrow]
+            {
+                :des "d-mode layer"
+                :rules [ 
+                    :d-mode 
 
-                    ; [:semicolon :autocomplete] ; To-Do
+                ]
+            }
 
-                    ; [:return_or_enter :insert_line_below]  ; To-Do
+            {
+                :des "k-mode layer"
+                :rules [ 
+                    :k-mode 
 
-                    ; [:left_shift :expand_selection] ; To-Do
-            ]}
+                    [:f :toggle_comments]
+                ]
+            }
 
             {
                 :des "f-mode layer"
@@ -205,28 +315,28 @@
 
                     [:spacebar :return_or_enter]
 
-                    [:i [:quote :spacebar]] ; ATTENTION: spacebar at the end
-                    [:o :!Sslash]
-                    [:p :!S1]
-                    [:open_bracket :hyphen]
-                    [:close_bracket :!Shyphen]
+                    [:i :!Sslash]
+                    [:o :!S1]
+                    [:p :hyphen]
+                    [:open_bracket :!Shyphen]
 
-                    [:k :comma]
-                    [:l :period]
+                    [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
+                    [:l :!S3]
                     [:semicolon :!Ssemicolon]
                     [:quote :semicolon]
 
                     [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
                     [:period :!S2]
-                    ; [:slash :!S1] ; € IMPORTANT TO DO
-
-            ]}
+                    [:slash [:!Sgrave_accent_and_tilde :spacebar]]
+                ]
+            }
 
             {
                 :des "r-mode layer"
                 :rules [ 
                     :r-mode 
 
+                    [:u [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
                     [:i :!Sopen_bracket]
                     [:o :!Sclose_bracket]
                     [:p :!Scomma]
@@ -238,11 +348,26 @@
                     [:semicolon :open_bracket]
                     [:quote :close_bracket]
 
-                    ; [:comma :]
-                    ; [:period :]
-                    [:slash [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
+                    [:m :!Sequal_sign]
+                    [:comma :hyphen]
+                    [:period :!S8]
+                    [:slash :slash]
+                ]
+            }
 
-            ]}
+            {
+                :des "v-mode layer"
+                :rules [ 
+                    :v-mode 
+                    
+                    [:k :mybold]
+                    [:l :myitalic]
+                    [:semicolon :myunderline]
+                    [:quote :mystrikethrough]
+                    [:comma :fontdecrease]
+                    [:period :fontincrease]
+                ]
+            }
 
             {
                 :des "c-mode layer"
@@ -255,71 +380,80 @@
                     [:k [:quote :e]]
                     [:period [:grave_accent_and_tilde :!Se]]
                     [:j [:grave_accent_and_tilde :a]]
-            ]}
+                ]
+            }
+
             {
-                :des "k-mode layer"
+                :des "l-mode layer"
                 :rules [ 
-                    :k-mode 
-                    [:v :open_clipMenu]
-                    [:c :open_aText]
-            ]}
+                    :l-mode
+
+
+                ]
+            }
 
             {:des "default mode"
-              :rules [
+                :rules [
 
-                [:caps_lock :delete_or_backspace]
+                    [:caps_lock :delete_or_backspace]
+                    [:right_option :escape]
+                    [:grave_accent_and_tilde :myundo]
+                    [:##Sgrave_accent_and_tilde :myredo]
+                    
+                    [:e :f]
+                    [:##Se :##Sf]
+                    [:r :p]
+                    [:##Sr :##Sp]
+                    [:t :b]
+                    [:##St :##Sb]
+                    [:s :r]
+                    ; [:##s :left_shift nil {:alone :r}]
+                    [:##Ss :##Sr]
+                    [:d :s]
+                    ; [:##d :left_option nil {:alone :d}]
+                    [:##Sd :##Ss]
+                    [:f :t]
+                    ; [:##f :left_command nil {:alone :f}] 
+                    [:##Sf :##St]
+                    [:z :x]
+                    [:##Sz :##Sx]
+                    [:x :c]
+                    [:##Sx :##Sc]
+                    [:c :d]
+                    [:##Sc :##Sd]
+                    [:u :j]
+                    [:##Su :##Sj]
+                    [:i :l]
+                    [:##Si :##Sl]
+                    [:o :u]
+                    [:##So :##Su]
+                    [:p :y]
+                    [:##Sp :##Sy]
+                    [:open_bracket :z]
+                    [:##Sopen_bracket :##Sz]
+                    [:close_bracket :delete_forward]
+                    [:j :m]
+                    [:##Sj :##Sm]
+                    [:k :n]
+                    [:##Sk :##Sn]
+                    [:l :e]
+                    [:##Sl :##Se]
+                    [:semicolon :i]
+                    [:##semicolon :##Si]
+                    [:quote :o]
+                    [:##quote :##So]
+                    [:m :k]
+                    [:##Sm :##Sk]
+                    [:comma :h]
+                    [:##Scomma :##Sh]
+                    [:slash :period]
+                    [:period :comma]
+                    [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
 
-                [:e :f]
-                [:##Se :##Sf]
-                [:r :p]
-                [:##Sr :##Sp]
-                [:t :b]
-                [:##St :##Sb]
-                [:s :r]
-                [:##Ss :##Sr]
-                [:d :s]
-                [:##Sd :##Ss]
-                [:f :t]
-                [:##Sf :##St]
-                [:z :x]
-                [:##Sz :##Sx]
-                [:x :c]
-                [:##Sx :##Sc]
-                [:c :d]
-                [:##Sc :##Sd]
-                [:u :j]
-                [:##Su :##Sj]
-                [:i :l]
-                [:##Si :##Sl]
-                [:o :u]
-                [:##So :##Su]
-                [:p :y]
-                [:##Sp :##Sy]
-                [:open_bracket :z]
-                [:##Sopen_bracket :##Sz]
-                [:close_bracket :delete_forward]
-                [:j :m]
-                [:##Sj :##Sm]
-                [:k :n]
-                [:##Sk :##Sn]
-                [:l :e]
-                [:##Sl :##Se]
-                [:semicolon :i]
-                [:##semicolon :##Si]
-                [:quote :o]
-                [:##quote :##So]
-                [:m :k]
-                [:##Sm :##Sk]
-                [:comma :h]
-                [:##Scomma :##Sh]
-                [:slash :period]
-                [:period :comma]
-                [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
-
-                [:n [:w :w :w :w :w :w :w]]
-                [:b [:w :w :w :w :w :w :w]]
-                [:h [:w :w :w :w :w :w :w]]
-                [:y [:w :w :w :w :w :w :w]]
-            ]}
+                    [:n [:w :w :w :w :w :w :w]]
+                    [:b [:w :w :w :w :w :w :w]]
+                    [:y [:w :w :w :w :w :w :w]]
+                ]
+            }
         ]
     }
