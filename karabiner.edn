@@ -16,6 +16,8 @@
     ;; P  | caps_lock
     ;; !! | mandatory command + control + optional + shift (hyper)
     ;; ## | optional any
+
+    ;; :vk_none is for empty cells
 ;; 
 
 
@@ -109,6 +111,24 @@
         :mytoggle_comments {:key :slash :modi :command}
         :myfocus_terminal {:key :r :modi :ct}; custom shortcut in VS Code - View: Focus Active Editor Group ⌃⌘R 
         :myfocus_editor {:key :s :modi :ct} ; custom shortcut in VS Code - Terminal: Focus Terminal ⌃⌘S
+
+        :mydesktop1 {:key :1 :modi :control}
+        :mydesktop2 {:key :2 :modi :control}
+        :mydesktop3 {:key :3 :modi :control}
+        :mydesktop4 {:key :4 :modi :control}
+        :mydesktop5 {:key :5 :modi :control}
+        :mydesktop6 {:key :6 :modi :control}
+        :mydesktop7 {:key :7 :modi :control}
+        :mydesktop8 {:key :8 :modi :control}
+        :mydesktop9 {:key :9 :modi :control}
+        :mydesktop0 {:key :0 :modi :control}
+
+        :mynext_tab {:key :right_arrow :modi :co}
+        :myprevious_tab {:key :left_arrow :modi :co}
+        :mynext_desktop {:key :right_arrow :modi :control}
+        :myprevious_desktop {:key :left_arrow :modi :control}
+        :mynext_sheet {:key :page_down :modi :cs}
+        :myprevious_sheet {:key :page_up :modi :cs}
     }
 
 
@@ -217,13 +237,24 @@
                 :rules [
                     :spacebar-mode
 
-                    [:q :mycut]
-                    [:w :mycopy]
-                    [:e :mypaste_plain]
-                    [:r :mypaste]
+                    [:##1 :mydesktop1]
+                    [:##2 :mydesktop2]
+                    [:##3 :mydesktop3]
+                    [:##4 :mydesktop4]
+                    [:##5 :mydesktop5]
+                    [:##6 :mydesktop6]
+                    [:##7 :mydesktop7]
+                    [:##8 :mydesktop8]
+                    [:##9 :mydesktop9]
+                    [:##0 :mydesktop0]
 
-                    [:t :open_clipMenu]
-                    [:g :open_aText]
+                    [:##q :mycut]
+                    [:##w :mycopy]
+                    [:##e :mypaste_plain]
+                    [:##r :mypaste]
+
+                    [:##t :open_clipMenu]
+                    [:##g :open_aText]
 
                     [:##a :left_control]
                     [:##s :left_shift]
@@ -248,6 +279,14 @@
                     [:comma :command_tab]
                     [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
                     [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+
+                    [:b :myprevious_sheet]
+                    [:n :mynext_sheet]
+                    
+                    [:left_option :myprevious_desktop]
+                    [:left_command :mynext_desktop]
+                    [:right_command :myprevious_tab]
+                    [:right_option :mynext_tab]
                 ]
             }
 
@@ -456,9 +495,9 @@
                 :rules [
 
                     [:caps_lock :delete_or_backspace]
-                    ; [:left_control [:w :w :w :w :w :w :w] ]
-                    [:left_option [:w :w :w :w :w :w :w] ]
-                    [:right_option :escape]
+                    [:left_control :vk_none]
+                    [:left_option :vk_none]
+                    ; [:right_option :escape]
                     ; [:grave_accent_and_tilde :myundo]
                     ; [:##Sgrave_accent_and_tilde :myredo]
                     [:n :myundo]
@@ -471,13 +510,10 @@
                     [:t :b]
                     [:##St :##Sb]
                     [:s :r]
-                    ; [:##s :left_shift nil {:alone :r}]
                     [:##Ss :##Sr]
                     [:d :s]
-                    ; [:##d :left_option nil {:alone :d}]
                     [:##Sd :##Ss]
                     [:f :t]
-                    ; [:##f :left_command nil {:alone :f}] 
                     [:##Sf :##St]
                     [:z :x]
                     [:##Sz :##Sx]
@@ -515,9 +551,9 @@
                     [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
 
                     ; [:n [:w :w :w :w :w :w :w]]
-                    [:h [:w :w :w :w :w :w :w]]
+                    [:h :vk_none]
                     ; [:b [ :w :w :w :w :w :w :w]]
-                    [:y [:w :w :w :w :w :w :w]]
+                    [:y :vk_none]
                 ]
             }
 
