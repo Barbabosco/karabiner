@@ -95,7 +95,7 @@
         :fontincrease {:key :period :modi :cs}
 
         :myhard_reload {:key :r :modi :cs}
-        :myreload {:key :r :modi :command}
+        ; :myreload {:key :r :modi :command} ; not used, probably hard reload should be the default
         :mysave {:key :s :modi :command}
         :myselect_all {:key :a :modi :command}
 
@@ -173,44 +173,43 @@
             }
 
 
-            {:des   "arrows-mode"
-                :rules [
-                    [:condi :arrows-mode] ; IMPORTANT
+            ; {:des   "arrows-mode"
+            ;     :rules [
+            ;         [:condi :arrows-mode] ; IMPORTANT
 
-                    [:q :mycut]
-                    [:w :mycopy]
-                    [:e :mypaste_plain]
-                    [:r :mypaste]
+            ;         [:q :mycut]
+            ;         [:w :mycopy]
+            ;         [:e :mypaste_plain]
+            ;         [:r :mypaste]
 
-                    [:t :open_clipMenu]
-                    [:g :open_aText]
+            ;         [:t :open_clipMenu]
+            ;         [:g :open_aText]
 
-                    [:##a :left_control]
-                    [:##s :left_shift]
-                    [:##d :left_option]
-                    [:##f :left_command]
+            ;         [:##a :left_control]
+            ;         [:##s :left_shift]
+            ;         [:##d :left_option]
+            ;         [:##f :left_command]
 
-                    [:##z :myhard_reload]
-                    [:##x :myreload]
-                    [:##c :mysave]
-                    [:##v :myselect_all]
+            ;         [:##z :myhard_reload]
+            ;         [:##x :mysave]
+            ;         [:##c :myselect_all]
 
-                    [:##i :start_of_line]
-                    [:##o :page_down]
-                    [:##p :page_up]
-                    [:##open_bracket :end_of_line]
+            ;         [:##i :start_of_line]
+            ;         [:##o :page_down]
+            ;         [:##p :page_up]
+            ;         [:##open_bracket :end_of_line]
 
-                    [:##k :left_arrow]
-                    [:##l :down_arrow]
-                    [:##semicolon :up_arrow]
-                    [:##quote :right_arrow]
+            ;         [:##k :left_arrow]
+            ;         [:##l :down_arrow]
+            ;         [:##semicolon :up_arrow]
+            ;         [:##quote :right_arrow]
  
-                    [:m :next_window]
-                    [:comma :command_tab]
-                    ; [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    ; [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
-                ]
-            }
+            ;         [:m :next_window]
+            ;         [:comma :command_tab]
+            ;         ; [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+            ;         ; [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+            ;     ]
+            ; }
 
 
             {   
@@ -231,6 +230,10 @@
                     [:##d :left_option]
                     [:##f :left_command]
 
+                    [:##z :myhard_reload]
+                    [:##x :mysave]
+                    [:##c :myselect_all]
+
                     [:##i :start_of_line]
                     [:##o :page_down]
                     [:##p :page_up]
@@ -243,8 +246,8 @@
  
                     [:m :next_window]
                     [:comma :command_tab]
-                    ; [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    ; [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
                 ]
             }
 
@@ -338,7 +341,7 @@
                     [:comma :1]
                     [:period :2]
                     [:slash :3]
-                ]
+                ] 
             }
 
 
@@ -453,9 +456,13 @@
                 :rules [
 
                     [:caps_lock :delete_or_backspace]
+                    ; [:left_control [:w :w :w :w :w :w :w] ]
+                    [:left_option [:w :w :w :w :w :w :w] ]
                     [:right_option :escape]
-                    [:grave_accent_and_tilde :myundo]
-                    [:##Sgrave_accent_and_tilde :myredo]
+                    ; [:grave_accent_and_tilde :myundo]
+                    ; [:##Sgrave_accent_and_tilde :myredo]
+                    [:n :myundo]
+                    [:b :myredo]
                     
                     [:e :f]
                     [:##Se :##Sf]
@@ -507,9 +514,9 @@
                     [:period :comma]
                     [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
 
-                    [:n [:w :w :w :w :w :w :w]]
+                    ; [:n [:w :w :w :w :w :w :w]]
                     [:h [:w :w :w :w :w :w :w]]
-                    [:b [:w :w :w :w :w :w :w]]
+                    ; [:b [ :w :w :w :w :w :w :w]]
                     [:y [:w :w :w :w :w :w :w]]
                 ]
             }
