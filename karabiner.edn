@@ -58,7 +58,7 @@
         :co [:command :option]
         :cs [:command :shift]
         :ct [:command :control]
-        ; :to [:control :option]
+        :to [:control :option]
         ; :ts [:control :shift]
         :os [:option :shift]
     }
@@ -129,18 +129,40 @@
         :myprevious_desktop {:key :left_arrow :modi :control}
         :mynext_sheet {:key :page_down :modi :cs}
         :myprevious_sheet {:key :page_up :modi :cs}
+        :myemojisearch {:key :spacebar :modi :ct}
+        :myscreenshot3 {:key :3 :modi :cs}
+        :myscreenshot4 {:key :4 :modi :cs}
+        :myscreenshot5 {:key :5 :modi :cs}
+
+        :rectangle_left_half {:key :left_arrow :modi :to}
+        :rectangle_right_half {:key :right_arrow :modi :to}
+        :rectangle_top_half {:key :up_arrow :modi :to}
+        :rectangle_bottom_half {:key :down_arrow :modi :to}
+        
+        :rectangle_top_left {:key :u :modi :to}
+        :rectangle_top_right {:key :i :modi :to}
+        :rectangle_bottom_left {:key j :modi :to}
+        :rectangle_bottom_right {:key :k :modi :to}
+
+        :rectangle_first_third {:key :d :modi :to}
+        :rectangle_first_two_thirds {:key :e :modi :to}
+        :rectangle_center_third {:key :f :modi :to}
+        :rectangle_last_two_thirds {:key :t :modi :to}
+        :rectangle_last_third {:key :g :modi :to}
+
+        :rectangle_maximize {:key :return_or_enter :modi :to}
+        :rectangle_smaller {:key :hyphen :modi :to}
+        :rectangle_larger {:key :equal_sign :modi :to}
+        :rectangle_center {:key :c :modi :to}
+        :rectangle_restore {:key :delete_or_backspace :modi :to}
     }
-
-
-    ; :layers {
-    ;     :shift-mode {:key :shift}
-    ; }
 
     :simlayers {
         ; left hand
         :caps_lock-mode {:key :caps_lock} ; delete mode
         ; :tab-mode {:key :tab} ; or selection mode???
 
+        :a-mode {:key :a} ; rectangle
         :r-mode {:key :r} ; parenthesis
         :d-mode {:key :d} ; numbers
         :f-mode {:key :f} ; symbols
@@ -164,6 +186,40 @@
 
         :main [
 
+
+            {
+                :des "a-mode" ; rectangle
+                :rules [
+                    :a-mode
+
+                    [:e :rectangle_top_left]
+                    [:d :rectangle_top_right]
+                    [:r :rectangle_bottom_left]
+                    [:f :rectangle_bottom_right]
+                    
+                    [:k :rectangle_left_half]
+                    [:l :rectangle_bottom_half]
+                    [:semicolon :rectangle_top_half]
+                    [:quote :rectangle_right_half]
+
+                    [:u :rectangle_first_third]
+                    [:i :rectangle_first_two_thirds]
+                    [:o :rectangle_center_third]
+                    [:p :rectangle_last_two_thirds]
+                    [:open_bracket :rectangle_last_third]
+
+                    [:return_or_enter :rectangle_maximize]
+                    [:close_bracket :rectangle_restore]
+                    [:backslash :rectangle_center]
+                    [:period :rectangle_smaller]
+                    [:slash :rectangle_larger]
+
+                    [:m :next_window]
+                    [:comma :command_tab]
+                ]
+            }
+
+
             { 
                 :des   "g-mode"
                 :rules
@@ -179,57 +235,6 @@
                         ;  [:left_shift :acejump_selection]
                     ]
             }
-
-   
-            {
-                :des   "toggle arrows-mode"
-                :rules
-                    [
-                        [[:f :k]["arrows-mode" 0]] ; this should be kinda of a global resetter, to go back to the base mode
-                        [[:l :d] ["arrows-mode" 1]]
-                        ; [:escape [:escape ["arrows-mode" 0]]] ; this should be kinda of a global resetter, to go back to the base mode
-                        ; [:grave_accent_and_tilde ["arrows-mode" 1]]
-                    ]
-            }
-
-
-            ; {:des   "arrows-mode"
-            ;     :rules [
-            ;         [:condi :arrows-mode] ; IMPORTANT
-
-            ;         [:q :mycut]
-            ;         [:w :mycopy]
-            ;         [:e :mypaste_plain]
-            ;         [:r :mypaste]
-
-            ;         [:t :open_clipMenu]
-            ;         [:g :open_aText]
-
-            ;         [:##a :left_control]
-            ;         [:##s :left_shift]
-            ;         [:##d :left_option]
-            ;         [:##f :left_command]
-
-            ;         [:##z :myhard_reload]
-            ;         [:##x :mysave]
-            ;         [:##c :myselect_all]
-
-            ;         [:##i :start_of_line]
-            ;         [:##o :page_down]
-            ;         [:##p :page_up]
-            ;         [:##open_bracket :end_of_line]
-
-            ;         [:##k :left_arrow]
-            ;         [:##l :down_arrow]
-            ;         [:##semicolon :up_arrow]
-            ;         [:##quote :right_arrow]
- 
-            ;         [:m :next_window]
-            ;         [:comma :command_tab]
-            ;         ; [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-            ;         ; [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
-            ;     ]
-            ; }
 
 
             {   
@@ -496,12 +501,11 @@
 
                     [:caps_lock :delete_or_backspace]
                     [:left_control :vk_none]
-                    [:left_option :vk_none]
-                    ; [:right_option :escape]
-                    ; [:grave_accent_and_tilde :myundo]
-                    ; [:##Sgrave_accent_and_tilde :myredo]
-                    [:n :myundo]
-                    [:b :myredo]
+                    [:left_option :vk_none] 
+                    [[:7 :8] :myscreenshot3]
+                    [[:8 :9] :myscreenshot4]
+                    [[:9 :0] :myscreenshot5]
+                    [:y :myemojisearch]
                     
                     [:e :f]
                     [:##Se :##Sf]
@@ -550,10 +554,15 @@
                     [:period :comma]
                     [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
 
-                    ; [:n [:w :w :w :w :w :w :w]]
                     [:h :vk_none]
-                    ; [:b [ :w :w :w :w :w :w :w]]
+                    [:##Sh :vk_none]
                     [:y :vk_none]
+
+                    [:b :myredo]
+                    [:##Sb :vk_none]
+                    [:n :myundo]
+                    [:##Sn :vk_none]
+ 
                 ]
             }
 
