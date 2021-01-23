@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)file:///Users/barbabosco/Dropbox/000%20Coding/Javascript/script_for_shuffling%20lines.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>Converti il testo</title>
+</head>
+<body>
+
+<form action="file:///Users/barbabosco/Dropbox/000%20Coding/Javascript/script_for_shuffling%20lines.html" name="myForm">
+	<div>
+		<textarea name="textarea1" rows="20" cols="60"></textarea>
+		<textarea name="textarea2" rows="20" cols="60"></textarea>
+	</div>
+
+	<div>
+		<input type="button" value="Svuota le textarea" name="button1">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="button" value="Converti il testo" name="button2">
+		<input type="button" value="Ri-ordina il testo" name="button3">
+
+	</div>
+</form>
+
+
+
+<script>
+	var myForm = document.myForm;
+	var textarea1 = myForm.textarea1;
+	var textarea2 = myForm.textarea2;
+	var myButton1 = myForm.button1;
+	var myButton2 = myForm.button2;
+	var myButton3 = myForm.button3;
+
+	function myConvert() {
+		myString = textarea1.value;
+		var myRegExp = / (?=\()/g;
+		myNewString = myString.replace(myRegExp, "\t");
+		textarea2.value = myNewString;
+	}
+
+	function myClear(e) {
+		textarea1.value = "";
+		textarea2.value = "";
+	}
+
+	function shuffleText() {
+		var myOrderedString = textarea1.value; 
+		var myOrderedArray = [];
+
+		while(myOrderedString.indexOf("\n") !== -1) {
+			var myLineStart = myOrderedString.indexOf("\n");
+			var nextItem = myOrderedString.substr(0, myLineStart);
+			myOrderedArray.push(nextItem);
+			myOrderedString = myOrderedString.substr(myLineStart + 1);
+		}
+
+		myOrderedArray.push(myOrderedString);
+		myShuffledArray = [];
+
+		while( myOrderedArray.length > 0) {
+			var myRandomNum = Math.round(Math.random()*myOrderedArray.length - 1);
+			let myNextItem = myOrderedArray.splice(myRandomNum, 1);
+			myShuffledArray.push(myNextItem)
+		}
+
+		textarea2.value = myShuffledArray.join("\n");
+	}
+
+	myButton1.addEventListener("click", myClear);
+	myButton2.addEventListener("click", myConvert);
+	myButton3.addEventListener("click", shuffleText);
+
+
+</script>
+
+
+
+</body></html>
