@@ -193,8 +193,8 @@
                     :a-mode
 
                     [:e :rectangle_top_left]
-                    [:d :rectangle_top_right]
-                    [:r :rectangle_bottom_left]
+                    [:r :rectangle_top_right]
+                    [:d :rectangle_bottom_left]
                     [:f :rectangle_bottom_right]
                     
                     [:k :rectangle_left_half]
