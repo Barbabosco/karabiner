@@ -26,23 +26,23 @@
         :goku {
             :default true
             ; :sim 50 ;200
-            ; :delay 80 ;200
-            ; :alone 120 ;500
-            ; :held 70 ;500
+            ; :delay 500 ;200
+            ; :alone 1000 ;500
+            ; :held 1000 ;500
 
             ;; simultaneous_threshold_milliseconds (def: 50)
             ;; keys need to be pressed within this threshold to be considered simultaneous
-            :sim     50
+            :sim 1000
             ;; to_delayed_action_delay_milliseconds (def: 500)
             ;; basically it means time after which the key press is count delayed
-            :delay   500
+            :delay 500
             ;; to_if_alone_timeout_milliseconds (def: 1000)
             ;; hold for 995s and single tap registered; hold for 1005s and seen as modifier
-            :alone   1000
+            :alone 200
             ;; to_if_held_down_threshold_milliseconds (def: 500)
             ;; key is fired twice when 500 ms is elapsed (otherwise seen as a hold command)
             ;; increase this value to allow you to hold a simlayer key longer before the next key is pressed
-            :held    1000}
+            :held 1000}
     }
 
     :templates {
@@ -61,6 +61,7 @@
         :to [:control :option]
         ; :ts [:control :shift]
         :os [:option :shift]
+        :cp [:caps_lock]
     }
 
     :tos {
@@ -163,8 +164,12 @@
     }
 
     :simlayers {
+
+        :keypad_4-mode {:key :keypad_4} ; delete mode
+         
         ; left hand
-        :caps_lock-mode {:key :caps_lock} ; delete mode
+        ;; :caps_lock-mode {:key :caps_lock} ; delete mode
+        ;; :caps_lock-mode {:key :caps_lock} ; 
         ; :tab-mode {:key :tab} ; or selection mode???
 
         :r-mode {:key :r} ; parenthesis
@@ -172,10 +177,10 @@
         :a-mode {:key :a} ; rectangle
         :s-mode {:key :s} ; gmail
         :d-mode {:key :d} ; numbers
-        :f-mode {:key :f} ; symbols
+        :b-mode {:key :b} ; symbols
         :g-mode {:key :g} ; Lindquist - cursor mode
 
-        :c-mode {:key :c} ; accents
+        :f-mode {:key :f} ; accents
         :v-mode {:key :v} ; text related
         
         ; left hand
@@ -189,6 +194,11 @@
         ; :delete-mode {:key :h} ; Lindquist
         ; :emoji-mode {:key :z} ; Lindquist
     }
+
+ :layers {;
+        :caps_lock-mode {:key :caps_lock :alone {:key :escape}}
+    }
+
 
 
         :main [
@@ -316,18 +326,18 @@
             }
 
 
-            {
-                :des "caps_lock" ; or delete mode
-                :rules [
-                    :caps_lock-mode
+            ;; {
+            ;;     :des "caps_lock" ; or delete mode
+            ;;     :rules [
+            ;;         :caps_lock-mode
 
-                    [:i :delete_line]
-                    [:k :!Cdelete_or_backspace]
-                    [:l :!Odelete_or_backspace]
-                    [:semicolon :!Odelete_forward]
-                    [:quote :!Cdelete_forward]
-                ]
-            }
+            ;;         [:i :delete_line]
+            ;;         [:k :!Cdelete_or_backspace]
+            ;;         ;; [:l :!Odelete_or_backspace]
+            ;;         [:semicolon :!Odelete_forward]
+            ;;         [:quote :!Cdelete_forward]
+            ;;     ]
+            ;; }
 
 
             {
@@ -396,12 +406,36 @@
             }
 
 
-            {
-                :des "f-mode layer"
-                :rules [ 
-                    :f-mode 
+            ;; {
+            ;;     :des "f-mode layer"
+            ;;     :rules [ 
+            ;;         :f-mode 
 
-                    [:spacebar :return_or_enter]
+            ;;         [:spacebar :return_or_enter]
+
+            ;;         [:i :!Sslash]
+            ;;         [:o :!S1]
+            ;;         [:p :hyphen]
+            ;;         [:open_bracket :!Shyphen]
+
+            ;;         [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
+            ;;         [:l :!S3]
+            ;;         [:semicolon :!Ssemicolon]
+            ;;         [:quote :semicolon]
+
+            ;;         [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
+            ;;         [:period :!S2]
+            ;;         [:slash [:!Sgrave_accent_and_tilde :spacebar]]
+            ;;     ]
+            ;; }
+
+
+           {
+                :des "caps-mode layer"
+                :rules [ 
+                    :caps_lock-mode
+
+                    ;; [:spacebar :return_or_enter]
 
                     [:i :!Sslash]
                     [:o :!S1]
@@ -461,9 +495,9 @@
 
 
             {
-                :des "c-mode layer"
+                :des "f-mode layer"
                 :rules [ 
-                    :c-mode 
+                    :f-mode 
                     [:l [:grave_accent_and_tilde :e]]
                     [:o [:grave_accent_and_tilde :u]]
                     [:semicolon [:grave_accent_and_tilde :i]]
@@ -491,10 +525,21 @@
             }
 
 
+            {
+                :des "keypad_4-mode layer"
+                :rules [ 
+                    :keypad_4-mode
+
+                    [:keypad_6 :delete_or_backspace]
+                ]
+            }
+
             {:des "default mode"
                 :rules [
 
-                    [:caps_lock :delete_or_backspace]
+                    ;; [:caps_lock :delete_or_backspace]
+                    [:caps_lock :vk_none]
+                    [:delete_or_backspace :vk_none]
                     [:left_control :vk_none]
                     [:left_option :vk_none] 
                     [[:7 :8] :myscreenshot3]
@@ -553,8 +598,8 @@
                     [:##Sh :vk_none]
                     [:y :vk_none]
 
-                    [:b :myredo]
-                    [:##Sb :vk_none]
+                    ;; [:b :myredo]
+                    ;; [:##Sb :vk_none]
                     [:n :myundo]
                     [:##Sn :vk_none]
  
