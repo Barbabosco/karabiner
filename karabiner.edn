@@ -72,7 +72,6 @@
         :open_aText {:key :a :modi :co}
         :next_window {:key :grave_accent_and_tilde :modi :command}
         :command_tab {:key :tab :modi :command}
-        ; :select_line {:key :a :modi :control }
 
         :cursor_find_match {:key :d :modi :command} ; Lindquist
         :cursor_above {:key :up_arrow :modi :co} ; Lindquist
@@ -161,6 +160,11 @@
         :gmail_bcc {:key :b :modi :cs}
         :gmail_quote {:key :9 :modi :cs}
         :gmail_discard {:key :d :modi :cs}
+
+        :select-before {:key :left_arrow :modi :cs}
+        :select-previous-word {:key :left_arrow :modi :os}
+        :select-next-word {:key :right_arrow :modi :os}
+        :select-after {:key :right_arrow :modi :cs}
     }
 
     :simlayers {
@@ -172,7 +176,7 @@
         ;; :caps_lock-mode {:key :caps_lock} ; 
         ; :tab-mode {:key :tab} ; or selection mode???
 
-        :r-mode {:key :r} ; parenthesis
+        :f-mode {:key :f} ; parenthesis
 
         :a-mode {:key :a} ; rectangle
         :s-mode {:key :s} ; gmail
@@ -180,8 +184,8 @@
         :b-mode {:key :b} ; symbols
         :g-mode {:key :g} ; Lindquist - cursor mode
 
-        :f-mode {:key :f} ; accents
-        :v-mode {:key :v} ; text related
+        ;; :f-mode {:key :f} ; selection mode
+        :c-mode {:key :c} ; text related
         
         ; left hand
         :o-mode {:key :o} ; to open (= go to the specified application)
@@ -196,12 +200,88 @@
     }
 
  :layers {;
-        :caps_lock-mode {:key :caps_lock :alone {:key :escape}}
+        :caps_lock-mode {:key :caps_lock :alone {:key :escape}} ; accents and punctuation
+        :y-mode {:key :y} ; selection and deletion
+        :h-mode {:key :h} ; numbers
     }
 
 
 
         :main [
+
+
+          {
+                :des "caps-mode layer"
+                :rules [ 
+                    :caps_lock-mode
+
+                    [:u :!S1]
+                    [:i :!Sslash]
+                    [:o [:grave_accent_and_tilde :u]]
+                    [:p :!Ssemicolon]
+                    [:open_bracket :semicolon]
+                    [:close_bracket :hyphen]
+
+                    [:j [:grave_accent_and_tilde :a]]
+                    [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
+                    [:l [:grave_accent_and_tilde :e]]
+                    [:semicolon [:grave_accent_and_tilde :i]]
+                    [:quote [:grave_accent_and_tilde :o]]
+
+                    [:n :!S3]
+                    [:m :!S2]
+                    [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
+                    [:slash [:quote :e]]
+
+
+                    [:period [:grave_accent_and_tilde :!Se]]
+                ]
+            }
+
+
+           {
+                :des "y-mode" ; or delete mode
+                :rules [
+                    :y-mode
+
+                    [:u :delete_line]
+                    [:i :!Cdelete_or_backspace]
+                    [:o :!Odelete_or_backspace]
+                    [:p :!Odelete_forward]
+                    [:open_bracket :!Cdelete_forward]
+
+                    [:k :select-before]
+                    [:l :select-previous-word]
+                    [:semicolon :select-next-word]
+                    [:quote :select-after]
+                ]
+            }
+
+
+            {
+                :des "h-mode layer"
+                :rules [ 
+                    :h-mode 
+
+                    [:u :keypad_hyphen]
+                    [:i :7]
+                    [:o :8]
+                    [:p :9]
+                    [:open_bracket :keypad_slash]
+
+                    [:j :keypad_plus]
+                    [:k :4]
+                    [:l :5]
+                    [:semicolon :6]
+                    [:quote :keypad_asterisk]
+                    
+                    [:n :keypad_period]
+                    [:m :0]
+                    [:comma :1]
+                    [:period :2]
+                    [:slash :3]
+                ] 
+            }
 
 
             {
@@ -326,16 +406,17 @@
             }
 
 
+ 
             ;; {
-            ;;     :des "caps_lock" ; or delete mode
-            ;;     :rules [
-            ;;         :caps_lock-mode
+            ;;     :des "f-mode layer"
+            ;;     :rules [ 
+            ;;         :f-mode 
 
-            ;;         [:i :delete_line]
-            ;;         [:k :!Cdelete_or_backspace]
-            ;;         ;; [:l :!Odelete_or_backspace]
-            ;;         [:semicolon :!Odelete_forward]
-            ;;         [:quote :!Cdelete_forward]
+            ;;         [:k :select-before]
+            ;;         [:l :select-previous-word]
+            ;;         [:semicolon :select-next-word]
+            ;;         [:quote :select-after]
+
             ;;     ]
             ;; }
 
@@ -370,28 +451,28 @@
             }
 
 
-            {
-                :des "d-mode layer"
-                :rules [ 
-                    :d-mode 
+            ;; {
+            ;;     :des "d-mode layer"
+            ;;     :rules [ 
+            ;;         :d-mode 
 
-                    [:u :!S5]
-                    [:i :7]
-                    [:o :8]
-                    [:p :9]
-                    [:open_bracket :comma]
+            ;;         [:u :!S5]
+            ;;         [:i :7]
+            ;;         [:o :8]
+            ;;         [:p :9]
+            ;;         [:open_bracket :comma]
 
-                    [:k :4]
-                    [:l :5]
-                    [:semicolon :6]
-                    [:quote :period]
+            ;;         [:k :4]
+            ;;         [:l :5]
+            ;;         [:semicolon :6]
+            ;;         [:quote :period]
                     
-                    [:m :0]
-                    [:comma :1]
-                    [:period :2]
-                    [:slash :3]
-                ] 
-            }
+            ;;         [:m :0]
+            ;;         [:comma :1]
+            ;;         [:period :2]
+            ;;         [:slash :3]
+            ;;     ] 
+            ;; }
 
 
             {
@@ -430,34 +511,35 @@
             ;; }
 
 
-           {
-                :des "caps-mode layer"
-                :rules [ 
-                    :caps_lock-mode
 
-                    ;; [:spacebar :return_or_enter]
+        ;;    {
+        ;;         :des "caps-mode layer"
+        ;;         :rules [ 
+        ;;             :caps_lock-mode
 
-                    [:i :!Sslash]
-                    [:o :!S1]
-                    [:p :hyphen]
-                    [:open_bracket :!Shyphen]
+        ;;             ;; [:spacebar :return_or_enter]
 
-                    [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
-                    [:l :!S3]
-                    [:semicolon :!Ssemicolon]
-                    [:quote :semicolon]
+        ;;             [:i :!Sslash]
+        ;;             [:o :!S1]
+        ;;             [:p :hyphen]
+        ;;             [:open_bracket :!Shyphen]
 
-                    [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
-                    [:period :!S2]
-                    [:slash [:!Sgrave_accent_and_tilde :spacebar]]
-                ]
-            }
+        ;;             [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
+        ;;             [:l :!S3]
+        ;;             [:semicolon :!Ssemicolon]
+        ;;             [:quote :semicolon]
 
+        ;;             [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
+        ;;             [:period :!S2]
+        ;;             [:slash [:!Sgrave_accent_and_tilde :spacebar]]
+        ;;         ]
+        ;;     }
 
+ 
             {
-                :des "r-mode layer"
+                :des "f-mode layer"
                 :rules [ 
-                    :r-mode 
+                    :f-mode 
 
                     [:u [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
                     [:i :!Sopen_bracket]
@@ -471,18 +553,23 @@
                     [:semicolon :open_bracket]
                     [:quote :close_bracket]
 
-                    [:m :!Sequal_sign]
-                    [:comma :hyphen]
-                    [:period :!S8]
-                    [:slash :slash]
+                    [:m :vk_none]
+                    [:comma :vk_none]
+                    [:period :vk_none]
+                    [:slash :vk_none]
+
+                    ;; [:m :!Sequal_sign]
+                    ;; [:comma :hyphen]
+                    ;; [:period :!S8]
+                    ;; [:slash :slash]
                 ]
             }
 
 
             {
-                :des "v-mode layer"
+                :des "c-mode layer"
                 :rules [ 
-                    :v-mode 
+                    :c-mode 
                     
                     [:k :mybold]
                     [:l :myitalic]
@@ -494,19 +581,19 @@
             }
 
 
-            {
-                :des "f-mode layer"
-                :rules [ 
-                    :f-mode 
-                    [:l [:grave_accent_and_tilde :e]]
-                    [:o [:grave_accent_and_tilde :u]]
-                    [:semicolon [:grave_accent_and_tilde :i]]
-                    [:quote [:grave_accent_and_tilde :o]]
-                    [:k [:quote :e]]
-                    [:period [:grave_accent_and_tilde :!Se]]
-                    [:j [:grave_accent_and_tilde :a]]
-                ]
-            }
+            ;; {
+            ;;     :des "f-mode layer"
+            ;;     :rules [ 
+            ;;         :f-mode 
+            ;;         [:l [:grave_accent_and_tilde :e]]
+            ;;         [:o [:grave_accent_and_tilde :u]]
+            ;;         [:semicolon [:grave_accent_and_tilde :i]]
+            ;;         [:quote [:grave_accent_and_tilde :o]]
+            ;;         [:k [:quote :e]]
+            ;;         [:period [:grave_accent_and_tilde :!Se]]
+            ;;         [:j [:grave_accent_and_tilde :a]]
+            ;;     ]
+            ;; }
 
 
             {
@@ -545,7 +632,7 @@
                     [[:7 :8] :myscreenshot3]
                     [[:8 :9] :myscreenshot4]
                     [[:9 :0] :myscreenshot5]
-                    [:y :myemojisearch]
+                     [[:3 :4] :myemojisearch]
                     
                     [:e :f]
                     [:##Se :##Sf]
@@ -565,6 +652,8 @@
                     [:##Sx :##Sc]
                     [:c :d]
                     [:##Sc :##Sd]
+                    [:b :z]
+                    [:##Sb :##Sz]
                     [:u :j]
                     [:##Su :##Sj]
                     [:i :l]
@@ -573,8 +662,7 @@
                     [:##So :##Su]
                     [:p :y]
                     [:##Sp :##Sy]
-                    [:open_bracket :z]
-                    [:##Sopen_bracket :##Sz]
+                    [:open_bracket :delete_or_backspace]
                     [:close_bracket :delete_forward]
                     [:j :m]
                     [:##Sj :##Sm]
@@ -597,12 +685,12 @@
                     [:h :vk_none]
                     [:##Sh :vk_none]
                     [:y :vk_none]
+                    
 
                     ;; [:b :myredo]
                     ;; [:##Sb :vk_none]
                     [:n :myundo]
-                    [:##Sn :vk_none]
- 
+                    [:##Sn :myredo]
                 ]
             }
 
