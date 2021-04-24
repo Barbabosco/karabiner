@@ -76,10 +76,10 @@
         :cursor_find_match {:key :d :modi :command} ; Lindquist
         :cursor_above {:key :up_arrow :modi :co} ; Lindquist
         :cursor_below {:key :down_arrow :modi :co} ; Lindquist
-        ; :acejump {:key :j :modi :cos}
-        ; :acejump_line {:key :l :modi :cos}
-        ; :acejump_selection {:key :s :modi :cos}
-        ; :acejump_multi {:key :m :modi :cos}
+        ; :acejump {:key :j :modi :cos} ; Lindquist
+        ; :acejump_line {:key :l :modi :cos} ; Lindquist
+        ; :acejump_selection {:key :s :modi :cos} ; Lindquist
+        ; :acejump_multi {:key :m :modi :cos} ; Lindquist
 
         :start_of_line {:key :left_arrow :modi :command}
         :end_of_line {:key :right_arrow :modi :command}
@@ -170,29 +170,23 @@
 
     :simlayers {
 
-        ;; :keypad_4-mode {:key :keypad_4} ; delete mode
-         
-        ; left hand
-        ;; :caps_lock-mode {:key :caps_lock} ; 
-        ; :tab-mode {:key :tab} ; or selection mode???
 
-        
+        ;; :spacebar-mode {:key :spacebar} 
 
-        :a-mode {:key :a} ; rectangle
-        :s-mode {:key :s} ; gmail
-        :d-mode {:key :d} ; numbers
-        :b-mode {:key :b} ; symbols
-        :g-mode {:key :g} ; Lindquist - cursor mode
-
+        ; >>>>>> left hand
+        :rectangle-mode {:key :a}
+        :gmail-mode {:key :s}
+        :numbers-mode {:key :d}
+        :cursor-mode {:key :g} ; Lindquist - cursor mode
         :parentheses-mode {:key :f} ; parentheses
-        :text-mode {:key :k} ; text related
+        :select-mode {:key :c}
         
-        ; right hand
-        :o-mode {:key :o} ; to open (= go to the specified application)
-        :l-mode {:key :l} ; find, save, select all
-        :comma-mode {:key :comma} ; this is reserved for VS Code and programming
-        :spacebar-mode {:key :spacebar}
- 
+        ; >>>>>> right hand
+        :open-mode {:key :o} ; to open (= go to the specified application)
+        :find-mode {:key :l} ; find, save, select all
+        :code-mode {:key :comma} ; this is reserved for VS Code and programming
+
+        :text-mode {:key :k} ; text related
  
         ;:movement-mode {:key :q} ; Lindquist
         ;:movement-mode {:key :g :modi :fg} ; Lindquist
@@ -202,22 +196,10 @@
     }
 
  :layers {;
-        ;; :spacebar-mode {:key :spacebar alone {:key :spacebar}}
+        :spacebar-mode {:key :spacebar alone {:key :spacebar}}
         :caps_lock-mode {:key :caps_lock :alone {:key :escape}} ; accents and punctuation
-        :y-mode {:key :y :alone {:key :y}} ; selection and deletion
-        ;; :h-mode {:key :h } ; numbers
-        ;; :f-mode {:key :f :alone {:key :f}} ; parenthesis
 
-        ;; :a-mode {:key :a} ; rectangle
-        ;; :s-mode {:key :s} ; gmail
-        ;; :d-mode {:key :d} ; numbers
-        ;; :b-mode {:key :b} ; symbols
-        ;; :g-mode {:key :g} ; Lindquist - cursor mode
 
-       ; right hand
-        ;; :o-mode {:key :o} ; to open (= go to the specified application)
-        ;; :l-mode {:key :l} ; find, save, select all
-        ;; :comma-mode {:key :comma} ; this is reserved for VS Code and programming
     }
 
 
@@ -255,116 +237,8 @@
             }
 
 
-           {
-                :des "y-mode" ; or delete mode
-                :rules [
-                    :y-mode
-
-                    [:u :delete_line]
-                    [:i :!Cdelete_or_backspace]
-                    [:o :!Odelete_or_backspace]
-                    [:p :!Odelete_forward]
-                    [:open_bracket :!Tk]
-
-                    [:k :select-before]
-                    [:l :select-previous-word]
-                    [:semicolon :select-next-word]
-                    [:quote :select-after]
-                ]
-            }
-
-
-            {
-                :des "numbers layer"
-                :rules [ 
-                    :d-mode 
-
-                    [:u :keypad_hyphen]
-                    [:i :7]
-                    [:o :8]
-                    [:p :9]
-                    [:open_bracket :keypad_slash]
-
-                    [:j :keypad_plus]
-                    [:k :4]
-                    [:l :5]
-                    [:semicolon :6]
-                    [:quote :keypad_asterisk]
-                    
-                    [:f :keypad_period]
-                    [:m :0]
-                    [:comma :1]
-                    [:period :2]
-                    [:slash :3]
-                ] 
-            }
-
-
-            {
-                :des "a-mode" ; rectangle
-                :rules [
-                    :a-mode
-
-                    [:e :rectangle_top_left]
-                    [:r :rectangle_top_right]
-                    [:d :rectangle_bottom_left]
-                    [:f :rectangle_bottom_right]
-                    
-                    [:k :rectangle_left_half]
-                    [:l :rectangle_bottom_half]
-                    [:semicolon :rectangle_top_half]
-                    [:quote :rectangle_right_half]
-
-                    [:u :rectangle_first_third]
-                    [:i :rectangle_first_two_thirds]
-                    [:o :rectangle_center_third]
-                    [:p :rectangle_last_two_thirds]
-                    [:open_bracket :rectangle_last_third]
-
-                    [:return_or_enter :rectangle_maximize]
-                    [:close_bracket :rectangle_restore]
-                    [:backslash :rectangle_center]
-                    [:period :rectangle_smaller]
-                    [:slash :rectangle_larger]
-
-                    [:m :next_window]
-                    [:comma :command_tab]
-                ]
-            }
-
-
-            {
-                :des "s-mode" ; gmail
-                :rules [
-                    :s-mode
-
-                    [:i :gmail_cc]
-                    [:o :gmail_bcc]
-                    [:k :gmail_quote]
-                    [:comma :gmail_discard]
-                ]
-            }
-
-
-            { 
-                :des   "g-mode"
-                :rules
-                    [
-                        :g-mode
-
-                        [:k :cursor_find_match]
-                        [:l :cursor_below]
-                        [:semicolon :cursor_above]
-                        ;  [:-v :acejump]
-                        ;  [:-l :acejump_line]
-                        ;  [:-m :acejump_multi]
-                        ;  [:left_shift :acejump_selection]
-                    ]
-            }
-
-
             {   
-                :des   "spacebar-mode"
+                :des   "spacebar-mode" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
                 :rules [
                     :spacebar-mode
 
@@ -422,19 +296,115 @@
             }
 
 
- 
-            ;; {
-            ;;     :des "f-mode layer"
-            ;;     :rules [ 
-            ;;         :f-mode 
+           {
+                :des "mode"
+                :rules [
+                    :select-mode
 
-            ;;         [:k :select-before]
-            ;;         [:l :select-previous-word]
-            ;;         [:semicolon :select-next-word]
-            ;;         [:quote :select-after]
+                    [:u :delete_line]
+                    [:i :!Cdelete_or_backspace]
+                    [:o :!Odelete_or_backspace]
+                    [:p :!Odelete_forward]
+                    [:open_bracket :!Tk]
 
-            ;;     ]
-            ;; }
+                    [:k :select-before]
+                    [:l :select-previous-word]
+                    [:semicolon :select-next-word]
+                    [:quote :select-after]
+                ]
+            }
+
+
+            {
+                :des "mode"
+                :rules [ 
+                    :numbers-mode 
+
+                    [:r :!S5]
+                    [:f :0]
+                    [:c :keypad_period]
+
+                    [:u :keypad_hyphen]
+                    [:i :7]
+                    [:o :8]
+                    [:p :9]
+                    [:open_bracket :keypad_slash]
+
+                    [:j :keypad_plus]
+                    [:k :4]
+                    [:l :5]
+                    [:semicolon :6]
+                    [:quote :keypad_asterisk]
+                    
+                    [:m :0]
+                    [:comma :1]
+                    [:period :2]
+                    [:slash :3]
+                ] 
+            }
+
+
+            {
+                :des "mode"
+                :rules [
+                    :rectangle-mode
+
+                    [:e :rectangle_top_left]
+                    [:r :rectangle_top_right]
+                    [:d :rectangle_bottom_left]
+                    [:f :rectangle_bottom_right]
+                    
+                    [:k :rectangle_left_half]
+                    [:l :rectangle_bottom_half]
+                    [:semicolon :rectangle_top_half]
+                    [:quote :rectangle_right_half]
+
+                    [:u :rectangle_first_third]
+                    [:i :rectangle_first_two_thirds]
+                    [:o :rectangle_center_third]
+                    [:p :rectangle_last_two_thirds]
+                    [:open_bracket :rectangle_last_third]
+
+                    [:return_or_enter :rectangle_maximize]
+                    [:close_bracket :rectangle_restore]
+                    [:backslash :rectangle_center]
+                    [:period :rectangle_smaller]
+                    [:slash :rectangle_larger]
+
+                    [:m :next_window]
+                    [:comma :command_tab]
+                ]
+            }
+
+
+            {
+                :des "mode"
+                :rules [
+                    :gmail-mode
+
+                    [:i :gmail_cc]
+                    [:o :gmail_bcc]
+                    [:k :gmail_quote]
+                    [:comma :gmail_discard]
+                ]
+            }
+
+
+            { 
+                :des "mode"
+                :rules
+                    [
+                        :cursor-mode
+
+                        [:k :cursor_find_match]
+                        [:l :cursor_below]
+                        [:semicolon :cursor_above]
+                        ;  [:-v :acejump]
+                        ;  [:-l :acejump_line]
+                        ;  [:-m :acejump_multi]
+                        ;  [:left_shift :acejump_selection]
+                    ]
+            }
 
 
             {
@@ -450,9 +420,9 @@
 
 
             {
-                :des "o-mode layer"
+                :des "mode"
                 :rules [ 
-                    :o-mode 
+                    :open-mode 
 
                     [:a [:open "/Applications/Google Chrome.app"]]
                     [:s [:open "/Applications/Google Chrome Canary.app"]]
@@ -467,34 +437,10 @@
             }
 
 
-            ;; {
-            ;;     :des "d-mode layer"
-            ;;     :rules [ 
-            ;;         :d-mode 
-
-            ;;         [:u :!S5]
-            ;;         [:i :7]
-            ;;         [:o :8]
-            ;;         [:p :9]
-            ;;         [:open_bracket :comma]
-
-            ;;         [:k :4]
-            ;;         [:l :5]
-            ;;         [:semicolon :6]
-            ;;         [:quote :period]
-                    
-            ;;         [:m :0]
-            ;;         [:comma :1]
-            ;;         [:period :2]
-            ;;         [:slash :3]
-            ;;     ] 
-            ;; }
-
-
             {
-                :des "comma-mode layer"
+                :des "mode"
                 :rules [ 
-                    :comma-mode 
+                    :code-mode 
 
                     [:s :myfocus_editor]
                     [:d :myfocus_terminal]
@@ -502,58 +448,9 @@
                 ]
             }
 
-
-            ;; {
-            ;;     :des "f-mode layer"
-            ;;     :rules [ 
-            ;;         :f-mode 
-
-            ;;         [:spacebar :return_or_enter]
-
-            ;;         [:i :!Sslash]
-            ;;         [:o :!S1]
-            ;;         [:p :hyphen]
-            ;;         [:open_bracket :!Shyphen]
-
-            ;;         [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
-            ;;         [:l :!S3]
-            ;;         [:semicolon :!Ssemicolon]
-            ;;         [:quote :semicolon]
-
-            ;;         [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
-            ;;         [:period :!S2]
-            ;;         [:slash [:!Sgrave_accent_and_tilde :spacebar]]
-            ;;     ]
-            ;; }
-
-
-
-        ;;    {
-        ;;         :des "caps-mode layer"
-        ;;         :rules [ 
-        ;;             :caps_lock-mode
-
-        ;;             ;; [:spacebar :return_or_enter]
-
-        ;;             [:i :!Sslash]
-        ;;             [:o :!S1]
-        ;;             [:p :hyphen]
-        ;;             [:open_bracket :!Shyphen]
-
-        ;;             [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
-        ;;             [:l :!S3]
-        ;;             [:semicolon :!Ssemicolon]
-        ;;             [:quote :semicolon]
-
-        ;;             [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
-        ;;             [:period :!S2]
-        ;;             [:slash [:!Sgrave_accent_and_tilde :spacebar]]
-        ;;         ]
-        ;;     }
-
  
             {
-                :des "parentheses-mode layer"
+                :des "mode"
                 :rules [ 
                     :parentheses-mode 
 
@@ -583,7 +480,7 @@
 
 
             {
-                :des "text-mode layer"
+                :des "mode"
                 :rules [ 
                     :text-mode 
 
@@ -604,25 +501,10 @@
             }
 
 
-            ;; {
-            ;;     :des "f-mode layer"
-            ;;     :rules [ 
-            ;;         :f-mode 
-            ;;         [:l [:grave_accent_and_tilde :e]]
-            ;;         [:o [:grave_accent_and_tilde :u]]
-            ;;         [:semicolon [:grave_accent_and_tilde :i]]
-            ;;         [:quote [:grave_accent_and_tilde :o]]
-            ;;         [:k [:quote :e]]
-            ;;         [:period [:grave_accent_and_tilde :!Se]]
-            ;;         [:j [:grave_accent_and_tilde :a]]
-            ;;     ]
-            ;; }
-
-
             {
-                :des "l-mode layer"
+                :des "mode"
                 :rules [ 
-                    :l-mode
+                    :find-mode
 
                     [:q :myfind_previous]
                     [:w :myfind_next]
@@ -634,15 +516,6 @@
                 ]
             }
 
-
-            {
-                :des "keypad_4-mode layer"
-                :rules [ 
-                    :keypad_4-mode
-
-                    [:keypad_6 :delete_or_backspace]
-                ]
-            }
 
             {:des "default mode"
                 :rules [
@@ -717,16 +590,10 @@
 
                     [:h [:quote :spacebar]]
                     [:##Sh :vk_none]
-                    ;; [:y :vk_none]
-                    
-
-                    ;; [:b :myredo]
-                    ;; [:##Sb :vk_none]
                     [:n :myundo]
                     [:##Sn :myredo]
                 ]
             }
-
 
 
         ]
