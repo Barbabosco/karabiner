@@ -32,13 +32,13 @@
 
             ;; simultaneous_threshold_milliseconds (def: 50)
             ;; keys need to be pressed within this threshold to be considered simultaneous
-            :sim 1000
+            :sim 50
             ;; to_delayed_action_delay_milliseconds (def: 500)
             ;; basically it means time after which the key press is count delayed
             :delay 500
             ;; to_if_alone_timeout_milliseconds (def: 1000)
             ;; hold for 995s and single tap registered; hold for 1005s and seen as modifier
-            :alone 200
+            :alone 1000
             ;; to_if_held_down_threshold_milliseconds (def: 500)
             ;; key is fired twice when 500 ms is elapsed (otherwise seen as a hold command)
             ;; increase this value to allow you to hold a simlayer key longer before the next key is pressed
@@ -165,18 +165,18 @@
         :select-previous-word {:key :left_arrow :modi :os}
         :select-next-word {:key :right_arrow :modi :os}
         :select-after {:key :right_arrow :modi :cs}
+
     }
 
     :simlayers {
 
-        :keypad_4-mode {:key :keypad_4} ; delete mode
+        ;; :keypad_4-mode {:key :keypad_4} ; delete mode
          
         ; left hand
-        ;; :caps_lock-mode {:key :caps_lock} ; delete mode
         ;; :caps_lock-mode {:key :caps_lock} ; 
         ; :tab-mode {:key :tab} ; or selection mode???
 
-        :f-mode {:key :f} ; parenthesis
+        
 
         :a-mode {:key :a} ; rectangle
         :s-mode {:key :s} ; gmail
@@ -184,14 +184,16 @@
         :b-mode {:key :b} ; symbols
         :g-mode {:key :g} ; Lindquist - cursor mode
 
-        ;; :f-mode {:key :f} ; selection mode
-        :c-mode {:key :c} ; text related
+        :parentheses-mode {:key :f} ; parentheses
+        :text-mode {:key :k} ; text related
         
-        ; left hand
+        ; right hand
         :o-mode {:key :o} ; to open (= go to the specified application)
         :l-mode {:key :l} ; find, save, select all
         :comma-mode {:key :comma} ; this is reserved for VS Code and programming
         :spacebar-mode {:key :spacebar}
+ 
+ 
         ;:movement-mode {:key :q} ; Lindquist
         ;:movement-mode {:key :g :modi :fg} ; Lindquist
         ;:movement-mode {:key :f :modi :g} ; Lindquist
@@ -200,9 +202,22 @@
     }
 
  :layers {;
+        ;; :spacebar-mode {:key :spacebar alone {:key :spacebar}}
         :caps_lock-mode {:key :caps_lock :alone {:key :escape}} ; accents and punctuation
-        :y-mode {:key :y} ; selection and deletion
-        :h-mode {:key :h} ; numbers
+        :y-mode {:key :y :alone {:key :y}} ; selection and deletion
+        ;; :h-mode {:key :h } ; numbers
+        ;; :f-mode {:key :f :alone {:key :f}} ; parenthesis
+
+        ;; :a-mode {:key :a} ; rectangle
+        ;; :s-mode {:key :s} ; gmail
+        ;; :d-mode {:key :d} ; numbers
+        ;; :b-mode {:key :b} ; symbols
+        ;; :g-mode {:key :g} ; Lindquist - cursor mode
+
+       ; right hand
+        ;; :o-mode {:key :o} ; to open (= go to the specified application)
+        ;; :l-mode {:key :l} ; find, save, select all
+        ;; :comma-mode {:key :comma} ; this is reserved for VS Code and programming
     }
 
 
@@ -215,24 +230,25 @@
                 :rules [ 
                     :caps_lock-mode
 
-                    [:u :!S1]
+                    [:delete_or_backspace :!Odelete_or_backspace]
+                    [:backslash :!Odelete_forward]
+
+                    [:u :slash]
                     [:i :!Sslash]
                     [:o [:grave_accent_and_tilde :u]]
-                    [:p :!Ssemicolon]
-                    [:open_bracket :semicolon]
-                    [:close_bracket :hyphen]
+                    [:p :!S1]
+                    [:open_bracket :vk_none]
+                    [:close_bracket :vk_none]
 
                     [:j [:grave_accent_and_tilde :a]]
-                    [:k [:quote :spacebar]] ; ATTENTION: spacebar at the end
+                    [:k [:quote :e]] ; ATTENTION: spacebar at the end
                     [:l [:grave_accent_and_tilde :e]]
                     [:semicolon [:grave_accent_and_tilde :i]]
                     [:quote [:grave_accent_and_tilde :o]]
 
-                    [:n :!S3]
                     [:m :!S2]
                     [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
-                    [:slash [:quote :e]]
-
+                    [:slash :hyphen]
 
                     [:period [:grave_accent_and_tilde :!Se]]
                 ]
@@ -248,7 +264,7 @@
                     [:i :!Cdelete_or_backspace]
                     [:o :!Odelete_or_backspace]
                     [:p :!Odelete_forward]
-                    [:open_bracket :!Cdelete_forward]
+                    [:open_bracket :!Tk]
 
                     [:k :select-before]
                     [:l :select-previous-word]
@@ -259,9 +275,9 @@
 
 
             {
-                :des "h-mode layer"
+                :des "numbers layer"
                 :rules [ 
-                    :h-mode 
+                    :d-mode 
 
                     [:u :keypad_hyphen]
                     [:i :7]
@@ -275,7 +291,7 @@
                     [:semicolon :6]
                     [:quote :keypad_asterisk]
                     
-                    [:n :keypad_period]
+                    [:f :keypad_period]
                     [:m :0]
                     [:comma :1]
                     [:period :2]
@@ -363,8 +379,8 @@
                     [:##9 :mydesktop9]
                     [:##0 :mydesktop0]
 
-                    [:##q :mycut]
-                    [:##w :mycopy]
+                    ;; [:##q :mycut]
+                    ;; [:##w :mycopy]
                     [:##e :mypaste_plain]
                     [:##r :mypaste]
 
@@ -380,10 +396,10 @@
                     [:##x :mysave]
                     [:##c :myselect_all]
 
-                    [:##i :start_of_line]
-                    [:##o :page_down]
-                    [:##p :page_up]
-                    [:##open_bracket :end_of_line]
+                    [:##i :mycopy]
+                    [:##o :mycut]
+                    ;; [:##p :page_up]
+                    ;; [:##open_bracket :end_of_line]
 
                     [:##k :left_arrow]
                     [:##l :down_arrow]
@@ -537,9 +553,9 @@
 
  
             {
-                :des "f-mode layer"
+                :des "parentheses-mode layer"
                 :rules [ 
-                    :f-mode 
+                    :parentheses-mode 
 
                     [:u [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
                     [:i :!Sopen_bracket]
@@ -567,16 +583,23 @@
 
 
             {
-                :des "c-mode layer"
+                :des "text-mode layer"
                 :rules [ 
-                    :c-mode 
-                    
-                    [:k :mybold]
-                    [:l :myitalic]
-                    [:semicolon :myunderline]
-                    [:quote :mystrikethrough]
-                    [:comma :fontdecrease]
-                    [:period :fontincrease]
+                    :text-mode 
+
+                    [:f :mybold]
+                    [:d :myitalic]
+                    [:s :myunderline]
+                    [:a :mystrikethrough]
+                    [:x :fontdecrease]
+                    [:c :fontincrease]
+
+                    ;; [:k :mybold]
+                    ;; [:l :myitalic]
+                    ;; [:semicolon :myunderline]
+                    ;; [:quote :mystrikethrough]
+                    ;; [:comma :fontdecrease]
+                    ;; [:period :fontincrease]
                 ]
             }
 
@@ -626,13 +649,16 @@
 
                     ;; [:caps_lock :delete_or_backspace]
                     [:caps_lock :vk_none]
-                    [:delete_or_backspace :vk_none]
+                    ;; [:delete_or_backspace :delete_or_backspace]
+                    [:!Sdelete_or_backspace :!Cdelete_or_backspace]
+                    [:backslash :delete_forward]
+                    [:!Sbackslash :!Tk]
                     [:left_control :vk_none]
                     [:left_option :vk_none] 
                     [[:7 :8] :myscreenshot3]
                     [[:8 :9] :myscreenshot4]
                     [[:9 :0] :myscreenshot5]
-                     [[:3 :4] :myemojisearch]
+                    [[:3 :4] :myemojisearch]
                     
                     [:e :f]
                     [:##Se :##Sf]
@@ -660,10 +686,15 @@
                     [:##Si :##Sl]
                     [:o :u]
                     [:##So :##Su]
-                    [:p :y]
-                    [:##Sp :##Sy]
-                    [:open_bracket :delete_or_backspace]
-                    [:close_bracket :delete_forward]
+                    [:p :!S3]
+                    ;; [:##Sp :##Sy]
+                    [:open_bracket :backslash]
+                    [:##Sopen_bracket :##backslash]
+                    ;; [:close_bracket :delete_forward]
+                    [:p :vk_none]
+                    [:##Sp :vk_none]
+                    [:open_bracket :vk_none]
+                    [:close_bracket :vk_none]
                     [:j :m]
                     [:##Sj :##Sm]
                     [:k :n]
@@ -678,13 +709,15 @@
                     [:##Sm :##Sk]
                     [:comma :h]
                     [:##Scomma :##Sh]
-                    [:slash :period]
                     [:period :comma]
-                    [:##Sslash :comma] ; used only for the shortcuts in GDocs, to reduce font size
+                    [:##Speriod :semicolon]
 
-                    [:h :vk_none]
+                    [:slash :period]
+                    [:!Sslash :semicolon]
+
+                    [:h [:quote :spacebar]]
                     [:##Sh :vk_none]
-                    [:y :vk_none]
+                    ;; [:y :vk_none]
                     
 
                     ;; [:b :myredo]
