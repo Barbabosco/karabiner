@@ -238,7 +238,7 @@
 
 
             {   
-                :des   "spacebar-mode" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
+                :des   "spacebar layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
                 :rules [
                     :spacebar-mode
 
@@ -253,10 +253,8 @@
                     [:##9 :mydesktop9]
                     [:##0 :mydesktop0]
 
-                    ;; [:##q :mycut]
-                    ;; [:##w :mycopy]
-                    [:##e :mypaste_plain]
-                    [:##r :mypaste]
+                    [:##e :mycut]
+                    [:##r :mycopy]
 
                     [:##t :open_clipMenu]
                     [:##g :open_aText]
@@ -270,8 +268,9 @@
                     [:##x :mysave]
                     [:##c :myselect_all]
 
-                    [:##i :mycopy]
-                    [:##o :mycut]
+                    [:##o :mypaste_plain]
+                    [:##i :mypaste]
+
                     ;; [:##p :page_up]
                     ;; [:##open_bracket :end_of_line]
 
@@ -301,11 +300,11 @@
                 :rules [
                     :select-mode
 
-                    [:u :delete_line]
-                    [:i :!Cdelete_or_backspace]
-                    [:o :!Odelete_or_backspace]
-                    [:p :!Odelete_forward]
-                    [:open_bracket :!Tk]
+                    [:i :delete_line]
+                    ;; [:i :!Cdelete_or_backspace]
+                    ;; [:o :!Odelete_or_backspace]
+                    ;; [:p :!Odelete_forward]
+                    ;; [:open_bracket :!Tk]
 
                     [:k :select-before]
                     [:l :select-previous-word]
@@ -506,10 +505,10 @@
                 :rules [ 
                     :find-mode
 
-                    [:q :myfind_previous]
-                    [:w :myfind_next]
-                    [:e :myfind_selection]
-                    [:r :myfind_replace]
+                    [:e :myfind_previous]
+                    [:r :myfind_next]
+                    [:a :myfind_selection]
+                    [:s :myfind_replace]
                     [:d :myfind_gspreadsheet]
                     [:f :myfind]
 
