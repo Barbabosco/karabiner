@@ -197,7 +197,7 @@
 
  :layers {;
         :spacebar-mode {:key :spacebar alone {:key :spacebar}}
-        :caps_lock-mode {:key :caps_lock :alone {:key :escape}} ; accents and punctuation
+        :caps_lock-mode {:key :caps_lock alone {:key :nil}} ; accents and punctuation
 
 
     }
