@@ -549,6 +549,8 @@
                     [:##Sr :##Sp]
                     [:t :b]
                     [:##St :##Sb]
+                    [:y :vk_none]
+                    [:##Sy :vk_none]
                     [:s :r]
                     [:##Ss :##Sr]
                     [:d :s]
