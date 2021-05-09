@@ -170,7 +170,7 @@
 
     :simlayers {
 
-
+        ;; :caps_lock-mode {:key :caps_lock } ; accents and punctuation
         ;; :spacebar-mode {:key :spacebar} 
 
         ; >>>>>> left hand
@@ -196,8 +196,9 @@
     }
 
  :layers {;
-        :spacebar-mode {:key :spacebar alone {:key :spacebar}}
-        :caps_lock-mode {:key :caps_lock alone {:key :nil}} ; accents and punctuation
+        :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
+        :caps_lock-mode {:key :caps_lock :alone {:key :vk_none} :held {:key :vk_none}} ; accents and punctuation
+        ;; :caps_lock-mode {:key :caps_lock } ; accents and punctuation
 
 
     }
@@ -218,8 +219,10 @@
                     [:u :slash]
                     [:i :!Sslash]
                     [:o [:grave_accent_and_tilde :u]]
-                    [:p :!S1]
-                    [:open_bracket :vk_none]
+                    ;; [:p :!S1]
+                    ;; [:open_bracket :semicolon]
+                    [:p :semicolon]
+                    [:open_bracket :!S1]
                     [:close_bracket :vk_none]
 
                     [:j [:grave_accent_and_tilde :a]]
@@ -228,7 +231,8 @@
                     [:semicolon [:grave_accent_and_tilde :i]]
                     [:quote [:grave_accent_and_tilde :o]]
 
-                    [:m :!S2]
+                    ;; [:m :!S2]
+                    [:m :!Ssemicolon]
                     [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
                     [:slash :hyphen]
 
@@ -483,6 +487,8 @@
                 :rules [ 
                     :text-mode 
 
+                    [:tab :tab]
+
                     [:f :mybold]
                     [:d :myitalic]
                     [:s :myunderline]
@@ -520,13 +526,18 @@
                 :rules [
 
                     ;; [:caps_lock :delete_or_backspace]
-                    [:caps_lock :vk_none]
+                    ;; [:caps_lock [:quote :spacebar]]
                     ;; [:delete_or_backspace :delete_or_backspace]
+                    [:left_control :vk_none]
+                    [:left_option :vk_none] 
+
                     [:!Sdelete_or_backspace :!Cdelete_or_backspace]
                     [:backslash :delete_forward]
                     [:!Sbackslash :!Tk]
-                    [:left_control :vk_none]
-                    [:left_option :vk_none] 
+
+                    [:tab [:quote :spacebar]]
+                    [:##Ctab :tab]
+                    
                     [[:7 :8] :myscreenshot3]
                     [[:8 :9] :myscreenshot4]
                     [[:9 :0] :myscreenshot5]
@@ -558,8 +569,9 @@
                     [:##Si :##Sl]
                     [:o :u]
                     [:##So :##Su]
-                    [:p :!S3]
-                    ;; [:##Sp :##Sy]
+                    ;; [:p :!S3]
+                    [:p :y]
+                    [:##Sp :##Sy]
                     [:open_bracket :backslash]
                     [:##Sopen_bracket :##backslash]
                     ;; [:close_bracket :delete_forward]
@@ -587,7 +599,7 @@
                     [:slash :period]
                     [:!Sslash :semicolon]
 
-                    [:h [:quote :spacebar]]
+                    [:h :vk_none]
                     [:##Sh :vk_none]
                     [:n :myundo]
                     [:##Sn :myredo]
