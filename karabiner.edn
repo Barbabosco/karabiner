@@ -21,6 +21,9 @@
 ;; 
 
 
+
+
+
 {
     :profiles {
         :goku {
@@ -35,7 +38,7 @@
             :sim 50
             ;; to_delayed_action_delay_milliseconds (def: 500)
             ;; basically it means time after which the key press is count delayed
-            :delay 500
+            :delay 50
             ;; to_if_alone_timeout_milliseconds (def: 1000)
             ;; hold for 995s and single tap registered; hold for 1005s and seen as modifier
             :alone 1000
@@ -130,9 +133,9 @@
         :mynext_sheet {:key :page_down :modi :cs}
         :myprevious_sheet {:key :page_up :modi :cs}
         :myemojisearch {:key :spacebar :modi :ct}
-        :myscreenshot3 {:key :3 :modi :cs}
+        ;; :myscreenshot3 {:key :3 :modi :cs}
         :myscreenshot4 {:key :4 :modi :cs}
-        :myscreenshot5 {:key :5 :modi :cs}
+        ;; :myscreenshot5 {:key :5 :modi :cs}
 
         :rectangle_left_half {:key :left_arrow :modi :to}
         :rectangle_right_half {:key :right_arrow :modi :to}
@@ -166,6 +169,8 @@
         :select-next-word {:key :right_arrow :modi :os}
         :select-after {:key :right_arrow :modi :cs}
 
+        :myQuestion {:key :slash}
+
     }
 
     :simlayers {
@@ -176,52 +181,109 @@
         ; >>>>>> left hand
         :rectangle-mode {:key :a}
         :gmail-mode {:key :s}
-        :numbers-mode {:key :d}
         :cursor-mode {:key :g} ; Lindquist - cursor mode
-        :parentheses-mode {:key :f} ; parentheses
         :select-mode {:key :c}
         
         ; >>>>>> right hand
         :open-mode {:key :o} ; to open (= go to the specified application)
         :find-mode {:key :l} ; find, save, select all
         :code-mode {:key :comma} ; this is reserved for VS Code and programming
-
         :text-mode {:key :k} ; text related
  
-        ;:movement-mode {:key :q} ; Lindquist
-        ;:movement-mode {:key :g :modi :fg} ; Lindquist
-        ;:movement-mode {:key :f :modi :g} ; Lindquist
-        ; :delete-mode {:key :h} ; Lindquist
-        ; :emoji-mode {:key :z} ; Lindquist
+        ; NEVER IMPLEMENTED the following
+        ;:movement-mode {:key :q} ; Lindquist NEVER IMPLEMENTED
+        ;:movement-mode {:key :g :modi :fg} ; Lindquist NEVER IMPLEMENTED
+        ;:movement-mode {:key :f :modi :g} ; Lindquist NEVER IMPLEMENTED
+        ; :delete-mode {:key :h} ; Lindquist NEVER IMPLEMENTED
+        ; :emoji-mode {:key :z} ; Lindquist NEVER IMPLEMENTED
     }
 
- :layers {;
+    :layers {;
         :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
-        :caps_lock-mode {:key :caps_lock :alone {:key :vk_none} :held {:key :vk_none}} ; accents and punctuation
+        :caps_lock-mode {:key :caps_lock :alone {:key :z}} ; accents and punctuation
+        :numbers-mode {:key :tab :alone {:key :tab}} ; this is a true layer version of the numbers-mode simlayer
+        :parentheses-mode {:key :escape :alone {:key :escape}} ; parentheses
+        ;; :return-mode {:key :return_or_enter :alone {:key :return_or_enter}}
+
+        ;; :caps_lock-mode {:key :caps_lock :alone [:quote :spacebar]} ; accents and punctuation
+        ;; :caps_lock-mode {:key :caps_lock :alone {:key :vk_none}} ; accents and punctuation
         ;; :caps_lock-mode {:key :caps_lock } ; accents and punctuation
 
+        ; >>>>>> left hand
+        ;; :rectangle-mode {:key :a}
+        ;; :gmail-mode {:key :s}
+        ;; :numbers-mode {:key :d}
+        ;; :cursor-mode {:key :g} ; Lindquist - cursor mode
+        ;; :parentheses-mode {:key :f} ; parentheses
+        ;; :select-mode {:key :c}
+        
+        ;; ; >>>>>> right hand
+        ;; :open-mode {:key :o} ; to open (= go to the specified application)
+        ;; :find-mode {:key :l} ; find, save, select all
+        ;; :code-mode {:key :comma} ; this is reserved for VS Code and programming
+        ;; :text-mode {:key :k} ; text related
 
     }
 
 
+    :devices {
+        ;;    :rk68 [{:product_id 4295015415 :vendor_id 3141}]
+           :rk68 [{:vendor_id 3141 :product_id 32792 }]
+    }
+
+ 
 
         :main [
 
+            {:des   "if using Royal Kludge RK68"
+                :rules [
+                    ;; [:condi :rk68]
+                    [:shift [:b]]
+                ]
+            }
 
-          {
+
+            {:des   "enter and exit number-mode"
+                :rules [
+                    [[:9 :0] [:vk_none ["numbers-mode" 1]]] ;; turn ON numbers-mode
+                    [[:7 :8] [:vk_none ["numbers-mode" 0]]] ;; turn OFF numbers-mode
+                ]
+            }
+
+
+            {
                 :des "caps-mode layer"
                 :rules [ 
                     :caps_lock-mode
 
-                    [:delete_or_backspace :!Odelete_or_backspace]
-                    [:backslash :!Odelete_forward]
+                    [:q :vk_none]
+                    [:w :vk_none]
+                    [:e :vk_none]
+                    [:r :!S3]
+                    [:t :vk_none]
+
+                    [:a :vk_none]
+                    [:s :vk_none]
+                    [:d :vk_none]
+                    [:f :!S7]
+                    [:g :vk_none]
+
+
+                    [:z :vk_none]
+                    [:x :vk_none]
+                    [:c :!Shyphen]
+                    [:v :vk_none]
 
                     [:u :slash]
+
+                    ;; [:i [:!Sslash :spacebar]]
                     [:i :!Sslash]
                     [:o [:grave_accent_and_tilde :u]]
                     ;; [:p :!S1]
                     ;; [:open_bracket :semicolon]
                     [:p :semicolon]
+                    [:p [:semicolon :spacebar]]
+                    ;; [:open_bracket [:!S1 :spacebar]]
                     [:open_bracket :!S1]
                     [:close_bracket :vk_none]
 
@@ -232,6 +294,7 @@
                     [:quote [:grave_accent_and_tilde :o]]
 
                     ;; [:m :!S2]
+                    ;; [:m [:!Ssemicolon :spacebar]]
                     [:m :!Ssemicolon]
                     [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
                     [:slash :hyphen]
@@ -245,7 +308,7 @@
                 :des   "spacebar layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
                 :rules [
                     :spacebar-mode
-
+    
                     [:##1 :mydesktop1]
                     [:##2 :mydesktop2]
                     [:##3 :mydesktop3]
@@ -299,12 +362,23 @@
             }
 
 
+          {
+                :des "mode"
+                :rules [ 
+                    :return-mode
+
+                    [:d :!S9]
+                    [:f :!S0]
+
+                ]
+            }
+
+
            {
                 :des "mode"
                 :rules [
                     :select-mode
 
-                    [:i :delete_line]
                     ;; [:i :!Cdelete_or_backspace]
                     ;; [:o :!Odelete_or_backspace]
                     ;; [:p :!Odelete_forward]
@@ -321,11 +395,24 @@
             {
                 :des "mode"
                 :rules [ 
-                    :numbers-mode 
+                    :numbers-mode ; IMPORTANT: this mode has always to be identical to the next one
 
-                    [:r :!S5]
+                    [:q :vk_none]
+                    [:w :vk_none]
+                    [:e :!S9 ]
+                    [:r :!S0]
+                    [:t :vk_none]
+
+                    [:a :vk_none]
+                    [:s :vk_none]
+                    [:d :!S5]
                     [:f :0]
+                    [:g :vk_none]
+
+                    [:z :vk_none]
+                    [:x :equal_sign]
                     [:c :keypad_period]
+                    [:v :comma]
 
                     [:u :keypad_hyphen]
                     [:i :7]
@@ -343,6 +430,9 @@
                     [:comma :1]
                     [:period :2]
                     [:slash :3]
+
+                    ;; [:spacebar :0] it doesn't work, maybe because spacebar is a proper layer...
+                    [:right_command :keypad_period]
                 ] 
             }
 
@@ -445,6 +535,7 @@
                 :rules [ 
                     :code-mode 
 
+                    [:r :delete_line]
                     [:s :myfocus_editor]
                     [:d :myfocus_terminal]
                     [:f :mytoggle_comments]
@@ -487,8 +578,6 @@
                 :rules [ 
                     :text-mode 
 
-                    [:tab :tab]
-
                     [:f :mybold]
                     [:d :myitalic]
                     [:s :myunderline]
@@ -525,23 +614,21 @@
             {:des "default mode"
                 :rules [
 
-                    ;; [:caps_lock :delete_or_backspace]
-                    ;; [:caps_lock [:quote :spacebar]]
-                    ;; [:delete_or_backspace :delete_or_backspace]
-                    [:left_control :vk_none]
                     [:left_option :vk_none] 
+                    [:left_control :vk_none]
+                    [:left_shift :left_shift nil {:alone [:quote :spacebar]}]
+                    [:right_shift :right_shift nil {:alone [:quote :spacebar]}]
+                    ;; [:left_command :left_command nil {:alone [:quote :spacebar]}]
+                    ;; [:right_command :right_command nil {:alone [:quote :spacebar]}]
+                    [:caps_lock :z]
+                    [:##caps_lock :z]
 
                     [:!Sdelete_or_backspace :!Cdelete_or_backspace]
                     [:backslash :delete_forward]
                     [:!Sbackslash :!Tk]
-
-                    [:tab [:quote :spacebar]]
-                    [:##Ctab :tab]
                     
-                    [[:7 :8] :myscreenshot3]
-                    [[:8 :9] :myscreenshot4]
-                    [[:9 :0] :myscreenshot5]
-                    [[:3 :4] :myemojisearch]
+                    [[:hyphen :equal_sign] :myscreenshot4]
+                    [[:1 :2] :myemojisearch]
                     
                     [:e :f]
                     [:##Se :##Sf]
@@ -563,8 +650,10 @@
                     [:##Sx :##Sc]
                     [:c :d]
                     [:##Sc :##Sd]
-                    [:b :z]
-                    [:##Sb :##Sz]
+                    ;; [:b :z]
+                    ;; [:##Sb :##Sz]
+                    [:b :vk_none]
+                    [:##Sb :vk_none]
                     [:u :j]
                     [:##Su :##Sj]
                     [:i :l]
@@ -595,13 +684,17 @@
                     [:##Sm :##Sk]
                     [:comma :h]
                     [:##Scomma :##Sh]
+                    ;; [:period [:comma :spacebar]]
                     [:period :comma]
-                    [:##Speriod :semicolon]
+                    [:!Speriod :comma]
+                    ;; [:##Speriod :semicolon]
 
+                    ;; [:slash [:period :spacebar]]
                     [:slash :period]
-                    [:!Sslash :semicolon]
+                    [:!Sslash :period]
+                    ;; [:!Sslash :semicolon] H:;;H;6>?>?HK>?
 
-                    [:h :vk_none]
+                    [:h :mute]
                     [:##Sh :vk_none]
                     [:n :myundo]
                     [:##Sn :myredo]
