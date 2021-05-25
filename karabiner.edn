@@ -53,6 +53,7 @@
     }
 
     :modifiers {
+        :c [:command]
         ; :fg [:command :shift]
         ; :super-hyper [:command :shift :control :option :fn]
         ; :hyper [:command :shift :control :option]
@@ -169,7 +170,10 @@
         :select-next-word {:key :right_arrow :modi :os}
         :select-after {:key :right_arrow :modi :cs}
 
-        :myQuestion {:key :slash}
+        ;; :myQuestion {:key :slash} NON utilizzata ancora
+        :myFileOpen {:key :down_arrow :modi :c}
+        :myCloseApp {:key :q :modi :c}
+        :myCloseWindow {:key :w :modi :c}
 
     }
 
@@ -185,7 +189,6 @@
         :select-mode {:key :c}
         
         ; >>>>>> right hand
-        :open-mode {:key :o} ; to open (= go to the specified application)
         :find-mode {:key :l} ; find, save, select all
         :code-mode {:key :comma} ; this is reserved for VS Code and programming
         :text-mode {:key :k} ; text related
@@ -202,8 +205,9 @@
         :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
         :caps_lock-mode {:key :caps_lock :alone {:key :z}} ; accents and punctuation
         :numbers-mode {:key :tab :alone {:key :tab}} ; this is a true layer version of the numbers-mode simlayer
-        :parentheses-mode {:key :escape :alone {:key :escape}} ; parentheses
-        ;; :return-mode {:key :return_or_enter :alone {:key :return_or_enter}}
+        :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}} ; parentheses
+        :open-mode {:key :close_bracket :alone {:key :backslash}} ; to open (= go to the specified application)
+        ;; :test-mode {:key :left_command :alone {:key :left_command}} ; Do NOT work
 
         ;; :caps_lock-mode {:key :caps_lock :alone [:quote :spacebar]} ; accents and punctuation
         ;; :caps_lock-mode {:key :caps_lock :alone {:key :vk_none}} ; accents and punctuation
@@ -227,18 +231,42 @@
 
 
     :devices {
-        ;;    :rk68 [{:product_id 4295015415 :vendor_id 3141}]
            :rk68 [{:vendor_id 3141 :product_id 32792 }]
+           :macbook2016 [{:vendor_id 1452 :product_id 631 }]
     }
 
- 
+    :applications {
+        :acrobat ["com.adobe.Reader"]
+        :chrome ["com.google.Chrome"]
+        :code ["com.microsoft.VSCode"]
+    }
 
         :main [
 
-            {:des   "if using Royal Kludge RK68"
+
+            ;; {:des   "if using Royal Kludge RK68"
+            ;;     :rules [
+            ;;         [:condi :rk68] ;; inside [] you can use manies conditions at once
+
+            ;;         [:a :b]
+            ;;     ]
+            ;; }
+
+
+            ;; {:des   "if in Acrobat"
+            ;;     :rules [
+            ;;         [:condi :acrobat] ;; inside [] you can use manies conditions at once
+
+            ;;         [:a :page_down]
+            ;;     ]
+            ;; }
+
+
+            {:des   "test mode"
                 :rules [
-                    ;; [:condi :rk68]
-                    [:shift [:b]]
+                    [:condi :test-mode] ;; inside [] you can use manies conditions at once
+
+                    [:a :b]
                 ]
             }
 
@@ -247,6 +275,8 @@
                 :rules [
                     [[:9 :0] [:vk_none ["numbers-mode" 1]]] ;; turn ON numbers-mode
                     [[:7 :8] [:vk_none ["numbers-mode" 0]]] ;; turn OFF numbers-mode
+                    [[:hyphen :equal_sign] :myscreenshot4]
+                    [[:1 :2] :myemojisearch]                    
                 ]
             }
 
@@ -256,18 +286,22 @@
                 :rules [ 
                     :caps_lock-mode
 
+                    ;; START - See also default-mode
+                    [:delete_or_backspace :!Odelete_or_backspace]
+                    [:backslash :!Odelete_forward]
+                    ;; END - See also default-mode
+
                     [:q :vk_none]
                     [:w :vk_none]
                     [:e :vk_none]
-                    [:r :!S3]
+                    [:r :vk_none]
                     [:t :vk_none]
 
                     [:a :vk_none]
                     [:s :vk_none]
                     [:d :vk_none]
-                    [:f :!S7]
+                    [:f :vk_none]
                     [:g :vk_none]
-
 
                     [:z :vk_none]
                     [:x :vk_none]
@@ -275,17 +309,10 @@
                     [:v :vk_none]
 
                     [:u :slash]
-
-                    ;; [:i [:!Sslash :spacebar]]
                     [:i :!Sslash]
                     [:o [:grave_accent_and_tilde :u]]
-                    ;; [:p :!S1]
-                    ;; [:open_bracket :semicolon]
-                    [:p :semicolon]
-                    [:p [:semicolon :spacebar]]
-                    ;; [:open_bracket [:!S1 :spacebar]]
-                    [:open_bracket :!S1]
-                    [:close_bracket :vk_none]
+                    [:p :!S1]
+                    [:open_bracket [:grave_accent_and_tilde :!Se]]
 
                     [:j [:grave_accent_and_tilde :a]]
                     [:k [:quote :e]] ; ATTENTION: spacebar at the end
@@ -293,15 +320,77 @@
                     [:semicolon [:grave_accent_and_tilde :i]]
                     [:quote [:grave_accent_and_tilde :o]]
 
-                    ;; [:m :!S2]
-                    ;; [:m [:!Ssemicolon :spacebar]]
-                    [:m :!Ssemicolon]
+                    [:m :hyphen]
                     [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
-                    [:slash :hyphen]
-
-                    [:period [:grave_accent_and_tilde :!Se]]
+                    [:period :!Ssemicolon]
+                    [:slash :semicolon]
                 ]
             }
+
+
+            ;; {   
+            ;;     :des   "spacebar layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
+            ;;     :rules [
+            ;;         :spacebar-mode
+    
+            ;;         [:##1 :mydesktop1]
+            ;;         [:##2 :mydesktop2]
+            ;;         [:##3 :mydesktop3]
+            ;;         [:##4 :mydesktop4]
+            ;;         [:##5 :mydesktop5]
+            ;;         [:##6 :mydesktop6]
+            ;;         [:##7 :mydesktop7]
+            ;;         [:##8 :mydesktop8]
+            ;;         [:##9 :mydesktop9]
+            ;;         [:##0 :mydesktop0]
+
+            ;;         [:##q :myCloseApp]
+            ;;         [:##w :myCloseWindow]
+            ;;         [:##e :mycut]
+            ;;         [:##e :mycut]
+            ;;         [:##r :mycopy]
+            ;;         [:##t :open_clipMenu]
+            ;;         [:y :vk_none]
+
+            ;;         [:##a :left_control]
+            ;;         [:##s :left_shift]
+            ;;         [:##d :left_option]
+            ;;         [:##f :left_command]
+            ;;         [:##g :open_aText]
+            ;;         [:h :vk_none]
+
+            ;;         [:##z :myhard_reload]
+            ;;         [:##x :mysave]
+            ;;         [:##c :myselect_all]
+            ;;         [:v :vk_none]
+            ;;         ;; b is down here
+
+            ;;         [:##u :vk_none]
+            ;;         [:##i :mypaste]
+            ;;         [:##o :mypaste_plain]
+            ;;         [:p :page_down]
+            ;;         [:open_bracket :page_up]
+
+            ;;         [:##j :myFileOpen]
+            ;;         [:##k :left_arrow]
+            ;;         [:##l :down_arrow]
+            ;;         [:##semicolon :up_arrow]
+            ;;         [:##quote :right_arrow]
+ 
+            ;;         [:m :next_window]
+            ;;         [:comma :command_tab]
+            ;;         [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+            ;;         [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+
+            ;;         [:b :myprevious_sheet]
+            ;;         [:n :mynext_sheet]
+                    
+            ;;         [:left_option :myprevious_desktop]
+            ;;         [:left_command :mynext_desktop]
+            ;;         [:right_command :myprevious_tab]
+            ;;         [:right_option :mynext_tab]
+            ;;     ]
+            ;; }
 
 
             {   
@@ -309,38 +398,45 @@
                 :rules [
                     :spacebar-mode
     
-                    [:##1 :mydesktop1]
-                    [:##2 :mydesktop2]
-                    [:##3 :mydesktop3]
-                    [:##4 :mydesktop4]
-                    [:##5 :mydesktop5]
-                    [:##6 :mydesktop6]
-                    [:##7 :mydesktop7]
-                    [:##8 :mydesktop8]
-                    [:##9 :mydesktop9]
-                    [:##0 :mydesktop0]
+                    [:1 :mydesktop1]
+                    [:2 :mydesktop2]
+                    [:3 :mydesktop3]
+                    [:4 :mydesktop4]
+                    [:5 :mydesktop5]
+                    [:6 :mydesktop6]
+                    [:7 :mydesktop7]
+                    [:8 :mydesktop8]
+                    [:9 :mydesktop9]
+                    [:0 :mydesktop0]
 
-                    [:##e :mycut]
-                    [:##r :mycopy]
-
-                    [:##t :open_clipMenu]
-                    [:##g :open_aText]
+                    [:q :myCloseApp]
+                    [:w :myCloseWindow]
+                    [:e :mycut]
+                    [:e :mycut]
+                    [:r :mycopy]
+                    [:t :open_clipMenu]
+                    [:y :vk_none]
 
                     [:##a :left_control]
                     [:##s :left_shift]
                     [:##d :left_option]
                     [:##f :left_command]
+                    [:##g :open_aText]
+                    [:h :vk_none]
 
-                    [:##z :myhard_reload]
-                    [:##x :mysave]
-                    [:##c :myselect_all]
+                    [:z :vk_none]
+                    [:x :myhard_reload]
+                    [:c :myselect_all]
+                    [:v :mysave]
+                    ;; b is down here
 
-                    [:##o :mypaste_plain]
-                    [:##i :mypaste]
+                    [:u :vk_none]
+                    [:i :mypaste]
+                    [:o :mypaste_plain]
+                    [:p :vk_none]
+                    [:open_bracket :vk_none]
 
-                    ;; [:##p :page_up]
-                    ;; [:##open_bracket :end_of_line]
-
+                    [:j :myFileOpen]
                     [:##k :left_arrow]
                     [:##l :down_arrow]
                     [:##semicolon :up_arrow]
@@ -348,8 +444,10 @@
  
                     [:m :next_window]
                     [:comma :command_tab]
-                    [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    [:period :page_down]
+                    [:slash :page_up]
+                    [:!Speriod [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    [:!Sslash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
 
                     [:b :myprevious_sheet]
                     [:n :mynext_sheet]
@@ -358,20 +456,12 @@
                     [:left_command :mynext_desktop]
                     [:right_command :myprevious_tab]
                     [:right_option :mynext_tab]
+
+                    [:!Sv :z] ; just a test
+                    [:!Rv :z] ; just a test
                 ]
             }
 
-
-          {
-                :des "mode"
-                :rules [ 
-                    :return-mode
-
-                    [:d :!S9]
-                    [:f :!S0]
-
-                ]
-            }
 
 
            {
@@ -399,20 +489,22 @@
 
                     [:q :vk_none]
                     [:w :vk_none]
-                    [:e :!S9 ]
-                    [:r :!S0]
+                    [:e :vk_none ]
+                    [:r :!S5]
                     [:t :vk_none]
 
                     [:a :vk_none]
                     [:s :vk_none]
-                    [:d :!S5]
+                    [:d :vk_none]
                     [:f :0]
                     [:g :vk_none]
 
                     [:z :vk_none]
-                    [:x :equal_sign]
+                    [:x :comma]
                     [:c :keypad_period]
-                    [:v :comma]
+                    [:##c :keypad_period]
+                    [:v :period]
+                    [:b :vk_none]
 
                     [:u :keypad_hyphen]
                     [:i :7]
@@ -431,7 +523,6 @@
                     [:period :2]
                     [:slash :3]
 
-                    ;; [:spacebar :0] it doesn't work, maybe because spacebar is a proper layer...
                     [:right_command :keypad_period]
                 ] 
             }
@@ -517,15 +608,44 @@
                 :rules [ 
                     :open-mode 
 
-                    [:a [:open "/Applications/Google Chrome.app"]]
-                    [:s [:open "/Applications/Google Chrome Canary.app"]]
-                    [:d [:open "/Applications/Visual Studio Code.app"]]
-                    [:f [:open "/System/Library/CoreServices/Finder.app"]]
-                    [:q [:open "/Applications/Anki.app/"]]
-                    
-                    [:e [:open "/Applications/OpenOffice.app/"]]
-                    [:r [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
+                    [:##q :myCloseApp]
+                    [:##w :myCloseWindow]
+                    [:e [:open "/Applications/Firefox.app/"]]
+                    [:r [:open "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app"]]
+                    [:t [:open "/Applications/Obsidian.app/"]] ;; oBsidian
+                    [:y :vk_none]
 
+                    [:a [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
+                    [:s :vk_none]
+                    [:d [:open "/Applications/Safari.app/"]]
+                    [:f [:open "/System/Library/CoreServices/Finder.app"]]
+                    [:g [:open "/Applications/Google Chrome Canary.app"]]
+                    [:h :vk_none]
+
+                    [:z [:open "/Applications/FileZilla.app"]]
+                    [:x [:open "/Applications/Google Chrome.app"]]
+                    [:c :vk_none]
+                    [:v [:open "/Applications/Visual Studio Code.app"]]
+                    [:b :vk_none]
+
+                    [:u :vk_none]
+                    [:i :vk_none]
+                    [:o [:open "/Applications/OpenOffice.app/"]]
+                    [:p :vk_none]
+                    [:open_bracket :vk_none]
+                    [:close_bracket :vk_none]
+
+                    [:j :vk_none]
+                    [:k [:open "/Applications/Notes.app/"]]
+                    [:l :vk_none]
+                    [:semicolon :vk_none]
+                    ;; [:quote :vk_none] ; IMPORTANT if not commented, it'd be impossible to print o
+
+                    [:n :vk_none]
+                    [:m [:open "/Applications/Anki.app/"]] ;; anKi
+                    [:comma :vk_none]
+                    [:period :vk_none]
+                    [:slash :vk_none]
                 ]
             }
 
@@ -543,32 +663,59 @@
             }
 
  
+            ;; {
+            ;;     :des "mode"
+            ;;     :rules [ 
+            ;;         :parentheses-mode 
+
+            ;;         [:u [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
+            ;;         [:i :!Sopen_bracket]
+            ;;         [:o :!Sclose_bracket]
+            ;;         [:p :!Scomma]
+            ;;         [:open_bracket :!Speriod]
+
+            ;;         [:j :equal_sign]
+            ;;         [:k :!S9]
+            ;;         [:l :!S0]
+            ;;         [:semicolon :open_bracket]
+            ;;         [:quote :close_bracket]
+
+            ;;         [:m :vk_none]
+            ;;         [:comma :vk_none]
+            ;;         [:period :vk_none]
+            ;;         [:slash :vk_none]
+
+            ;;         ;; [:m :!Sequal_sign]
+            ;;         ;; [:comma :hyphen]
+            ;;         ;; [:period :!S8]
+            ;;         ;; [:slash :slash]
+            ;;     ]
+            ;; }
+
+
             {
                 :des "mode"
                 :rules [ 
                     :parentheses-mode 
 
-                    [:u [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
-                    [:i :!Sopen_bracket]
-                    [:o :!Sclose_bracket]
-                    [:p :!Scomma]
-                    [:open_bracket :!Speriod]
+                    [:q :!Sbackslash]
+                    [:w :!Shyphen]
+                    [:e :!Sopen_bracket]
+                    [:r :!Sclose_bracket]
+                    [:t [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
 
-                    [:j :equal_sign]
-                    [:k :!S9]
-                    [:l :!S0]
-                    [:semicolon :open_bracket]
-                    [:quote :close_bracket]
+                    [:a :open_bracket]
+                    [:s :close_bracket]
+                    [:d :!S9]
+                    [:f :!S0]
+                    [:g :equal_sign]
 
-                    [:m :vk_none]
-                    [:comma :vk_none]
-                    [:period :vk_none]
-                    [:slash :vk_none]
+                    [:z :!S4]
+                    [:x :!Scomma]
+                    [:c :!Speriod]
+                    [:v :!S3]
+                    [:b :vk_none]
 
-                    ;; [:m :!Sequal_sign]
-                    ;; [:comma :hyphen]
-                    ;; [:period :!S8]
-                    ;; [:slash :slash]
                 ]
             }
 
@@ -616,6 +763,7 @@
 
                     [:left_option :vk_none] 
                     [:left_control :vk_none]
+                    [:left_command :vk_none]
                     [:left_shift :left_shift nil {:alone [:quote :spacebar]}]
                     [:right_shift :right_shift nil {:alone [:quote :spacebar]}]
                     ;; [:left_command :left_command nil {:alone [:quote :spacebar]}]
@@ -623,13 +771,12 @@
                     [:caps_lock :z]
                     [:##caps_lock :z]
 
-                    [:!Sdelete_or_backspace :!Cdelete_or_backspace]
-                    [:backslash :delete_forward]
-                    [:!Sbackslash :!Tk]
-                    
-                    [[:hyphen :equal_sign] :myscreenshot4]
-                    [[:1 :2] :myemojisearch]
-                    
+                    ;; START - See also caps-mode
+                    [:!Sdelete_or_backspace :!Cdelete_or_backspace] ; delete backward till the start of the line
+                    [:backslash :delete_forward] ; delete forward one char
+                    [:!Sbackslash :!Tk] ; delete forward till the end of the line
+                    ;; END - See also caps-mode
+
                     [:e :f]
                     [:##Se :##Sf]
                     [:r :p]
@@ -665,11 +812,12 @@
                     [:##Sp :##Sy]
                     [:open_bracket :backslash]
                     [:##Sopen_bracket :##backslash]
-                    ;; [:close_bracket :delete_forward]
                     [:p :vk_none]
                     [:##Sp :vk_none]
                     [:open_bracket :vk_none]
-                    [:close_bracket :vk_none]
+                    ;; [:close_bracket :backslash]
+                    ;; [:##close_bracket :backslash]
+
                     [:j :m]
                     [:##Sj :##Sm]
                     [:k :n]
@@ -679,20 +827,15 @@
                     [:semicolon :i]
                     [:##semicolon :##Si]
                     [:quote :o]
-                    [:##quote :##So]
+                    [:##Squote :##So]
                     [:m :k]
                     [:##Sm :##Sk]
                     [:comma :h]
                     [:##Scomma :##Sh]
-                    ;; [:period [:comma :spacebar]]
                     [:period :comma]
-                    [:!Speriod :comma]
-                    ;; [:##Speriod :semicolon]
-
-                    ;; [:slash [:period :spacebar]]
+                    [:!Speriod :!S2]
                     [:slash :period]
-                    [:!Sslash :period]
-                    ;; [:!Sslash :semicolon] H:;;H;6>?>?HK>?
+                    [:!Sslash :!S7]
 
                     [:h :mute]
                     [:##Sh :vk_none]
@@ -700,7 +843,6 @@
                     [:##Sn :myredo]
                 ]
             }
-
 
         ]
     }
