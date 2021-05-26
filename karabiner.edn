@@ -211,6 +211,7 @@
         ;; :leftCommand-mode {:key :left_command :alone {:key :left_control}}
         ;; :leftCommand-mode {:key :left_command}
         :rightCommand-mode {:key :right_command}
+        :rightOption-mode {:key :right_option}
         ;; :test-mode {:key :left_command :alone {:key :left_command}} ; Do NOT work
 
         ;; :caps_lock-mode {:key :caps_lock :alone [:quote :spacebar]} ; accents and punctuation
@@ -235,8 +236,9 @@
 
 
     :devices {
-           :rk68 [{:vendor_id 3141 :product_id 32792 }]
-           :macbook2016 [{:vendor_id 1452 :product_id 631 }]
+           :macbook2016 [{:vendor_id 1452 :product_id 631 }] ;; Apple MacBook 2016's integrated keyboard
+           :rk68 [{:vendor_id 3141 :product_id 32792 }] ;; Royal Kludge RK 68
+           :daskey [{:vendor_id 9456 :product_id 321 }] ;; Daskeyboyard
     }
 
     :applications {
@@ -266,11 +268,14 @@
             ;; }
 
 
-            {:des   "test mode"
+            {:des   "condition"
                 :rules [
-                    [:condi :test-mode] ;; inside [] you can use manies conditions at once
+                    [:condi :daskey] ;; inside [] you can use manies conditions at once
 
-                    [:a :b]
+                    ;; [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
+                    ;; [:!Rgrave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3 
+
+                    
                 ]
             }
 
@@ -286,11 +291,44 @@
 
 
             {
+                :des "mode"
+                :rules [
+                    :backslash-mode
+
+                    [:a :b]
+                ]
+            }
+
+
+            {
+                :des "mode"
+                :rules [
+                    :rightCommand-mode
+
+                    [:left_option :myprevious_tab]
+                    [:left_command :mynext_tab]
+                    
+                ]
+            }
+
+
+            {
+                :des "mode"
+                :rules [
+                    :rightOption-mode
+
+                    [:a :b]
+                    
+                ]
+            }
+
+
+            {
                 :des "caps-mode layer"
                 :rules [ 
                     :caps_lock-mode
 
-                    [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward word 1/3
+                    [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
 
                     [:q :vk_none]
                     [:w :vk_none]
@@ -309,11 +347,11 @@
                     [:c :!Shyphen]
                     [:v :vk_none]
 
-                    [:u :slash]
+                    [:u :hyphen]
                     [:i :!Sslash]
                     [:o [:grave_accent_and_tilde :u]]
                     [:p :!S1]
-                    [:open_bracket [:grave_accent_and_tilde :!Se]]
+                    [:open_bracket :slash]
 
                     [:j [:grave_accent_and_tilde :a]]
                     [:k [:quote :e]] ; ATTENTION: spacebar at the end
@@ -321,7 +359,7 @@
                     [:semicolon [:grave_accent_and_tilde :i]]
                     [:quote [:grave_accent_and_tilde :o]]
 
-                    [:m :hyphen]
+                    [:m [:grave_accent_and_tilde :!Se]]
                     [:comma [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
                     [:period :!Ssemicolon]
                     [:slash :semicolon]
@@ -399,7 +437,7 @@
                 :rules [
                     :spacebar-mode
 
-                    [:escape :delete_forward] ;; delete foreward char 1/3
+                    [:escape :delete_forward] ;; delete foreward character 1/3
     
                     [:1 :mydesktop1]
                     [:2 :mydesktop2]
@@ -414,7 +452,6 @@
 
                     [:q :myCloseApp]
                     [:w :myCloseWindow]
-                    [:e :mycut]
                     [:e :mycut]
                     [:r :mycopy]
                     [:t :open_clipMenu]
@@ -435,9 +472,9 @@
 
                     [:u :vk_none]
                     [:i :mypaste]
-                    [:o :mypaste_plain]
-                    [:p :vk_none]
-                    [:open_bracket :vk_none]
+                    [:o [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    [:p [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    [:open_bracket :mypaste_plain]
 
                     [:j :myFileOpen]
                     [:##k :left_arrow]
@@ -449,8 +486,8 @@
                     [:comma :command_tab]
                     [:period :page_down]
                     [:slash :page_up]
-                    [:!Speriod [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    [:!Sslash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    ;; [:!Speriod [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    ;; [:!Sslash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
 
                     ;; [:b :myprevious_sheet] ;; spostato in parentheses mode
                     ;; [:n :mynext_sheet] ;; spostato in parentheses mode
@@ -575,28 +612,6 @@
                     [:o :gmail_bcc]
                     [:k :gmail_quote]
                     [:comma :gmail_discard]
-                ]
-            }
-
-
-            {
-                :des "mode"
-                :rules [
-                    :backslash-mode
-
-                    ;; [:escape :delete_forward] ;; delete foreward char 1/3
-                ]
-            }
-
-
-            {
-                :des "mode"
-                :rules [
-                    :rightCommand-mode
-
-                    [:left_option :myprevious_tab]
-                    [:left_command :mynext_tab]
-                    
                 ]
             }
 
@@ -728,7 +743,7 @@
                 :rules [ 
                     :parentheses-mode 
 
-                    [:escape :!Odelete_forward] ;; delete foreward word 1/3
+                    [:escape :!Odelete_forward] ;; delete foreward word 2/3
 
                     [:left_option :myprevious_sheet]
                     [:left_command :mynext_sheet]
@@ -802,7 +817,8 @@
                     [:left_option :vk_none] 
 
                     [:right_command :vk_none] 
-                    [:right_option :right_command] 
+                    [:right_option :vk_none] 
+                    [:right_control :right_command] 
 
                     [:left_shift :left_shift nil {:alone [:quote :spacebar]}]
                     [:right_shift :right_shift nil {:alone [:quote :spacebar]}]
@@ -810,8 +826,8 @@
                     [:caps_lock :z]
                     [:##caps_lock :z]
 
-                    ;; [:delete_or_backspace :delete_or_backspace] ;; delete backward word 1/3
-                    [:!Sdelete_or_backspace :!Cdelete_or_backspace] ;; delete backward word 2/3
+                    ;; [:delete_or_backspace :delete_or_backspace] ;; delete backward character 1/3
+                    [:!Sdelete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
                     [:!Rescape :!Tk] ;; delete foreward line 3/3
 
                     [:e :f]
