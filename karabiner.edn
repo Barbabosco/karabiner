@@ -53,7 +53,7 @@
     }
 
     :modifiers {
-        :c [:command]
+        ;; :cmd [:command]
         ; :fg [:command :shift]
         ; :super-hyper [:command :shift :control :option :fn]
         ; :hyper [:command :shift :control :option]
@@ -171,9 +171,12 @@
         :select-after {:key :right_arrow :modi :cs}
 
         ;; :myQuestion {:key :slash} NON utilizzata ancora
-        :myFileOpen {:key :down_arrow :modi :c}
-        :myCloseApp {:key :q :modi :c}
-        :myCloseWindow {:key :w :modi :c}
+        :myFileOpen {:key :down_arrow :modi :command}
+        :myCloseApp {:key :q :modi :command}
+        :myCloseWindow {:key :w :modi :command}
+
+        :myMoveFocusToMenuBar {:key :f10 :modi :control}
+        :myChangeWayTabMovesFocus {:key :f7 :modi :control}
 
     }
 
@@ -272,6 +275,7 @@
                 :rules [
                     [:condi :daskey] ;; inside [] you can use manies conditions at once
 
+                    ;; [:grave_accent_and_tilde :escape]
                     ;; [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
                     ;; [:!Rgrave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3 
 
@@ -294,8 +298,12 @@
                 :des "mode"
                 :rules [
                     :backslash-mode
-
-                    [:a :b]
+                    [:e :myprevious_sheet]
+                    [:r :mynext_sheet]
+                    [:d :myprevious_desktop]
+                    [:f :mynext_desktop]
+                    [:x :myprevious_tab]
+                    [:c :mynext_tab]
                 ]
             }
 
@@ -366,7 +374,8 @@
                 :rules [ 
                     :caps_lock-mode
 
-                    [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
+                    ;; [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
+                    [:delete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
 
                     [:q :vk_none]
                     [:w :vk_none]
@@ -405,77 +414,14 @@
             }
 
 
-            ;; {   
-            ;;     :des   "spacebar layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
-            ;;     :rules [
-            ;;         :spacebar-mode
-    
-            ;;         [:##1 :mydesktop1]
-            ;;         [:##2 :mydesktop2]
-            ;;         [:##3 :mydesktop3]
-            ;;         [:##4 :mydesktop4]
-            ;;         [:##5 :mydesktop5]
-            ;;         [:##6 :mydesktop6]
-            ;;         [:##7 :mydesktop7]
-            ;;         [:##8 :mydesktop8]
-            ;;         [:##9 :mydesktop9]
-            ;;         [:##0 :mydesktop0]
-
-            ;;         [:##q :myCloseApp]
-            ;;         [:##w :myCloseWindow]
-            ;;         [:##e :mycut]
-            ;;         [:##e :mycut]
-            ;;         [:##r :mycopy]
-            ;;         [:##t :open_clipMenu]
-            ;;         [:y :vk_none]
-
-            ;;         [:##a :left_control]
-            ;;         [:##s :left_shift]
-            ;;         [:##d :left_option]
-            ;;         [:##f :left_command]
-            ;;         [:##g :open_aText]
-            ;;         [:h :vk_none]
-
-            ;;         [:##z :myhard_reload]
-            ;;         [:##x :mysave]
-            ;;         [:##c :myselect_all]
-            ;;         [:v :vk_none]
-            ;;         ;; b is down here
-
-            ;;         [:##u :vk_none]
-            ;;         [:##i :mypaste]
-            ;;         [:##o :mypaste_plain]
-            ;;         [:p :page_down]
-            ;;         [:open_bracket :page_up]
-
-            ;;         [:##j :myFileOpen]
-            ;;         [:##k :left_arrow]
-            ;;         [:##l :down_arrow]
-            ;;         [:##semicolon :up_arrow]
-            ;;         [:##quote :right_arrow]
- 
-            ;;         [:m :next_window]
-            ;;         [:comma :command_tab]
-            ;;         [:##period [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-            ;;         [:##slash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
-
-            ;;         [:b :myprevious_sheet]
-            ;;         [:n :mynext_sheet]
-                    
-            ;;         [:left_option :myprevious_desktop]
-            ;;         [:left_command :mynext_desktop]
-            ;;         [:right_command :myprevious_tab]
-            ;;         [:right_option :mynext_tab]
-            ;;     ]
-            ;; }
-
-
             {   
                 :des   "spacebar layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
                 :rules [
                     :spacebar-mode
 
-                    [:escape :delete_forward] ;; delete foreward character 1/3
+                    ;; [:escape :delete_forward] ;; delete foreward character 1/3
+                    [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
+
                     [:!Qa :c] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
                     [:!Ca :b] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
     
@@ -504,11 +450,11 @@
                     [:##g :open_aText]
                     [:h :vk_none]
 
-                    [:z :vk_none]
+                    [:z :myChangeWayTabMovesFocus]
                     [:x :myhard_reload]
                     [:c :myselect_all]
                     [:v :mysave]
-                    ;; b is down here
+                    [:b :mysave]
 
                     [:u :vk_none]
                     [:i :mypaste]
@@ -522,7 +468,7 @@
                     [:##semicolon :up_arrow]
                     [:##quote :right_arrow]
  
-                    [:m :command_tab]
+                    [:m :myMoveFocusToMenuBar]
                     [:comma :next_window]
                     [:period :page_down]
                     [:slash :page_up]
@@ -536,8 +482,8 @@
                     ;; [:left_command :mynext_desktop]
                     ;; [:right_command :myprevious_tab]
                     ;; [:right_option :mynext_tab]
-                    [:left_option :myprevious_desktop]
-                    [:left_command :mynext_desktop]
+                    ;; [:left_option :myprevious_desktop]
+                    ;; [:left_command :mynext_desktop]
 
                     [:!Sv :z] ; just a test
                     [:!Rv :z] ; just a test
@@ -572,20 +518,19 @@
                     [:q :vk_none]
                     [:w :vk_none]
                     [:e :vk_none ]
-                    [:r :!S5]
+                    [:r :vk_none]
                     [:t :vk_none]
 
                     [:a :vk_none]
                     [:s :vk_none]
                     [:d :vk_none]
-                    [:f :0]
-                    [:g :vk_none]
+                    [:f :!S5]
+                    [:g :equal_sign]
 
                     [:z :vk_none]
                     [:x :comma]
-                    [:c :keypad_period]
-                    [:##c :keypad_period]
-                    [:v :period]
+                    [:c :vk_none]
+                    [:v :vk_none]
                     [:b :vk_none]
 
                     [:u :keypad_hyphen]
@@ -600,12 +545,14 @@
                     [:semicolon :6]
                     [:quote :keypad_asterisk]
                     
-                    [:m :0]
+                    [:m :vk_none]
                     [:comma :1]
                     [:period :2]
                     [:slash :3]
 
-                    ;; [:right_command :keypad_period]
+                    [:left_command :keypad_period]
+                    [:##left_command :##keypad_period]
+                    [:right_command :0]
                 ] 
             }
 
@@ -678,8 +625,8 @@
                 :rules [
                     :tab-mode
 
-                    [:left_option :myprevious_sheet]
-                    [:left_command :mynext_sheet]
+                    ;; [:left_option :myprevious_sheet]
+                    ;; [:left_command :mynext_sheet]
 
                     ; [:k :focus_editor]
                     ; [:l :focus_terminal]
@@ -688,51 +635,51 @@
             }
 
 
-            {
-                :des "mode"
-                :rules [ 
-                    :open-mode 
+            ;; {
+            ;;     :des "mode"
+            ;;     :rules [ 
+            ;;         :open-mode 
 
-                    [:##q :myCloseApp]
-                    [:##w :myCloseWindow]
-                    [:e [:open "/Applications/Firefox.app/"]]
-                    [:r [:open "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app"]]
-                    [:t [:open "/Applications/Obsidian.app/"]] ;; oBsidian
-                    [:y :vk_none]
+            ;;         [:##q :myCloseApp]
+            ;;         [:##w :myCloseWindow]
+            ;;         [:e [:open "/Applications/Firefox.app/"]]
+            ;;         [:r [:open "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app"]]
+            ;;         [:t [:open "/Applications/Obsidian.app/"]] ;; oBsidian
+            ;;         [:y :vk_none]
 
-                    [:a [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
-                    [:s :vk_none]
-                    [:d [:open "/Applications/Safari.app/"]]
-                    [:f [:open "/System/Library/CoreServices/Finder.app"]]
-                    [:g [:open "/Applications/Google Chrome Canary.app"]]
-                    [:h :vk_none]
+            ;;         [:a [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
+            ;;         [:s :vk_none]
+            ;;         [:d [:open "/Applications/Safari.app/"]]
+            ;;         [:f [:open "/System/Library/CoreServices/Finder.app"]]
+            ;;         [:g [:open "/Applications/Google Chrome Canary.app"]]
+            ;;         [:h :vk_none]
 
-                    [:z [:open "/Applications/FileZilla.app"]]
-                    [:x [:open "/Applications/Google Chrome.app"]]
-                    [:c :vk_none]
-                    [:v [:open "/Applications/Visual Studio Code.app"]]
-                    [:b :vk_none]
+            ;;         [:z [:open "/Applications/FileZilla.app"]]
+            ;;         [:x [:open "/Applications/Google Chrome.app"]]
+            ;;         [:c :vk_none]
+            ;;         [:v [:open "/Applications/Visual Studio Code.app"]]
+            ;;         [:b :vk_none]
 
-                    [:u :vk_none]
-                    [:i :vk_none]
-                    [:o [:open "/Applications/OpenOffice.app/"]]
-                    [:p :vk_none]
-                    [:open_bracket :vk_none]
-                    [:close_bracket :vk_none]
+            ;;         [:u :vk_none]
+            ;;         [:i :vk_none]
+            ;;         [:o [:open "/Applications/OpenOffice.app/"]]
+            ;;         [:p :vk_none]
+            ;;         [:open_bracket :vk_none]
+            ;;         [:close_bracket :vk_none]
 
-                    [:j :vk_none]
-                    [:k [:open "/Applications/Notes.app/"]]
-                    [:l :vk_none]
-                    [:semicolon :vk_none]
-                    ;; [:quote :vk_none] ; IMPORTANT if not commented, it'd be impossible to print o
+            ;;         [:j :vk_none]
+            ;;         [:k [:open "/Applications/Notes.app/"]]
+            ;;         [:l :vk_none]
+            ;;         [:semicolon :vk_none]
+            ;;         [:quote :vk_none]
 
-                    [:n :vk_none]
-                    [:m [:open "/Applications/Anki.app/"]] ;; anKi
-                    [:comma :vk_none]
-                    [:period :vk_none]
-                    [:slash :vk_none]
-                ]
-            }
+            ;;         [:n :vk_none]
+            ;;         [:m [:open "/Applications/Anki.app/"]] ;; anKi
+            ;;         [:comma :vk_none]
+            ;;         [:period :vk_none]
+            ;;         [:slash :vk_none]
+            ;;     ]
+            ;; }
 
 
             {
@@ -753,7 +700,9 @@
                 :rules [ 
                     :parentheses-mode 
 
-                    [:escape :!Odelete_forward] ;; delete foreward word 2/3
+                    ;; [:escape :!Odelete_forward] ;; delete foreward word 2/3
+                    ;; [:grave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3
+                    [:grave_accent_and_tilde :!Tk] ;; delete foreward line 3/3
 
                     [:left_option :myprevious_sheet]
                     [:left_command :mynext_sheet]
@@ -823,24 +772,31 @@
             {:des "default mode"
                 :rules [
 
-                    [:left_control :vk_none]
-                    [:left_option :vk_none] 
+                    [:escape :vk_none]
 
-                    [:!SQf :k]
+                    [:grave_accent_and_tilde :escape]
+                    ;; [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
+                    [:!Rgrave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3 
+                    ;; [:!Rgrave_accent_and_tilde :!Tk] ;; delete foreward line 3/3
+
+                    ;; [:delete_or_backspace :delete_or_backspace] ;; delete backward character 1/3
+                    [:!Sdelete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
+                    ;; [:delete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
+
+                    ;; [:left_control :vk_none]
+                    ;; [:left_option :vk_none]
 
                     ;; [:right_command :vk_none]
-                    [:right_option :vk_none] 
-                    [:right_control :right_command] 
+                    [:right_option :vk_none]
 
                     [:left_shift :left_shift nil {:alone [:quote :spacebar]}]
                     [:right_shift :right_shift nil {:alone [:quote :spacebar]}]
+                    ;; [:left_command :left_command nil {:alone [:quote :spacebar]}]
+                    ;; [:right_command :right_command nil {:alone [:quote :spacebar]}]
 
                     [:caps_lock :z]
                     [:##caps_lock :z]
 
-                    ;; [:delete_or_backspace :delete_or_backspace] ;; delete backward character 1/3
-                    [:!Sdelete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
-                    [:!Rescape :!Tk] ;; delete foreward line 3/3
 
                     [:e :f]
                     [:##Se :##Sf]
@@ -866,8 +822,10 @@
                     [:##Sb :vk_none]
 
 
-                    [:u :vk_none]
-                    [:##Su :vk_none]
+                    ;; [:u :vk_none]
+                    ;; [:##Su :vk_none]
+                    [:u :myundo]
+                    [:##Su :myredo]
                     [:i :l]
                     [:##Si :##Sl]
                     [:o :u]
@@ -898,8 +856,10 @@
 
                     [:h :mute]
                     [:##Sh :vk_none]
-                    [:n :myundo]
-                    [:##Sn :myredo]
+                    [:n :vk_none]
+                    [:##Sn :vk_none]
+                    ;; [:n :myundo]
+                    ;; [:##Sn :myredo]
                 ]
             }
 
