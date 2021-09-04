@@ -205,6 +205,8 @@
         ;:movement-mode {:key :f :modi :g} ; Lindquist NEVER IMPLEMENTED
         ; :delete-mode {:key :h} ; Lindquist NEVER IMPLEMENTED
         ; :emoji-mode {:key :z} ; Lindquist NEVER IMPLEMENTED
+
+        :close_bracket-mode {:key :close_bracket}
     }
 
     :layers {;
@@ -213,13 +215,14 @@
         :numbers-mode {:key :tab :alone {:key :tab}} ; this is a true layer version of the numbers-mode simlayer
         :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}} ; parentheses
         ;; :open-mode {:key :close_bracket :alone {:key :!Shyphen}} ; to open (= go to the specified application)
-        :backslash-mode {:key :backslash :alone {:key :backslash}}
         ;; :leftCommand-mode {:key :left_command :alone {:key :left_control}}
         ;; :leftCommand-mode {:key :left_command}
         ;; :rightCommand-mode {:key :right_command}
         :rightOption-mode {:key :right_option}
         :rightControl-mode {:key :right_control}
         ;; :test-mode {:key :left_command :alone {:key :left_command}} ; Do NOT work
+
+        :b-mode {:key :b}
 
 
         ;; :caps_lock-mode {:key :caps_lock :alone [:quote :spacebar]} ; accents and punctuation
@@ -302,7 +305,7 @@
             {
                 :des "mode"
                 :rules [
-                    :backslash-mode
+                    :close_bracket-mode
                     [:e :myprevious_sheet]
                     [:r :mynext_sheet]
                     [:d :myprevious_desktop]
@@ -367,30 +370,22 @@
             {
                 :des "mode"
                 :rules [
-                    :rightControl-mode
-
-
+                    :b-mode
+                    [:period :mycut]
+                    [:comma :mycopy]
+                    [:i :mypaste]
+                    [:o :mypaste_plain]
+                    [:m :myselect_all]
                 ]
             }
-
-
-            ;; {
-            ;;     :des "mode"
-            ;;     :rules [
-            ;;         :rightOption-mode
-
-            ;;         [:a :b]
-                    
-            ;;     ]
-            ;; }
-
+     
 
             {
                 :des "caps-mode layer"
                 :rules [ 
                     :caps_lock-mode
 
-                    [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
+                    [:close_bracket :!Odelete_or_backspace] ;; delete backward word 2/3
                     ;; [:delete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
 
                     [:q :vk_none]
@@ -456,10 +451,8 @@
                     ;; [:w :myCloseWindow]
                     ;; [:e :mycut]
                     ;; [:r :mycopy]
-                    [:q :mycut]
-                    [:w :mycopy]
-                    [:e :mypaste]
-                    [:r :mypaste_plain]
+                    [:r :mypaste]
+                    [:e :mypaste_plain]
                     [:t :open_clipMenu]
                     [:y :vk_none]
 
@@ -472,11 +465,12 @@
 
                     ;; [:z :myChangeWayTabMovesFocus]
                     ;; [:z :myMoveFocusToMenuBar]
-                    [:z :myselect_all]
-                    [:x :button1]
-                    [:c :button2]
+                    ;; [:c :button2]
                     ;; [:v :button2 :modi :shift]
-                    [:v {:pkey :button2 :modi :command}]
+                    [:z :vk_none]
+                    [:x :mycut]
+                    [:c :mycopy]
+                    [:v :myselect_all]
                     [:b :vk_none]
 
                     [:u :myselect_all]
@@ -805,7 +799,8 @@
 
                     ;; [:delete_or_backspace :delete_or_backspace] ;; delete backward character 1/3
                     ;; [:!Sdelete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
-                    [:!Sdelete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
+                    [:!Sclose_bracket :!Cdelete_or_backspace] ;; delete backward line 3/3
+                    [:delete_or_backspace :vk_none]
 
                     ;; [:left_control :vk_none]
                     ;; [:left_option :vk_none]
@@ -858,6 +853,8 @@
                     [:##Sp :##Sy]
                     [:open_bracket :j]
                     [:##Sopen_bracket :##Sj]
+                    [:close_bracket :delete_or_backspace]
+                    [:##close_bracket :delete_or_backspace]
 
                     [:j :m]
                     [:##Sj :##Sm]
