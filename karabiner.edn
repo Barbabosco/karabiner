@@ -183,9 +183,6 @@
 
         ;; :myClickShift {:key :button2}
         :myBackspaceWord {:key :delete_or_backspace :modi :option}
-        
-        
-
     }
 
     :simlayers {
@@ -197,6 +194,9 @@
         :gmail-mode {:key :s}
         :cursor-mode {:key :g} ; Lindquist - cursor mode
         ; :select-mode {:key :c}
+        :accentsAndMouse-mode {:key :keypad_2}  ;; accents and punctuation and keys to be used 
+                                                ;; with left hand when using mouse with right hand
+
         
         ; >>>>>> right hand
         :text-mode {:key :n} ; text related
@@ -214,32 +214,18 @@
     }
 
     :layers {;
-        :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
-        ;; :mouseService-mode {:key :keypad_3 :alone {:key :quote}} ; commands to be used when moving mouse with the right hand
-        :accents-mode {:key :caps_lock} ; accents and punctuation
-        :numbers-mode {:key :keypad_1 } ; this is a true layer version of the numbers-mode simlayer
+ 
+        ;; >>>>>> left hand
+        :numbers-mode {:key :tab } ; this is a true layer version of the numbers-mode simlayer
         :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}} ; parentheses
-        ;; :open-mode {:key :close_bracket :alone {:key :!Shyphen}} ; to open (= go to the specified application)
-        ;; :leftCommand-mode {:key :left_command :alone {:key :left_control}}
-        ;; :leftCommand-mode {:key :left_command}
-        ;; :rightCommand-mode {:key :right_command}
-        ;:open-mode {:key :h}
-        :rightControl-mode {:key :right_control}
-        ;; :test-mode {:key :left_command :alone {:key :left_command}} ; Do NOT work
-
-        ;; :b-mode {:key :b}
-
-
-
-        ; >>>>>> left hand
         ;; :rectangle-mode {:key :a}
         ;; :gmail-mode {:key :s}
         ;; :numbers-mode {:key :d}
         ;; :cursor-mode {:key :g} ; Lindquist - cursor mode
-        ;; :parentheses-mode {:key :f} ; parentheses
         ;; :select-mode {:key :c}
         
-        ;; ; >>>>>> right hand
+        ;; >>>>>> right hand
+        :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
         ;; :open-mode {:key :o} ; to open (= go to the specified application)
         ;; :find-mode {:key :l} ; find, save, select all
         ;; :code-mode {:key :comma} ; this is reserved for VS Code and programming
@@ -298,8 +284,8 @@
                 :rules [
                     [[:1 :2] [:vk_none ["numbers-mode" 1]]] ;; turn ON numbers-mode
                     [[:3 :4] [:vk_none ["numbers-mode" 0]]] ;; turn OFF numbers-mode
-                    [[:0 :hyphen] :myscreenshot4]
-                    [[:8 :9] :myemojisearch]                    
+                    [[:7 :8] :myemojisearch]                    
+                    [[:9 :0] :myscreenshot4]
                 ]
             }
 
@@ -310,7 +296,7 @@
                     :spacebar-mode
 
                     ;; [:escape :delete_forward] ;; delete foreward character 1/3
-                    ;; [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
+                    [:delete_forward :delete_forward] ;; delete foreward character 1/3
 
                     ;; [:!Qa :c] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
                     ;; [:!Ca :b] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
@@ -352,105 +338,19 @@
                     [:y [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
                     [:j :vk_none]
 
-                    [:m :command_tab]
+                    [:m :escape]
                     [:##n :left_arrow]
                     [:##e :down_arrow]
                     [:##i :up_arrow]
                     [:##o :right_arrow]
  
-                    [:k :vk_none]
+                    [:k :command_tab]
                     [:h :next_window]
                     [:comma :page_down]
                     [:period :page_up]
                     [:keypad_5 :vk_none]
                 ]
             }
-
-
-            {   
-                :des   "mouseService-mode layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
-                :rules [
-                    :mouseService-mode
-
-                    ;; [:escape :delete_forward] ;; delete foreward character 1/3
-                    ;; [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
-
-                    ;; [:!Qa :c] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
-                    ;; [:!Ca :b] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
-    
-                    [:1 :mydesktop1]
-                    [:2 :mydesktop2]
-                    [:3 :mydesktop3]
-                    [:4 :mydesktop4]
-                    [:5 :mydesktop5]
-                    [:6 :mydesktop6]
-                    [:7 :mydesktop7]
-                    [:8 :mydesktop8]
-                    [:9 :mydesktop9]
-                    [:0 :mydesktop0]
-
-
-
-                    [:q :myselect_all]
-                    [:w :mycut]
-                    [:f :mycopy]
-                    [:p :mypaste]
-                    [:b :mypaste_plain]
-
-                    [:##a :left_control]
-                    [:##r :left_shift]
-                    [:##s :left_option]
-                    [:##t :left_command]
-                    [:##g :open_clipMenu]
-
-                    [:tab :vk_none]
-                    [:x :vk_none]
-                    [:c :mysave]
-                    [:d :return_or_enter]
-                    [:v :open_aText]
-
-                    ;; [:z :vk_none]
-                    ;; [:x :vk_none]
-                    ;; [:c :return_or_enter]
-                    ;; [:v :open_aText]
-                    ;; [:b :vk_none]
-
-                    ;; [:u :myselect_all]
-                    ;; [:i :mypaste]
-                    ;; [:o [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    ;; [:p [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
-                    ;; [:open_bracket :mypaste_plain]
-                    ;; [:close_bracket :delete_or_backspace]
-
-                    ;; [:j :myFileOpen]
-                    [:##n :left_arrow]
-                    [:##e :down_arrow]
-                    [:##i :up_arrow]
-                    [:##o :right_arrow]
- 
-                    ;; [:m :command_tab]
-                    ;; [:comma :next_window]
-                    ;; [:period :page_down]
-                    ;; [:slash :page_up]
-                    ;; [:!Speriod [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
-                    ;; [:!Sslash [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
-
-                    ;; [:b :myprevious_sheet] ;; spostato in parentheses mode
-                    ;; [:n :mynext_sheet] ;; spostato in parentheses mode
-                    
-                    ;; [:left_option :myprevious_desktop
-                    ;; [:left_command :mynext_desktop]
-                    ;; [:right_command :myprevious_tab]
-                    ;; [:right_option :mynext_tab]
-                    ;; [:left_option :myprevious_desktop]
-                    ;; [:left_command :mynext_desktop]
-
-                    ;; [:!Sv :z] ; just a test
-                    ;; [:!Rv :z] ; just a test
-                ]
-            }
-
-
 
 
             {
@@ -534,28 +434,39 @@
             {
                 :des "mode"
                 :rules [ 
-                    :accents-mode
+                    :accentsAndMouse-mode
 
-                    [:close_bracket :!Odelete_or_backspace] ;; delete backward word 2/3
+                    [:delete_or_backspace :!Sdelete_or_backspace] ;; delete backward word 2/3
                     ;; [:delete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
 
-                    [:q :vk_none]
-                    [:w :vk_none]
-                    [:f :vk_none]
-                    [:p :vk_none]
-                    [:b :vk_none]
 
-                    [:a :vk_none]
-                    [:r :vk_none]
-                    [:s :vk_none]
-                    [:t :vk_none]
-                    [:g :vk_none]
+                    [:1 :mydesktop1]
+                    [:2 :mydesktop2]
+                    [:3 :mydesktop3]
+                    [:4 :mydesktop4]
+                    [:5 :mydesktop5]
+                    [:6 :mydesktop6]
+                    [:7 :mydesktop7]
+                    [:8 :mydesktop8]
+                    [:9 :mydesktop9]
+                    [:0 :mydesktop0]
 
-                    [:tab :vk_none]
+                    [:q :myselect_all]
+                    [:w :mycut]
+                    [:f :mycopy]
+                    [:p :mypaste]
+                    [:b :mypaste_plain]
+
+                    [:##a :left_control]
+                    [:##r :left_shift]
+                    [:##s :left_option]
+                    [:##t :left_command]
+                    [:##g :open_clipMenu]
+
                     [:x :vk_none]
-                    [:c :vk_none]
-                    [:d :vk_none]
-                    [:v :vk_none]
+                    [:c :mysave]
+                    [:d :return_or_enter]
+                    [:v :spacebar] ;; this is different from spacebar-mode
 
                     [:z :vk_none]
                     [:l :!Sslash]
@@ -573,7 +484,6 @@
                     [:h [:grave_accent_and_tilde :!Se]]
                     [:comma :!Ssemicolon]
                     [:period :semicolon]
-                    [:keypad_5 :vk_none]
                 ]
             }
 
@@ -636,8 +546,6 @@
                     [:h :1]
                     [:comma :2]
                     [:period :3]
-                    [:keypad_5 :##keypad_period]
-                    [:spacebar :keypad_period]
                 ] 
             }
 
@@ -739,21 +647,13 @@
                 :rules [ 
                     :parentheses-mode 
 
-                    ;; [:escape :!Odelete_forward] ;; delete foreward word 2/3
-                    ;[:grave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3
-                    ;; [:grave_accent_and_tilde :!Tk] ;; delete foreward line 3/3
-
-                    ;[:left_option :myprevious_sheet]
-                    ;[:left_command :mynext_sheet]
-                    ;; [:left_option :myundo]
-                    ;; [:left_command :myredo]
+                    [:delete_forward :!Tk] ;; delete foreward line 3/3
 
                     [:w :!Shyphen]
                     [:q :!Sbackslash]
                     [:f :!Sopen_bracket]
                     [:p :!Sclose_bracket]
                     [:b [:grave_accent_and_tilde :spacebar]] ; ATTENTION: spacebar at the end
-                    ;; [:b :o] ; ATTENTION: spacebar at the end
 
                     [:a :open_bracket]
                     [:r :close_bracket]
@@ -761,11 +661,10 @@
                     [:t :!S0]
                     [:g :equal_sign]
 
-                    ;[:z :!S4]
-                    ;[:x :!Scomma]
-                    ;[:c :!Speriod]
-                    ;[:v :!S3]
-                    ;[:b :vk_none]
+                    [:x :!S4]
+                    [:c :!Scomma]
+                    [:d :!Speriod]
+                    [:v :!S3]
 
                 ]
             }
@@ -776,19 +675,12 @@
                 :rules [ 
                     :text-mode 
 
-                    [:f :mybold]
-                    [:d :myitalic]
-                    [:s :myunderline]
                     [:a :mystrikethrough]
-                    [:x :fontdecrease]
-                    [:c :fontincrease]
-
-                    ;; [:k :mybold]
-                    ;; [:l :myitalic]
-                    ;; [:semicolon :myunderline]
-                    ;; [:quote :mystrikethrough]
-                    ;; [:comma :fontdecrease]
-                    ;; [:period :fontincrease]
+                    [:r :myunderline]
+                    [:s :myitalic]
+                    [:t :mybold]
+                    [:c :fontdecrease]
+                    [:d :fontincrease]
                 ]
             }
 
@@ -811,10 +703,13 @@
             {:des "default mode"
                 :rules [
 
-                    [:keypad_3 [:quote :spacebar]]
+                    [:keypad_2 [:quote :spacebar]]
                     ;; [:b [:grave_accent_and_tilde :spacebar]]
+                    [:##Skeypad_3 :myredo]
                     [:keypad_4 :myundo]
-                    [:keypad_5 :vk_none]
+                    ;; [:##Skeypad_4 :myredo]
+                    [:keypad_1 :vk_none]
+                    [:keypad_9 :vk_none]
 
                     ;; [:left_shift :vk_none]
 
@@ -825,7 +720,8 @@
                     ;; [:!Rgrave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3 
                     ;; [:!Rgrave_accent_and_tilde :!Tk] ;; delete foreward line 3/3
 
-                    ;; [:delete_or_backspace :delete_or_backspace] ;; delete backward character 1/3
+                    [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward character 1/3
+                    [:delete_forward :!Odelete_forward] 
                     ;; [:!Sdelete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
                     ;; [:!Sclose_bracket :!Cdelete_or_backspace] ;; delete backward line 3/3
                     ;; [:delete_or_backspace :vk_none]
@@ -901,9 +797,9 @@
                     ;; [:comma :h]
                     ;; [:##Scomma :##Sh]
                     ;; [:period :comma]
-                    ;; [:!Speriod :!S2]
+                    [:!Scomma :!S2]
                     ;; [:slash :period]
-                    ;; [:!Sslash :!S7]
+                    [:!Speriod :!S7]
 
                     ;; [:h :vk_none]
                     ;; [:##Sh :vk_none]
