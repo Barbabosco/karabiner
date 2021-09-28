@@ -223,7 +223,7 @@
         ;; :leftCommand-mode {:key :left_command}
         ;; :rightCommand-mode {:key :right_command}
         :open-mode {:key :h}
-        :rightControl-mode {:key :right_control}
+        ;; :rightControl-mode {:key :right_control}
         ;; :test-mode {:key :left_command :alone {:key :left_command}} ; Do NOT work
 
         :b-mode {:key :b}

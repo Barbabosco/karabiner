@@ -215,6 +215,7 @@
 
     :layers {;
         :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
+        ;; :mouseService-mode {:key :keypad_3 :alone {:key :quote}} ; commands to be used when moving mouse with the right hand
         :accents-mode {:key :caps_lock} ; accents and punctuation
         :numbers-mode {:key :keypad_1 } ; this is a true layer version of the numbers-mode simlayer
         :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}} ; parentheses
@@ -332,20 +333,81 @@
                     [:f :mycopy]
                     [:p :mypaste]
                     [:b :mypaste_plain]
-                    ;; [:y :vk_none]
 
                     [:##a :left_control]
                     [:##r :left_shift]
                     [:##s :left_option]
                     [:##t :left_command]
                     [:##g :open_clipMenu]
-                    ;; [:h :vk_none]
+
+                    [:tab :vk_none]
+                    [:x :vk_none]
+                    [:c :mysave]
+                    [:d :return_or_enter]
+                    [:v :open_aText]
 
                     [:z :vk_none]
+                    [:l :myFileOpen]
+                    [:u [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
+                    [:y [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
+                    [:j :vk_none]
+
+                    [:m :command_tab]
+                    [:##n :left_arrow]
+                    [:##e :down_arrow]
+                    [:##i :up_arrow]
+                    [:##o :right_arrow]
+ 
+                    [:k :vk_none]
+                    [:h :next_window]
+                    [:comma :page_down]
+                    [:period :page_up]
+                    [:keypad_5 :vk_none]
+                ]
+            }
+
+
+            {   
+                :des   "mouseService-mode layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
+                :rules [
+                    :mouseService-mode
+
+                    ;; [:escape :delete_forward] ;; delete foreward character 1/3
+                    ;; [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
+
+                    ;; [:!Qa :c] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
+                    ;; [:!Ca :b] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
+    
+                    [:1 :mydesktop1]
+                    [:2 :mydesktop2]
+                    [:3 :mydesktop3]
+                    [:4 :mydesktop4]
+                    [:5 :mydesktop5]
+                    [:6 :mydesktop6]
+                    [:7 :mydesktop7]
+                    [:8 :mydesktop8]
+                    [:9 :mydesktop9]
+                    [:0 :mydesktop0]
+
+
+
+                    [:q :myselect_all]
+                    [:w :mycut]
+                    [:f :mycopy]
+                    [:p :mypaste]
+                    [:b :mypaste_plain]
+
+                    [:##a :left_control]
+                    [:##r :left_shift]
+                    [:##s :left_option]
+                    [:##t :left_command]
+                    [:##g :open_clipMenu]
+
+                    [:tab :vk_none]
                     [:x :vk_none]
-                    [:c :vk_none]
-                    [:d :vk_none]
-                    [:v :vk_none]
+                    [:c :mysave]
+                    [:d :return_or_enter]
+                    [:v :open_aText]
 
                     ;; [:z :vk_none]
                     ;; [:x :vk_none]
@@ -387,6 +449,8 @@
                     ;; [:!Rv :z] ; just a test
                 ]
             }
+
+
 
 
             {
@@ -583,30 +647,41 @@
                 :rules [
                     :rectangle-mode
 
-                    [:e :rectangle_top_left]
-                    [:r :rectangle_top_right]
-                    [:d :rectangle_bottom_left]
-                    [:f :rectangle_bottom_right]
-                    
-                    [:k :rectangle_left_half]
-                    [:l :rectangle_bottom_half]
-                    [:semicolon :rectangle_top_half]
-                    [:quote :rectangle_right_half]
+                    [:q :vk_none]
+                    [:w :vk_none]
+                    [:f :rectangle_top_left]
+                    [:p :rectangle_top_right]
+                    [:b :vk_none]
 
-                    [:u :rectangle_first_third]
-                    [:i :rectangle_first_two_thirds]
-                    [:o :rectangle_center_third]
-                    [:p :rectangle_last_two_thirds]
-                    [:open_bracket :rectangle_last_third]
+                    ;; [:a :vk_none]
+                    [:r :vk_none]
+                    [:s :rectangle_bottom_left]
+                    [:t :rectangle_bottom_right]
+                    [:g :vk_none]
 
-                    [:return_or_enter :rectangle_maximize]
-                    ;; [:close_bracket :rectangle_restore]
-                    [:close_bracket :rectangle_center]
-                    [:period :rectangle_smaller]
-                    [:slash :rectangle_larger]
+                    [:tab :vk_none]
+                    [:x :vk_none]
+                    [:c :vk_none]
+                    [:d :vk_none]
+                    [:v :vk_none]
 
-                    [:m :next_window]
+                    [:z :rectangle_first_third]
+                    [:l :rectangle_first_two_thirds]
+                    [:u :rectangle_center_third]
+                    [:y :rectangle_last_two_thirds]
+                    [:j :rectangle_last_third]
+
+                    [:m :rectangle_maximize]
+                    [:n :rectangle_left_half]
+                    [:e :rectangle_bottom_half]
+                    [:i :rectangle_top_half]
+                    [:o :rectangle_right_half]
+
+                    [:k :rectangle_center]
+                    [:h :next_window]
                     [:comma :command_tab]
+                    [:period :vk_none]
+                    [:keypad_5 :vk_none]
                 ]
             }
 
@@ -736,9 +811,12 @@
             {:des "default mode"
                 :rules [
 
-                    [:keypad_3 :quote]
+                    [:keypad_3 [:quote :spacebar]]
+                    ;; [:b [:grave_accent_and_tilde :spacebar]]
                     [:keypad_4 :myundo]
                     [:keypad_5 :vk_none]
+
+                    ;; [:left_shift :vk_none]
 
                     ;; [:escape :vk_none]
 
