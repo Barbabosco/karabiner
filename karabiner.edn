@@ -202,7 +202,9 @@
         :text-mode {:key :n} ; text related
         :find-mode {:key :e} ; find, save, select all
         :code-mode {:key :h} ; this is reserved for VS Code and programming
+        :open-mode {:key :delete_or_backspace} ; to open (= go to the specified application)
         ; :close_bracket-mode {:key :close_bracket}
+        ;; :dele       
  
         ; NEVER IMPLEMENTED the following
         ;:movement-mode {:key :q} ; Lindquist NEVER IMPLEMENTED
@@ -235,7 +237,6 @@
         
         ;; >>>>>> right hand
         :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
-        ;; :open-mode {:key :o} ; to open (= go to the specified application)
         ;; :find-mode {:key :l} ; find, save, select all
         ;; :code-mode {:key :comma} ; this is reserved for VS Code and programming
         ;; :text-mode {:key :k} ; text related
@@ -317,11 +318,11 @@
                 ]
             }
  
+
             {   
                 :des   "spacebar layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
                 :rules [
                     :spacebar-mode
-
 
                     ;; [:escape :delete_forward] ;; delete foreward character 1/3
                     [:delete_forward :delete_forward] ;; delete foreward character 1/3
@@ -340,8 +341,6 @@
                     [:9 :mydesktop9]
                     [:0 :mydesktop0]
 
-
-
                     [:q :myselect_all]
                     [:w :mycut]
                     [:f :mycopy]
@@ -354,7 +353,6 @@
                     [:##t :left_command]
                     [:##g :open_clipMenu]
 
-                    [:tab :vk_none]
                     [:x :vk_none]
                     [:c :mysave]
                     [:d :return_or_enter]
@@ -437,18 +435,18 @@
             }
 
 
-            {
-                :des "mode"
-                :rules [
-                    :close_bracket-mode
-                    [:e :myprevious_sheet]
-                    [:r :mynext_sheet]
-                    [:d :myprevious_desktop]
-                    [:f :mynext_desktop]
-                    [:x :myprevious_tab]
-                    [:c :mynext_tab]
-                ]
-            }
+            ;; {
+            ;;     :des "mode"
+            ;;     :rules [
+            ;;         :close_bracket-mode
+            ;;         [:e :myprevious_sheet]
+            ;;         [:r :mynext_sheet]
+            ;;         [:d :myprevious_desktop]
+            ;;         [:f :mynext_desktop]
+            ;;         [:x :myprevious_tab]
+            ;;         [:c :mynext_tab]
+            ;;     ]
+            ;; }
 
 
             {
@@ -456,27 +454,28 @@
                 :rules [
                     :open-mode
 
-                    [:left_option :myprevious_tab]
-                    [:left_command :mynext_tab]
+                    ;; [:left_option :myprevious_tab]
+                    ;; [:left_command :mynext_tab]
+
 
                     [:q :myCloseApp]
                     [:w :myCloseWindow]
-                    [:e [:open "/Applications/Firefox.app/"]]
-                    [:r [:open "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app"]]
-                    [:t [:open "/Applications/Obsidian.app/"]] ;; oBsidian
+                    [:f [:open "/Applications/Firefox.app/"]]
+                    [:p [:open "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app"]]
+                    [:b [:open "/Applications/Obsidian.app/"]] ;; oBsidian
                     [:y :vk_none]
 
                     [:a [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
-                    [:s [:open "/Applications/Safari.app/"]]
-                    [:d [:open "/Applications/Visual Studio Code.app"]]
-                    [:f [:open "/Applications/Google Chrome.app"]]
-                    [:g [:open "/System/Library/CoreServices/Finder.app"]]
-                    [:h :vk_none]
+                    [:r [:open "/Applications/Safari.app/"]]
+                    [:s [:open "/System/Library/CoreServices/Finder.app"]]
+                    [:t [:open "/Applications/Google Chrome.app"]]
+                    [:g :vk_none]
                     
                     [:z [:open "/Applications/FileZilla.app"]]
                     [:x :vk_none]
                     ;; [:c [:open "/Applications/Google Chrome Canary.app"]]
                     ;; [:v [:open "/Applications/Telegram.app"]]
+                    [:d [:open "/Applications/Visual Studio Code.app"]]
                     [:v [:open "/Applications/TextEdit.app/"]]
                     [:b :vk_none]
 
@@ -487,13 +486,13 @@
                     [:close_bracket :vk_none]
 
                     [:j :vk_none]
-                    [:k [:open "/Applications/Notes.app/"]]
+                    [:n [:open "/Applications/Notes.app/"]]
                     [:l :vk_none]
                     [:semicolon :vk_none]
-                    [:quote [:open "/Applications/OpenOffice.app/"]]
+                    ;; [:quote [:open "/Applications/OpenOffice.app/"]]
 
                     [:n :vk_none]
-                    [:m [:open "/Applications/Anki.app/"]] ;; anKi
+                    [:k [:open "/Applications/Anki.app/"]] ;; anKi
                     [:comma :vk_none]
                     [:period :vk_none]
                     [:slash :vk_none]
@@ -501,21 +500,6 @@
 
                 ]
             }
-
-            {
-                :des "mode"
-                :rules [
-                    :b-mode
-                    [:period :mycut]
-                    [:comma :mycopy]
-                    [:i :mypaste]
-                    [:o :mypaste_plain]
-                    [:m :myselect_all]
-                ]
-            }
-     
-
-
 
 
            {
@@ -539,8 +523,7 @@
             {
                 :des "mode"
                 :rules [ 
-                    :numbers-mode ; IMPORTANT: this mode has always to be identical to the next one
-
+                    :numbers-mode
                     [:q :vk_none]
                     [:w :vk_none]
                     [:f :vk_none ]
@@ -644,8 +627,8 @@
                         :cursor-mode
 
                         [:k :cursor_find_match]
-                        [:l :cursor_below]
-                        [:semicolon :cursor_above]
+                        [:n :cursor_above]
+                        [:h :cursor_below]
                         ;  [:-v :acejump]
                         ;  [:-l :acejump_line]
                         ;  [:-m :acejump_multi]
@@ -675,7 +658,18 @@
             {
                 :des "mode"
                 :rules [ 
-                    :parentheses-mode 
+                    :parentheses-mode
+
+                    ;; [:1 :!C1]
+                    ;; [:2 :!C2]
+                    ;; [:3 :!C3]
+                    ;; [:4 :!C4]
+                    ;; [:5 :!C5]
+                    ;; [:6 :!C6]
+                    ;; [:7 :!C7]
+                    ;; [:8 :!C8]
+                    ;; [:9 :!C9]
+                    ;; [:0 :!C0]
 
                     [:delete_forward :!Tk] ;; delete foreward line 3/3
 
@@ -732,6 +726,17 @@
 
             {:des "default mode"
                 :rules [
+
+                    [:!C1 :!C1]
+                    [:!C2 :!C2]
+                    [:!C3 :!C3]
+                    [:!C4 :!C4]
+                    [:!C5 :!C5]
+                    [:!C6 :!C6]
+                    [:!C7 :!C7]
+                    [:!C8 :!C8]
+                    [:!C9 :!C9]
+                    [:!C0 :!C0]
 
                     ;; [:keypad_2 [:quote :spacebar]]
                     ;; [:keypad_2 :vk_none ]
