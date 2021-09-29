@@ -193,9 +193,9 @@
         :rectangle-mode {:key :a}
         :gmail-mode {:key :s}
         :cursor-mode {:key :g} ; Lindquist - cursor mode
-        ; :select-mode {:key :c}
-        :accentsAndMouse-mode {:key :keypad_2}  ;; accents and punctuation and keys to be used 
-                                                ;; with left hand when using mouse with right hand
+        ; :select-mode {:key :c} 
+        :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}}
+        
 
         
         ; >>>>>> right hand
@@ -213,11 +213,20 @@
 
     }
 
-    :layers {;
+    :layers {
  
+        ;; ⭐ ⭐ BIG BIG problem finally solved ⭐ ⭐
+        ;; :accentsAndMouse-mode {:key :keypad_2}
+        ;; accents and punctuation and keys to be used 
+        ;; with left hand when using mouse with right hand
+        ;; ⬇️ ⬇️ BIG BIG problem finally solved: see below ⬇️ ⬇️ 
+
+
         ;; >>>>>> left hand
         :numbers-mode {:key :tab } ; this is a true layer version of the numbers-mode simlayer
-        :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}} ; parentheses
+
+        ;; :accentsAndMouse-mode {:key :keypad_2   {:alone [:grave_accent_and_tilde :spacebar] }    } 
+
         ;; :rectangle-mode {:key :a}
         ;; :gmail-mode {:key :s}
         ;; :numbers-mode {:key :d}
@@ -248,6 +257,29 @@
 
         :main [
 
+             ;; ⭐ ⭐ BIG BIG problem finally solved ⭐ ⭐
+            ;; How to use a proper layer activated by a given and,
+            ;; on :alone get the apostrophe.
+            ;; The problem is that the apostrophe is two consecutive keys [:quote :spacebar]
+            ;; and using it on :alone throws an exception.
+            ;; So the solution is 
+            ;; - to skip :layers
+            ;; - and instead use a variable.
+            ;; Solution provided on the karabiner group on Telegram 
+            ;; See down here
+            ;; ⬇️  ⬇️  ⬇️  ⬇️  ⬇️  ⬇️ 
+
+            { 
+            :des   "accentsAndMouse-mode rule" ;; solution provided on the karabiner group on Telegram 
+            :rules [
+                    [:keypad_2 ["accentsAndMouse-mode" 1] nil {:afterup ["accentsAndMouse-mode" 0] :alone [:quote :spacebar]}]
+                    [:c :2 :accentsAndMouse-mode]
+                ]
+            }
+
+            ;; ⬆️  ⬆️  ⬆️  ⬆️  ⬆️  ⬆️    
+            ;; ⭐ ⭐ BIG BIG problem finally solved ⭐ ⭐ 
+
 
             ;; {:des   "if using Royal Kludge RK68"
             ;;     :rules [
@@ -267,17 +299,13 @@
             ;; }
 
 
-            {:des   "condition"
-                :rules [
-                    [:condi :daskey] ;; inside [] you can use manies conditions at once
-
-                    ;; [:grave_accent_and_tilde :escape]
-                    ;; [:grave_accent_and_tilde :delete_forward] ;; delete foreward character 1/3
-                    ;; [:!Rgrave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3 
-
+            ;; {:des   "condition"
+            ;;     :rules [
+            ;;         [:condi :daskey] ;; inside [] you can use manies conditions at once
                     
-                ]
-            }
+            ;;     ]
+            ;; }
+
 
 
             {:des   "enter and exit number-mode"
@@ -288,12 +316,12 @@
                     [[:9 :0] :myscreenshot4]
                 ]
             }
-
-
+ 
             {   
                 :des   "spacebar layer" ; IMPORTANT: to work properly, this simlayer has to be placed before the others
                 :rules [
                     :spacebar-mode
+
 
                     ;; [:escape :delete_forward] ;; delete foreward character 1/3
                     [:delete_forward :delete_forward] ;; delete foreward character 1/3
@@ -349,6 +377,62 @@
                     [:comma :page_down]
                     [:period :page_up]
                     [:keypad_5 :vk_none]
+                ]
+            }
+
+
+            {
+                :des "mode"
+                :rules [ 
+                    :accentsAndMouse-mode
+
+                    [:delete_or_backspace :!Sdelete_or_backspace] ;; delete backward word 2/3
+                    ;; [:delete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
+
+                    [:1 :mydesktop1]
+                    [:2 :mydesktop2]
+                    [:3 :mydesktop3]
+                    [:4 :mydesktop4]
+                    [:5 :mydesktop5]
+                    [:6 :mydesktop6]
+                    [:7 :mydesktop7]
+                    [:8 :mydesktop8]
+                    [:9 :mydesktop9]
+                    [:0 :mydesktop0]
+
+                    [:q :myselect_all]
+                    [:w :mycut]
+                    [:f :mycopy]
+                    [:p :mypaste]
+                    [:b :mypaste_plain]
+
+                    [:##a :left_control]
+                    [:##r :left_shift]
+                    [:##s :left_option]
+                    [:##t :left_command]
+                    [:##g :open_clipMenu]
+
+                    [:x :vk_none]
+                    [:c :mysave]
+                    [:d :return_or_enter]
+                    [:v :spacebar] ;; this is different from spacebar-mode
+
+                    [:z :vk_none]
+                    [:l :!Sslash]
+                    [:u [:grave_accent_and_tilde :u]]
+                    [:y :!S1]
+                    [:j :vk_none]
+
+                    [:m [:grave_accent_and_tilde :a]]
+                    [:n [:quote :e]]
+                    [:e [:grave_accent_and_tilde :e]]
+                    [:i [:grave_accent_and_tilde :i]]
+                    [:o [:grave_accent_and_tilde :o]]
+
+                    [:k [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
+                    [:h [:grave_accent_and_tilde :!Se]]
+                    [:comma :!Ssemicolon]
+                    [:period :semicolon]
                 ]
             }
 
@@ -431,61 +515,7 @@
             }
      
 
-            {
-                :des "mode"
-                :rules [ 
-                    :accentsAndMouse-mode
 
-                    [:delete_or_backspace :!Sdelete_or_backspace] ;; delete backward word 2/3
-                    ;; [:delete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
-
-
-                    [:1 :mydesktop1]
-                    [:2 :mydesktop2]
-                    [:3 :mydesktop3]
-                    [:4 :mydesktop4]
-                    [:5 :mydesktop5]
-                    [:6 :mydesktop6]
-                    [:7 :mydesktop7]
-                    [:8 :mydesktop8]
-                    [:9 :mydesktop9]
-                    [:0 :mydesktop0]
-
-                    [:q :myselect_all]
-                    [:w :mycut]
-                    [:f :mycopy]
-                    [:p :mypaste]
-                    [:b :mypaste_plain]
-
-                    [:##a :left_control]
-                    [:##r :left_shift]
-                    [:##s :left_option]
-                    [:##t :left_command]
-                    [:##g :open_clipMenu]
-
-                    [:x :vk_none]
-                    [:c :mysave]
-                    [:d :return_or_enter]
-                    [:v :spacebar] ;; this is different from spacebar-mode
-
-                    [:z :vk_none]
-                    [:l :!Sslash]
-                    [:u [:grave_accent_and_tilde :u]]
-                    [:y :!S1]
-                    [:j :vk_none]
-
-                    [:m [:grave_accent_and_tilde :a]]
-                    [:n [:quote :e]]
-                    [:e [:grave_accent_and_tilde :e]]
-                    [:i [:grave_accent_and_tilde :i]]
-                    [:o [:grave_accent_and_tilde :o]]
-
-                    [:k [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
-                    [:h [:grave_accent_and_tilde :!Se]]
-                    [:comma :!Ssemicolon]
-                    [:period :semicolon]
-                ]
-            }
 
 
            {
@@ -703,13 +733,15 @@
             {:des "default mode"
                 :rules [
 
-                    [:keypad_2 [:quote :spacebar]]
+                    ;; [:keypad_2 [:quote :spacebar]]
+                    ;; [:keypad_2 :vk_none ]
                     ;; [:b [:grave_accent_and_tilde :spacebar]]
                     [:##Skeypad_3 :myredo]
                     [:keypad_4 :myundo]
                     ;; [:##Skeypad_4 :myredo]
                     [:keypad_1 :vk_none]
                     [:keypad_9 :vk_none]
+
 
                     ;; [:left_shift :vk_none]
 
