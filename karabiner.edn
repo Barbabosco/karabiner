@@ -327,6 +327,9 @@
                     ;; [:escape :delete_forward] ;; delete foreward character 1/3
                     [:delete_forward :delete_forward] ;; delete foreward character 1/3
 
+                    [:keypad_3 :myprevious_desktop]
+                    [:keypad_4 :mynext_desktop]
+
                     ;; [:!Qa :c] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
                     ;; [:!Ca :b] ;; IMPORTANTE prova molto interessante, permetterebbe di raddoppiare il livello speacebar
     
@@ -415,11 +418,11 @@
                     [:d :return_or_enter]
                     [:v :spacebar] ;; this is different from spacebar-mode
 
-                    [:z :vk_none]
-                    [:l :!Sslash]
+                    [:z :!S3] ;; hash sign
+                    [:l :!Sslash] ;; question mark
                     [:u [:grave_accent_and_tilde :u]]
-                    [:y :!S1]
-                    [:j :vk_none]
+                    [:y :!S1] ;; exclamative mark
+                    [:##Sj :backslash]
 
                     [:m [:grave_accent_and_tilde :a]]
                     [:n [:quote :e]]
@@ -427,7 +430,7 @@
                     [:i [:grave_accent_and_tilde :i]]
                     [:o [:grave_accent_and_tilde :o]]
 
-                    [:k [:!Squote :spacebar]] ; ATTENTION: spacebar at the end
+                    [:k [:!Squote :spacebar]] ;; double quotes ATTENTION: spacebar at the end
                     [:h [:grave_accent_and_tilde :!Se]]
                     [:comma :!Ssemicolon]
                     [:period :semicolon]
@@ -454,8 +457,8 @@
                 :rules [
                     :open-mode
 
-                    ;; [:left_option :myprevious_tab]
-                    ;; [:left_command :mynext_tab]
+                    [:keypad_3 :myprevious_sheet]
+                    [:keypad_4 :mynext_sheet]
 
 
                     [:q :myCloseApp]
@@ -660,16 +663,19 @@
                 :rules [ 
                     :parentheses-mode
 
-                    ;; [:1 :!C1]
-                    ;; [:2 :!C2]
-                    ;; [:3 :!C3]
-                    ;; [:4 :!C4]
-                    ;; [:5 :!C5]
-                    ;; [:6 :!C6]
-                    ;; [:7 :!C7]
-                    ;; [:8 :!C8]
-                    ;; [:9 :!C9]
-                    ;; [:0 :!C0]
+                    [:keypad_3 :myprevious_tab]
+                    [:keypad_4 :mynext_tab]
+
+                    [:1 :!C1]
+                    [:2 :!C2]
+                    [:3 :!C3]
+                    [:4 :!C4]
+                    [:5 :!C5]
+                    [:6 :!C6]
+                    [:7 :!C7]
+                    [:8 :!C8]
+                    [:9 :!C9]
+                    [:0 :!C0]
 
                     [:delete_forward :!Tk] ;; delete foreward line 3/3
 
@@ -688,7 +694,7 @@
                     [:x :!S4]
                     [:c :!Scomma]
                     [:d :!Speriod]
-                    [:v :!S3]
+                    [:v :vk_none] 
 
                 ]
             }
