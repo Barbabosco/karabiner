@@ -191,7 +191,7 @@
 
         ; >>>>>> left hand
         :rectangle-mode {:key :a}
-        :gmail-mode {:key :s}
+        :gmail-mode {:key :r}
         :cursor-mode {:key :g} ; Lindquist - cursor mode
         ; :select-mode {:key :c} 
         :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}}
@@ -356,10 +356,10 @@
                     [:##t :left_command]
                     [:##g :open_clipMenu]
 
-                    [:x :vk_none]
-                    [:c :mysave]
+                    [:x :delete_or_backspace]
+                    ;; [:c :mysave]  probabilmente si può omettere visto che con la X-Bows, ⌘+S sembra abbastanza comodo
                     [:d :return_or_enter]
-                    [:v :open_aText]
+                    [:v :spacebar]
 
                     [:z :vk_none]
                     [:l :myFileOpen]
@@ -413,10 +413,10 @@
                     [:##t :left_command]
                     [:##g :open_clipMenu]
 
-                    [:x :vk_none]
-                    [:c :mysave]
+                    [:x :delete_or_backspace]
+                    [:c :mysave] ;; ATTENTION it doesn't work, don't know why
                     [:d :return_or_enter]
-                    [:v :spacebar] ;; this is different from spacebar-mode
+                    [:v :spacebar]
 
                     [:z :!S3] ;; hash sign
                     [:l :!Sslash] ;; question mark
@@ -615,10 +615,10 @@
                 :rules [
                     :gmail-mode
 
-                    [:i :gmail_cc]
-                    [:o :gmail_bcc]
-                    [:k :gmail_quote]
-                    [:comma :gmail_discard]
+                    [:l :gmail_cc]
+                    [:u :gmail_bcc]
+                    [:n :gmail_quote]
+                    [:h :gmail_discard]
                 ]
             }
 
@@ -733,16 +733,16 @@
             {:des "default mode"
                 :rules [
 
-                    [:!C1 :!C1]
-                    [:!C2 :!C2]
-                    [:!C3 :!C3]
-                    [:!C4 :!C4]
-                    [:!C5 :!C5]
-                    [:!C6 :!C6]
-                    [:!C7 :!C7]
-                    [:!C8 :!C8]
-                    [:!C9 :!C9]
-                    [:!C0 :!C0]
+                    ;; [:!C1 :!C1]
+                    ;; [:!C2 :!C2]
+                    ;; [:!C3 :!C3]
+                    ;; [:!C4 :!C4]
+                    ;; [:!C5 :!C5]
+                    ;; [:!C6 :!C6]
+                    ;; [:!C7 :!C7]
+                    ;; [:!C8 :!C8]
+                    ;; [:!C9 :!C9]
+                    ;; [:!C0 :!C0]
 
                     ;; [:keypad_2 [:quote :spacebar]]
                     ;; [:keypad_2 :vk_none ]
