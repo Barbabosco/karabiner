@@ -779,7 +779,7 @@
                     [:keypad_4 :myundo]
                     ;; [:##Skeypad_4 :myredo]
                     [:keypad_1 :vk_none]
-                    [:keypad_9 :vk_none]
+                    [:keypad_9 :slash]
 
 
                     ;; [:left_shift :vk_none]
