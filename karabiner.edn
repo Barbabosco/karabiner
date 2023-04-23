@@ -58,12 +58,13 @@
         ; :super-hyper [:command :shift :control :option :fn]
         ; :hyper [:command :shift :control :option]
         :cos [:command :shift :option]
-        ; :cst [:command :shift :control]
+        :cst [:command :shift :control]
         :co [:command :option]
+        :coc [:command :option :control]
         :cs [:command :shift]
         :ct [:command :control]
         :to [:control :option]
-        ; :ts [:control :shift]
+        :ts [:control :shift]
         :os [:option :shift]
         :cp [:caps_lock]
     }
@@ -72,7 +73,7 @@
         :myundo {:key :z :modi :command}
         :myredo {:key :z :modi :cs}
         :delete_line {:key :k :modi :cs} ;!CSk Lindquist
-        :open_clipMenu {:key :v :modi :co}
+        :open_clipy {:key :v :modi :co}
         :open_aText {:key :a :modi :co}
         :next_window {:key :grave_accent_and_tilde :modi :command}
         :command_tab {:key :tab :modi :command}
@@ -112,12 +113,20 @@
         :myfind_selection {:key :e :modi :command}
         :myfind_gspreadsheet {:key :h :modi :cs}
 
+
+        ;; START VS Code or code-mode
         :mytoggle_comments {:key :slash :modi :command}
         :mytoggle_sidebar {:key :b :modi :command}
         :myfocus_sidebar {:key :0 :modi :command}
         :myfocus_terminal {:key :s :modi :ct}; custom shortcut in VS Code - View: Focus Active Editor Group ⌃⌘R 
         :myfocus_editor {:key :r :modi :ct} ; custom shortcut in VS Code - Terminal: Focus Terminal ⌃⌘S
         :myopen-from-sidebar {:key :down_arrow :modi :command}
+        :my-matching-bracket {:key :backslash :modi :cs}
+        :my-select-all-occurrences {:key :l :modi :cs}
+        :my-lowercase {:key :l :modi :ts}
+        :my-uppercase {:key :u :modi :ts}
+        :my-titlecase {:key :t :modi :ts}
+        ;; END VS Code or code-mode
 
         :mydesktop1 {:key :1 :modi :control}
         :mydesktop2 {:key :2 :modi :control}
@@ -138,8 +147,11 @@
         :myprevious_sheet {:key :page_up :modi :cs}
         :myemojisearch {:key :spacebar :modi :ct}
         ;; :myscreenshot3 {:key :3 :modi :cs}
-        :myscreenshot4 {:key :4 :modi :cs}
+        ;; :myscreenshot4 {:key :4 :modi :cs}
         ;; :myscreenshot5 {:key :5 :modi :cs}
+        :myshottr {:key :2 :modi :cs}
+        :myshottrOcr {:key :o :modi :coc}
+
 
         :rectangle_left_half {:key :left_arrow :modi :to}
         :rectangle_right_half {:key :right_arrow :modi :to}
@@ -193,15 +205,15 @@
         :rectangle-mode {:key :a}
         :gmail-mode {:key :r}
         :cursor-mode {:key :g} ; Lindquist - cursor mode
-        ; :select-mode {:key :c} 
-        :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}}
+        ;; :d-mode {:key :d} 
+        ;; :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}}
         
 
         
         ; >>>>>> right hand
         :text-mode {:key :n} ; text related
         :find-mode {:key :e} ; find, save, select all
-        :code-mode {:key :h} ; this is reserved for VS Code and programming
+        ;; :code-mode {:key :h} ; this is reserved for VS Code and programming
         :open-mode {:key :delete_or_backspace} ; to open (= go to the specified application)
         ; :close_bracket-mode {:key :close_bracket}
         ;; :dele       
@@ -237,6 +249,10 @@
         
         ;; >>>>>> right hand
         :spacebar-mode {:key :spacebar :alone {:key :spacebar}}
+        :parentheses-mode {:key :return_or_enter :alone {:key :return_or_enter}}
+        :code-mode {:key :keypad_8} ; this is reserved for VS Code and programming
+
+        
         ;; :find-mode {:key :l} ; find, save, select all
         ;; :code-mode {:key :comma} ; this is reserved for VS Code and programming
         ;; :text-mode {:key :k} ; text related
@@ -274,7 +290,7 @@
             :des   "accentsAndMouse-mode rule" ;; solution provided on the karabiner group on Telegram 
             :rules [
                     [:keypad_2 ["accentsAndMouse-mode" 1] nil {:afterup ["accentsAndMouse-mode" 0] :alone [:quote :spacebar]}]
-                    [:c :2 :accentsAndMouse-mode]
+                    ;; [:c :2 :accentsAndMouse-mode]
                 ]
             }
 
@@ -311,10 +327,11 @@
 
             {:des   "enter and exit number-mode"
                 :rules [
-                    [[:1 :2] [:vk_none ["numbers-mode" 1]]] ;; turn ON numbers-mode
-                    [[:3 :4] [:vk_none ["numbers-mode" 0]]] ;; turn OFF numbers-mode
-                    [[:7 :8] :myemojisearch]                    
-                    [[:9 :0] :myscreenshot4]
+                    [[:1 :2] :myshottr]
+                    [[:3 :4] :myshottrOcr]                    
+                    [[:5 :6] :myemojisearch]                    
+                    [[:7 :8] [:vk_none ["numbers-mode" 1]]] ;; turn ON numbers-mode
+                    [[:9 :0] [:vk_none ["numbers-mode" 0]]] ;; turn OFF numbers-mode
                 ]
             }
  
@@ -354,14 +371,17 @@
                     [:##r :left_shift]
                     [:##s :left_option]
                     [:##t :left_command]
-                    [:##g :open_clipMenu]
+                    [:##g :open_clipy]
+
+                    [:left_option :mybold]
 
                     [:x :delete_or_backspace]
                     ;; [:c :mysave]  probabilmente si può omettere visto che con la X-Bows, ⌘+S sembra abbastanza comodo
+                    [:c :!S3] ;; hash
                     [:d :return_or_enter]
                     [:v :spacebar]
 
-                    [:z :vk_none]
+                    [:z :open_aText]
                     [:l :myFileOpen]
                     [:u [:down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow :down_arrow]]
                     [:y [:up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow :up_arrow]]
@@ -378,6 +398,7 @@
                     [:comma :page_down]
                     [:period :page_up]
                     [:keypad_5 :vk_none]
+            
                 ]
             }
 
@@ -387,7 +408,7 @@
                 :rules [ 
                     :accentsAndMouse-mode
 
-                    [:delete_or_backspace :!Sdelete_or_backspace] ;; delete backward word 2/3
+                    [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
                     ;; [:delete_or_backspace :!Cdelete_or_backspace] ;; delete backward line 3/3
 
                     [:1 :mydesktop1]
@@ -407,18 +428,18 @@
                     [:p :mypaste]
                     [:b :mypaste_plain]
 
-                    [:##a :left_control]
-                    [:##r :left_shift]
-                    [:##s :left_option]
-                    [:##t :left_command]
-                    [:##g :open_clipMenu]
+                    [:##a :mystrikethrough]
+                    [:##r :myunderline]
+                    [:##s :myitalic]
+                    [:##t :mybold]
+                    [:##g :open_clipy]
 
                     [:x :delete_or_backspace]
-                    [:c :mysave] ;; ATTENTION it doesn't work, don't know why
+                    [:c :!S3] ;; hash
                     [:d :return_or_enter]
                     [:v :spacebar]
 
-                    [:z :!S3] ;; hash sign
+                    [:z :hyphen] ;; hyphen
                     [:l :!Sslash] ;; question mark
                     [:u [:grave_accent_and_tilde :u]]
                     [:y :!S1] ;; exclamative mark
@@ -464,8 +485,8 @@
                     [:q :myCloseApp]
                     [:w :myCloseWindow]
                     [:f [:open "/Applications/Firefox.app/"]]
-                    [:p [:open "/Applications/Adobe Photoshop 2021/Adobe Photoshop 2021.app"]]
-                    [:b [:open "/Applications/Obsidian.app/"]] ;; oBsidian
+                    [:p [:open "/Applications/Adobe Photoshop 2022/Adobe Photoshop 2022.app"]]
+                    [:b [:open "/Applications/Blender.app/"]]
                     [:y :vk_none]
 
                     [:a [:open "/Applications/Adobe Acrobat Reader DC.app/"]]
@@ -547,21 +568,21 @@
                     [:v :vk_none]
 
                     [:z :keypad_hyphen]
-                    [:l :7]
-                    [:u :8]
-                    [:y :9]
+                    [:l :keypad_7]
+                    [:u :keypad_8]
+                    [:y :keypad_9]
                     [:j :keypad_slash]
 
                     [:m :keypad_plus]
-                    [:n :4]
-                    [:e :5]
-                    [:i :6]
+                    [:n :keypad_4]
+                    [:e :keypad_5]
+                    [:i :keypad_6]
                     [:o :keypad_asterisk]
                     
                     [:k :keypad_0]
-                    [:h :1]
-                    [:comma :2]
-                    [:period :3]
+                    [:h :keypad_1]
+                    [:comma :keypad_2]
+                    [:period :keypad_3]
                 ] 
             }
 
@@ -595,13 +616,13 @@
                     [:y :rectangle_last_two_thirds]
                     [:j :rectangle_last_third]
 
-                    [:m :rectangle_maximize]
+                    [:m :rectangle_center]
                     [:n :rectangle_left_half]
                     [:e :rectangle_bottom_half]
                     [:i :rectangle_top_half]
                     [:o :rectangle_right_half]
 
-                    [:k :rectangle_center]
+                    [:k :rectangle_maximize]
                     [:h :next_window]
                     [:comma :command_tab]
                     [:period :vk_none]
@@ -632,6 +653,7 @@
                         [:k :cursor_find_match]
                         [:n :cursor_above]
                         [:h :cursor_below]
+                        [:f :a]
                         ;  [:-v :acejump]
                         ;  [:-l :acejump_line]
                         ;  [:-m :acejump_multi]
@@ -645,7 +667,9 @@
                 :rules [ 
                     :code-mode 
 
-                    [:f :myopen-from-sidebar]
+                    [:q :my-titlecase]
+                    [:w :my-lowercase]
+                    [:f :my-uppercase]
                     [:p :delete_line]
                     [:b :mytoggle_sidebar]
 
@@ -653,7 +677,10 @@
                     [:r :myfocus_terminal]
                     [:s :myfocus_editor]
                     [:t :mytoggle_comments]
+                    [:g :my-matching-bracket]
 
+                    [:c :myopen-from-sidebar]
+                    [:d :my-select-all-occurrences]
                 ]
             }
 
@@ -733,6 +760,7 @@
             {:des "default mode"
                 :rules [
 
+                    ;; [:a :z]
                     ;; [:!C1 :!C1]
                     ;; [:!C2 :!C2]
                     ;; [:!C3 :!C3]
@@ -763,9 +791,9 @@
                     ;; [:!Rgrave_accent_and_tilde :!Odelete_forward] ;; delete foreward word 2/3 
                     ;; [:!Rgrave_accent_and_tilde :!Tk] ;; delete foreward line 3/3
 
-                    [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward character 1/3
+                    ;; [:delete_or_backspace :!Odelete_or_backspace] ;; delete backward character 1/3
                     [:delete_forward :!Odelete_forward] 
-                    ;; [:!Sdelete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
+                    [:!Sdelete_or_backspace :!Odelete_or_backspace] ;; delete backward word 2/3
                     ;; [:!Sclose_bracket :!Cdelete_or_backspace] ;; delete backward line 3/3
                     ;; [:delete_or_backspace :vk_none]
 
