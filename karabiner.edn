@@ -377,7 +377,8 @@
 
                     [:x :delete_or_backspace]
                     ;; [:c :mysave]  probabilmente si può omettere visto che con la X-Bows, ⌘+S sembra abbastanza comodo
-                    [:c :!S3] ;; hash
+                    ;; [:c :!S3] ;; hash
+                    [:c :vk_none]
                     [:d :return_or_enter]
                     [:v :spacebar]
 
@@ -435,7 +436,8 @@
                     [:##g :open_clipy]
 
                     [:x :delete_or_backspace]
-                    [:c :!S3] ;; hash
+                    ;; [:c :!S3] ;; hash
+                    [:c :vk_none]
                     [:d :return_or_enter]
                     [:v :spacebar]
 
@@ -721,7 +723,7 @@
                     [:x :!S4]
                     [:c :!Scomma]
                     [:d :!Speriod]
-                    [:v :vk_none] 
+                    [:v :!S3] ;; hash
 
                 ]
             }
@@ -883,4 +885,4 @@
             }
 
         ]
-    }
+    } 
